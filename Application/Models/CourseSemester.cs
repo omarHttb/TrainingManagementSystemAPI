@@ -9,7 +9,7 @@ public partial class CourseSemester
 
     public int CourseId { get; set; }
 
-    public int TrainerId { get; set; }
+    public int? TrainerId { get; set; }
 
     public string Semester { get; set; } = null!;
 
