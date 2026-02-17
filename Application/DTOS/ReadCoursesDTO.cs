@@ -12,5 +12,19 @@ namespace Application.DTOS
 
         public string Title { get; set; } = string.Empty;
 
+        public string Description { get; set; } = null!;
+
+        public decimal Price { get; set; }
+
+        public DateTime CreationDate { get; set; }
+
+        public int TrainerId { get; set; }
+
+        public int Capacity { get; set; }
+
+        public int StudentsRolledIn { get; set; }
+
+
+
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Application.Data.Models;
+namespace Infastructure.Models;
 
 public partial class UserRole
 {

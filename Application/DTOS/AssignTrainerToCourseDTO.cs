@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Application.DTOS
 {
-    public class AssignTrainerToCourseSemesterDTO
+    public class AssignTrainerToCourseDTO
     {
-        public int CourseSemesterID { get; set; }   
+        public int CourseID { get; set; }   
 
         public int TrainerID { get; set; }  
     }

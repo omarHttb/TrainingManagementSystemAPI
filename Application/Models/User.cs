@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Application.Data.Models;
+namespace Infastructure.Models;
 
 public partial class User
 {
@@ -17,7 +17,9 @@ public partial class User
 
     public DateOnly DateOfBirth { get; set; }
 
-    public DateTime? UserCreationDate { get; set; }
+    public DateTime UserCreationDate { get; set; }
+
+    public string PasswordHash { get; set; } = null!;
 
     public virtual ICollection<Trainee> Trainees { get; set; } = new List<Trainee>();
 

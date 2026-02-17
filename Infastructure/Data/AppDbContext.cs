@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Application.Data.Models;
+using Infastructure.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infastructure.Data;
@@ -20,8 +20,6 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<Course> Courses { get; set; }
 
-    public virtual DbSet<CourseSemester> CourseSemesters { get; set; }
-
     public virtual DbSet<Enrollment> Enrollments { get; set; }
 
     public virtual DbSet<Grade> Grades { get; set; }
@@ -36,7 +34,6 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<UserRole> UserRoles { get; set; }
 
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Attendence>(entity =>
@@ -44,8 +41,6 @@ public partial class AppDbContext : DbContext
             entity.HasKey(e => e.Id).HasName("PK__Attenden__3214EC07944E5F8E");
 
             entity.ToTable("Attendence");
-
-            entity.HasIndex(e => new { e.EnrollmentId, e.AttendanceDate }, "UQ_DailyAttendance").IsUnique();
 
             entity.Property(e => e.AttendanceDate).HasDefaultValueSql("(getdate())");
 
@@ -59,43 +54,30 @@ public partial class AppDbContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("PK__Courses__3214EC07CE5EA62B");
 
+            entity.Property(e => e.CreationDate).HasColumnType("datetime");
+            entity.Property(e => e.Price).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.Title).HasMaxLength(50);
-        });
 
-        modelBuilder.Entity<CourseSemester>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__CourseSe__3214EC077F8CDFEE");
-
-            entity.ToTable("CourseSemester");
-
-            entity.Property(e => e.CourseYear).HasDefaultValueSql("(getdate())");
-            entity.Property(e => e.Semester).HasMaxLength(20);
-
-            entity.HasOne(d => d.Course).WithMany(p => p.CourseSemesters)
-                .HasForeignKey(d => d.CourseId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_CourseSemester_Courses");
-
-            entity.HasOne(d => d.Trainer).WithMany(p => p.CourseSemesters)
+            entity.HasOne(d => d.Trainer).WithMany(p => p.Courses)
                 .HasForeignKey(d => d.TrainerId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_CourseSemester_Trainers");
+                .HasConstraintName("FK_Courses_Trainers");
         });
 
         modelBuilder.Entity<Enrollment>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Enrollme__3214EC076D19D3C3");
 
-            entity.HasIndex(e => new { e.CourseSemesterId, e.TraineeId }, "UQ_Enrollment").IsUnique();
+            entity.HasIndex(e => new { e.CourseId, e.TraineeId }, "UQ_COURSE_TRAINEE").IsUnique();
 
             entity.Property(e => e.EnrollmentDate)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
 
-            entity.HasOne(d => d.CourseSemester).WithMany(p => p.Enrollments)
-                .HasForeignKey(d => d.CourseSemesterId)
+            entity.HasOne(d => d.Course).WithMany(p => p.Enrollments)
+                .HasForeignKey(d => d.CourseId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Erollments_CourseSemester");
+                .HasConstraintName("FK_Erollments_Courses");
 
             entity.HasOne(d => d.Trainee).WithMany(p => p.Enrollments)
                 .HasForeignKey(d => d.TraineeId)
@@ -131,7 +113,6 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.JoinDate)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
-            entity.Property(e => e.UserId).HasColumnName("userId");
 
             entity.HasOne(d => d.User).WithMany(p => p.Trainees)
                 .HasForeignKey(d => d.UserId)
@@ -168,9 +149,9 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.Gender)
                 .HasMaxLength(1)
                 .IsUnicode(false)
-                .IsFixedLength()
-                .HasColumnName("gender");
+                .IsFixedLength();
             entity.Property(e => e.LastName).HasMaxLength(50);
+            entity.Property(e => e.PasswordHash).HasMaxLength(255);
             entity.Property(e => e.UserCreationDate)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Application.Data.Models;
+namespace Infastructure.Models;
 
 public partial class Trainer
 {
@@ -13,7 +13,7 @@ public partial class Trainer
 
     public DateTime? JoinDate { get; set; }
 
-    public virtual ICollection<CourseSemester> CourseSemesters { get; set; } = new List<CourseSemester>();
+    public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
 
     public virtual User User { get; set; } = null!;
 }

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Application.DTOS
 {
-    public class SetCourseSemesterCapacityDTO
+    public class SetCourseCapacityDTO
     {
-        public int CourseSemesterCapacity { get; set; }
+        public int CourseCapacity { get; set; }
 
-        public int CourseSemesterId { get; set; }
+        public int CourseId { get; set; }
     }
 }

@@ -8,10 +8,10 @@ namespace Application.DTOS
 {
     public class TraineeAttendanceReportDTO
     {
-        public string CourseTitle { get; set; }
-        public string TrainerFullName { get; set; }
-        public string TraineeFullName { get; set; }
-        public string CourseSemester { get; set; }
+        public string CourseTitle { get; set; }     = string.Empty;
+        public string TrainerFullName { get; set; } = string.Empty;
+        public string TraineeFullName { get; set; } = string.Empty;
+        public string CourseSemester { get; set; } = string.Empty;
         public DateOnly AttendanceDate {  get; set; }
         public bool DidAttend { get; set; }
     }

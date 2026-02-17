@@ -8,7 +8,7 @@ namespace Application.DTOS
 {
     public class TraineeAttendancePercentageDTO
     {
-        public string TraineeFullName { get; set; }
+        public string TraineeFullName { get; set; } = string.Empty;
 
         public int TraineeAttendancePercentage { get; set; }
 
