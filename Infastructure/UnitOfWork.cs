@@ -37,6 +37,8 @@ namespace Infastructure
 
         public IUserRoleRepository UserRoleRepository { get; private set; }
 
+        public ILessonRepository LessonRepository { get; private set; }
+
 
         public UnitOfWork(AppDbContext context)
         {
@@ -51,6 +53,7 @@ namespace Infastructure
             TrainerRepository = new TrainerRepository(_context);
             UserRepository = new UserRepository(_context);
             UserRoleRepository = new UserRoleRepository(_context);
+            LessonRepository = new LessonRepository(_context);
         }
 
 

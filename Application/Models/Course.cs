@@ -21,5 +21,7 @@ public partial class Course
 
     public virtual ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
 
+    public virtual ICollection<Lessons> Lessons { get; set; } = new List<Lessons>();
+
     public virtual Trainer Trainer { get; set; } = null!;
 }

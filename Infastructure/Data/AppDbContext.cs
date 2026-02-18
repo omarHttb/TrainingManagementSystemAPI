@@ -34,6 +34,8 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<UserRole> UserRoles { get; set; }
 
+    public virtual DbSet<Lessons> Lessons { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Attendence>(entity =>
@@ -48,6 +50,23 @@ public partial class AppDbContext : DbContext
                 .HasForeignKey(d => d.EnrollmentId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Attendence_Enrollments");
+
+            entity.HasOne(d => d.Lessons).WithMany(p => p.Attendences).
+            HasForeignKey(d => d.LessonId)
+            .OnDelete(DeleteBehavior.ClientSetNull).
+            HasConstraintName("FK_Attendence_Lesson");
+        });
+
+
+        modelBuilder.Entity<Lessons>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+
+            entity.ToTable("Lessons");
+
+            entity.HasOne(d => d.course).WithMany(p => p.Lessons)
+            .HasForeignKey(d => d.CourseId).OnDelete(DeleteBehavior.ClientSetNull)
+            .HasConstraintName("FK_Lesson_Course");
         });
 
         modelBuilder.Entity<Course>(entity =>

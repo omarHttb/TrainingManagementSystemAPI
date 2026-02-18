@@ -27,6 +27,8 @@ namespace Application
 
         IUserRoleRepository UserRoleRepository { get; }
 
+        ILessonRepository LessonRepository { get; }
+
         int Complete();
     }
 }
