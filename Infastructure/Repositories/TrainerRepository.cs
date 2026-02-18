@@ -1,4 +1,4 @@
-using Application.Data.Models;
+using Application.Models;
 using Application.RepositoryInterfaces;
 using Infastructure.Data;
 using System;

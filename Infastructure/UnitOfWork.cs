@@ -1,5 +1,5 @@
 ﻿using Application;
-using Application.Data.Models;
+using Application.Models;
 using Application.RepositoryInterfaces;
 using Infastructure.Data;
 using Infastructure.Repositories;
@@ -22,7 +22,6 @@ namespace Infastructure
 
         public ICourseRepository CourseRepository { get; private set; }
 
-        public ICourseSemesterRepository CourseSemesterRepository { get; private set; }
 
         public IEnrollmentRepository EnrollmentRepository { get; private set; }
 
@@ -45,7 +44,6 @@ namespace Infastructure
 
             AttendenceRepository = new AttendenceRepository(_context);
             CourseRepository = new CourseRepository(_context);
-            CourseSemesterRepository = new CourseSemesterRepository(_context);
             EnrollmentRepository = new EnrollmentRepository(_context);
             GradeRepository = new GradeRepository(_context);
             RoleRepository = new RoleRepository(_context);

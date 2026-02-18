@@ -13,8 +13,6 @@ namespace Application
 
         ICourseRepository CourseRepository { get; }
 
-        ICourseSemesterRepository CourseSemesterRepository { get; }
-
         IEnrollmentRepository EnrollmentRepository { get; }
 
         IGradeRepository GradeRepository { get; }
