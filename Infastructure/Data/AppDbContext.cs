@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Application.DTOS;
 using Application.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace Infastructure.Data;
 
@@ -196,6 +197,11 @@ public partial class AppDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_UserRoles_Users");
         });
+
+        modelBuilder.Entity<GetCourseDetailsDTO>().HasNoKey();
+        modelBuilder.Entity<GetAllCoursesTraineesDTO>().HasNoKey();
+        modelBuilder.Entity<GetAttendanceReportPerCourse>().HasNoKey();
+        modelBuilder.Entity<AverageGradeForCourseDTO>().HasNoKey();
 
         OnModelCreatingPartial(modelBuilder);
     }

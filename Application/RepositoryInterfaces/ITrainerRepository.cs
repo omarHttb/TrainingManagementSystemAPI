@@ -9,5 +9,17 @@ namespace Application.RepositoryInterfaces
 {
     public interface ITrainerRepository : IBaseRepository<Trainer>
     {
+
+        Task<bool> CreateTrainerUsingSP(Trainer trainer);
+
+        Task<bool> UpdateTrainerUsingSP(Trainer trainer, int Id);
+
+        Task<bool> DeleteTrainerUsingSP(int Id);
+
+        Task<Trainer> GetTrainerByIdUsingSP(int Id);
+
+        Task<List<Trainer>> GetAllTrainersUsingSP();
+
+
     }
 }

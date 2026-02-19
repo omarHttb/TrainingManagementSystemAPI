@@ -9,5 +9,10 @@ namespace Application.RepositoryInterfaces
 {
     public interface IAttendenceRepository : IBaseRepository<Attendence>
     {
+
+        Task<bool> RecordAttendancePerLessonUsingSP(Attendence attendance);
+
+        Task<float> CalculateAttendancePercentagePerTraineeEnrollmentUsingSP(int enrollmentID);
+        
     }
 }

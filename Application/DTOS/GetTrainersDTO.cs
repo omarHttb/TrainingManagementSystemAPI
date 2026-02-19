@@ -6,16 +6,17 @@ using System.Threading.Tasks;
 
 namespace Application.DTOS
 {
-    public class ReadTraineesDTO
+    public class GetTrainersDTO
     {
-        public int Id { get; set; }
-
         public int UserId { get; set; }
+
+        public string TeachingSubject { get; set; } = null!;
 
         public DateTime? JoinDate { get; set; }
 
-        public string FullName { get; set; } = string.Empty;
+        public string FullName { get; set; }
 
-        public string Email { get; set; } = string.Empty;
+        public string Email { get; set; }
+
     }
 }

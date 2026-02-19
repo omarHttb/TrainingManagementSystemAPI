@@ -9,5 +9,9 @@ namespace Application.RepositoryInterfaces
 {
     public interface IEnrollmentRepository : IBaseRepository<Enrollment>
     {
+
+        Task<bool> EnrollTraineeIntoACourseUsingSp(Enrollment enrollment);
+
+        Task<>
     }
 }
