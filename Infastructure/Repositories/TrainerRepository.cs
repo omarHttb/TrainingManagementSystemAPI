@@ -18,6 +18,29 @@ namespace Infastructure.Repositories
             }
         }
 
-        
+        public Task<bool> CreateTrainerUsingSP(Trainer trainer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteTrainerUsingSP(int Id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<Trainer>> GetAllTrainersUsingSP()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Trainer> GetTrainerByIdUsingSP(int Id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> UpdateTrainerUsingSP(Trainer trainer, int Id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

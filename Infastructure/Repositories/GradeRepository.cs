@@ -1,3 +1,4 @@
+using Application.DTOS;
 using Application.Models;
 using Application.RepositoryInterfaces;
 using Infastructure.Data;
@@ -18,6 +19,19 @@ namespace Infastructure.Repositories
             }
         }
 
-        
+        public Task<Grade> AddGrade(Grade grade)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<AverageGradeForCourseDTO> GetAverageGradeForCourse(int courseId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Grade> UpdateGrade(Grade grade, int Id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -18,6 +18,9 @@ namespace Infastructure.Repositories
             }
         }
 
-        
+        public Task<bool> EnrollTraineeIntoACourseUsingSp(Enrollment enrollment)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -18,6 +18,14 @@ namespace Infastructure.Repositories
             }
         }
 
-        
+        public Task<float> CalculateAttendancePercentagePerTraineeEnrollmentUsingSP(int enrollmentID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> RecordAttendancePerLessonUsingSP(Attendence attendance)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

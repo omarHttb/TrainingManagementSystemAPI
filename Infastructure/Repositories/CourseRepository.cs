@@ -1,3 +1,4 @@
+using Application.DTOS;
 using Application.Models;
 using Application.RepositoryInterfaces;
 using Infastructure.Data;
@@ -18,6 +19,39 @@ namespace Infastructure.Repositories
             }
         }
 
-        
+        public Task<bool> AssignTrainerToCourseUsingSP(int Id, int TrainerId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> CreateCourseUsingSP(Course course)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteCourseUsingSP(int Id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<GetCourseDetailsDTO>> GetAllCourseDetailsUsingSP()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<GetCourseDetailsDTO> GetCourseDetailsByIdUsingSP(int Id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> SetCourseCpacityUsingSP(int Cpacity, int Id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> UpdateCourseUsingSP(int Id, Course course)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -18,6 +18,10 @@ namespace Infastructure.Repositories
             }
         }
 
+        public Task<User> CreateUserUsingSP(User user)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 
