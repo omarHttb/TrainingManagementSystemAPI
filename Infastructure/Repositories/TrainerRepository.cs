@@ -1,3 +1,4 @@
+using Application.DTOS;
 using Application.Models;
 using Application.RepositoryInterfaces;
 using Infastructure.Data;
@@ -23,7 +24,7 @@ namespace Infastructure.Repositories
         public async Task<bool> CreateTrainerUsingSP(Trainer trainer)
         {
             var rows = await _context.Database.ExecuteSqlInterpolatedAsync
-        ($"EXEC SP_CreateTrainer {trainer.UserId},{trainer.TeachingSubject},{trainer.JoinDate}");
+                ($"EXEC SP_CreateTrainer {trainer.UserId},{trainer.TeachingSubject},{trainer.JoinDate}");
 
             return rows > 0;
         }
@@ -37,19 +38,28 @@ namespace Infastructure.Repositories
 
         }
 
-        public Task<List<Trainer>> GetAllTrainersUsingSP()
+        public async Task<List<TrainerWithDetailsDTO>> GetAllTrainersUsingSP()
         {
-            //TODO COMPLETE THESE
+            var result = await _context.TrainerWithDetailsDTO.FromSqlRaw("EXEC SP_GetAllTrainerDetails").ToListAsync();
+
+            return result;
         }
 
-        public Task<Trainer> GetTrainerByIdUsingSP(int Id)
+        public async Task<TrainerWithDetailsDTO> GetTrainerByIdUsingSP(int Id)
         {
-            throw new NotImplementedException();
+            var result = await _context.TrainerWithDetailsDTO.FromSqlInterpolated($"EXEC SP_GetAllTrainerDetails {Id}").FirstOrDefaultAsync();
+
+            return result ?? new TrainerWithDetailsDTO();
+
         }
 
-        public Task<bool> UpdateTrainerUsingSP(Trainer trainer, int Id)
+        public async Task<bool> UpdateTrainerUsingSP(Trainer trainer, int Id)
         {
-            throw new NotImplementedException();
+            var rows = await _context.Database.ExecuteSqlInterpolatedAsync
+                ($"EXEC SP_UpdateTrainer {Id} {trainer.UserId},{trainer.TeachingSubject},{trainer.JoinDate}");
+
+            return rows > 0;
+
         }
     }
 }

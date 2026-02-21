@@ -41,6 +41,7 @@ public partial class AppDbContext : DbContext
     public DbSet<GetAllCoursesTraineesDTO> getAllCoursesTraineesDTO { get; set; }
     public DbSet<GetAttendanceReportPerCourseDTO> getAttendanceReportPerCourseDTO { get; set; }
     public DbSet<AverageGradeForCourseDTO> AverageGradeForCourseDTO { get; set; }
+    public DbSet<TrainerWithDetailsDTO> TrainerWithDetailsDTO { get; set; }
 
 
 
@@ -213,6 +214,7 @@ public partial class AppDbContext : DbContext
         modelBuilder.Entity<GetAllCoursesTraineesDTO>().HasNoKey();
         modelBuilder.Entity<GetAttendanceReportPerCourseDTO>().HasNoKey();
         modelBuilder.Entity<AverageGradeForCourseDTO>().HasNoKey();
+        modelBuilder.Entity<TrainerWithDetailsDTO>().HasNoKey();
 
         OnModelCreatingPartial(modelBuilder);
     }

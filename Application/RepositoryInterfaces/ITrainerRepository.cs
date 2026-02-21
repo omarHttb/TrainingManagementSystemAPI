@@ -1,3 +1,4 @@
+using Application.DTOS;
 using Application.Models;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,9 @@ namespace Application.RepositoryInterfaces
 
         Task<bool> DeleteTrainerUsingSP(int Id);
 
-        Task<Trainer> GetTrainerByIdUsingSP(int Id);
+        Task<TrainerWithDetailsDTO> GetTrainerByIdUsingSP(int Id);
 
-        Task<List<Trainer>> GetAllTrainersUsingSP();
+        Task<List<TrainerWithDetailsDTO>> GetAllTrainersUsingSP();
 
 
     }

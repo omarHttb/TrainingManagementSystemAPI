@@ -1,6 +1,8 @@
 using Application.Models;
 using Application.RepositoryInterfaces;
 using Infastructure.Data;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,14 +20,21 @@ namespace Infastructure.Repositories
             }
         }
 
-        public Task<bool> CreateTraineeUsingSP(Trainee trainee)
+        public async Task<bool> CreateTraineeUsingSP(Trainee trainee)
         {
-            throw new NotImplementedException();
+            var rows = await _context.Database.ExecuteSqlInterpolatedAsync
+                ($"EXEC SP_CreateTrainee {trainee.UserId},{trainee.JoinDate}");
+
+            return rows > 0;
+
         }
 
-        public Task<bool> DeleteTraineeUsingSP(int id)
+        public async Task<bool> DeleteTraineeUsingSP(int id)
         {
-            throw new NotImplementedException();
+            var rows = await _context.Database.ExecuteSqlRawAsync("EXEC SP_DeleteTrainee @Id",
+                        new SqlParameter("@Id", id));
+
+            return rows > 0;
         }
 
         public Task<List<Trainee>> GetAllTrainesWithPaginationUsingSP(int pageNumber, int pageSize)
