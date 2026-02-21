@@ -1,3 +1,4 @@
+using Application.DTOS;
 using Application.Models;
 using Application.RepositoryInterfaces;
 using Infastructure.Data;
@@ -37,12 +38,17 @@ namespace Infastructure.Repositories
             return rows > 0;
         }
 
-        public Task<List<Trainee>> GetAllTrainesWithPaginationUsingSP(int pageNumber, int pageSize)
+        public async Task<List<TraineeDetailsDTO>> GetAllTrainesWithPaginationUsingSP(int pageNumber, int pageSize)
         {
-            throw new NotImplementedException();
+            var result = await _context.TraineeDetailsDTO
+                    .FromSqlInterpolated($"EXEC SP_GetPaginatedTrainees {pageNumber}, {pageSize}")
+                    .ToListAsync();
+
+            return result;
+
         }
 
-        public Task<Trainee> SeachTraineeByEmailOrNameUsingSP(string name = "", string email = "")
+        public Task<TraineeDetailsDTO> SeachTraineeByEmailOrNameUsingSP(string name = "", string email = "")
         {
             throw new NotImplementedException();
         }

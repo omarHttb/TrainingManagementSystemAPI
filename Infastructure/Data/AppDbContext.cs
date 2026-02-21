@@ -42,8 +42,9 @@ public partial class AppDbContext : DbContext
     public DbSet<GetAttendanceReportPerCourseDTO> getAttendanceReportPerCourseDTO { get; set; }
     public DbSet<AverageGradeForCourseDTO> AverageGradeForCourseDTO { get; set; }
     public DbSet<TrainerWithDetailsDTO> TrainerWithDetailsDTO { get; set; }
+    public DbSet<TraineeDetailsDTO> TraineeDetailsDTO { get; set; }
 
-
+    
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -208,8 +209,8 @@ public partial class AppDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_UserRoles_Users");
         });
-
-
+        
+        modelBuilder.Entity<TraineeDetailsDTO>().HasNoKey();
         modelBuilder.Entity<GetCourseDetailsDTO>().HasNoKey();
         modelBuilder.Entity<GetAllCoursesTraineesDTO>().HasNoKey();
         modelBuilder.Entity<GetAttendanceReportPerCourseDTO>().HasNoKey();

@@ -1,3 +1,4 @@
+using Application.DTOS;
 using Application.Models;
 using System;
 using System.Collections.Generic;
@@ -15,9 +16,9 @@ namespace Application.RepositoryInterfaces
 
         Task<bool> DeleteTraineeUsingSP(int id);
 
-        Task<List<Trainee>> GetAllTrainesWithPaginationUsingSP(int pageNumber, int pageSize);
+        Task<List<TraineeDetailsDTO>> GetAllTrainesWithPaginationUsingSP(int pageNumber, int pageSize);
 
-        Task<Trainee> SeachTraineeByEmailOrNameUsingSP(string name = "", string email = "");
+        Task<TraineeDetailsDTO> SeachTraineeByEmailOrNameUsingSP(string name = "", string email = "");
 
     }
 }
