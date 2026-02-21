@@ -37,8 +37,18 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<Lessons> Lessons { get; set; }
 
+    public DbSet<GetCourseDetailsDTO> getCourseDetailsDTO { get; set; }
+    public DbSet<GetAllCoursesTraineesDTO> getAllCoursesTraineesDTO { get; set; }
+    public DbSet<GetAttendanceReportPerCourseDTO> getAttendanceReportPerCourseDTO { get; set; }
+    public DbSet<AverageGradeForCourseDTO> AverageGradeForCourseDTO { get; set; }
+
+
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+
+
+
         modelBuilder.Entity<Attendence>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Attenden__3214EC07944E5F8E");
@@ -198,9 +208,10 @@ public partial class AppDbContext : DbContext
                 .HasConstraintName("FK_UserRoles_Users");
         });
 
+
         modelBuilder.Entity<GetCourseDetailsDTO>().HasNoKey();
         modelBuilder.Entity<GetAllCoursesTraineesDTO>().HasNoKey();
-        modelBuilder.Entity<GetAttendanceReportPerCourse>().HasNoKey();
+        modelBuilder.Entity<GetAttendanceReportPerCourseDTO>().HasNoKey();
         modelBuilder.Entity<AverageGradeForCourseDTO>().HasNoKey();
 
         OnModelCreatingPartial(modelBuilder);

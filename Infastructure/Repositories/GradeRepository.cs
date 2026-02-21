@@ -2,6 +2,7 @@ using Application.DTOS;
 using Application.Models;
 using Application.RepositoryInterfaces;
 using Infastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,19 +20,30 @@ namespace Infastructure.Repositories
             }
         }
 
-        public Task<Grade> AddGrade(Grade grade)
+        public async Task<bool> AddTraineeGradeUsingSp(Grade grade)
         {
-            throw new NotImplementedException();
+            var rows = await _context.Database.ExecuteSqlInterpolatedAsync
+             ($"EXEC SP_AddGradeForTrainee {grade.EnrollmentId} , {grade.Grade1}");
+
+            return rows > 0;
+
         }
 
-        public Task<AverageGradeForCourseDTO> GetAverageGradeForCourse(int courseId)
+        public async Task<AverageGradeForCourseDTO> GetAverageGradeForCourseUsingSp(int courseId)
         {
-            throw new NotImplementedException();
+            var averageGrade = await _context.Database
+                .SqlQuery<AverageGradeForCourseDTO>(
+                    $"EXEC SP_GetAverageGradeForCourse @courseId = {courseId}")
+                .SingleAsync();
+
+            return averageGrade;
         }
 
-        public Task<Grade> UpdateGrade(Grade grade, int Id)
+        public async Task<bool> UpdateTraineeGradeUsingSp(Grade grade, int Id)
         {
-            throw new NotImplementedException();
+            var rows = await _context.Database.ExecuteSqlInterpolatedAsync($"EXEC SP_UpdateGradeForTrainee {Id}, {grade.Grade1}");
+
+            return rows > 0;    
         }
     }
 }

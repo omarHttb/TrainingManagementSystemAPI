@@ -21,7 +21,7 @@ namespace Application.RepositoryInterfaces
 
         Task<List<GetCourseDetailsDTO>> GetAllCourseDetailsUsingSP();
 
-        Task<bool> SetCourseCpacityUsingSP(int Cpacity, int Id);
+        Task<bool> SetCourseCpacityUsingSP(int Capacity, int Id);
 
         Task<bool> AssignTrainerToCourseUsingSP(int Id, int TrainerId);
     }

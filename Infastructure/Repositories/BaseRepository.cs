@@ -23,7 +23,7 @@ namespace Infastructure.Repositories
 
         public async Task<T> AddAsync(T entity)
         {
-
+            
             await _context.Set<T>().AddAsync(entity);
             return entity;
 

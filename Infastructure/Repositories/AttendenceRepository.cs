@@ -1,6 +1,7 @@
 using Application.Models;
 using Application.RepositoryInterfaces;
 using Infastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,14 +19,20 @@ namespace Infastructure.Repositories
             }
         }
 
-        public Task<float> CalculateAttendancePercentagePerTraineeEnrollmentUsingSP(int enrollmentID)
+        public async Task<decimal> CalculateAttendancePercentagePerTraineeEnrollmentUsingSP(int enrollmentId)
         {
-            throw new NotImplementedException();
+            var percentage = await _context.Database.SqlQuery<decimal>
+                ($"EXEC SP_CalculateAttendancePercentagePerTrainee {enrollmentId}").SingleAsync();
+
+            return percentage;
         }
 
-        public Task<bool> RecordAttendancePerLessonUsingSP(Attendence attendance)
+        public async Task<bool> RecordAttendancePerLessonUsingSP(Attendence attendance)
         {
-            throw new NotImplementedException();
+            var rows = await _context.Database.ExecuteSqlInterpolatedAsync
+                ($"EXEC SP_RecordAttendancePerLesson {attendance.EnrollmentId},{attendance.DidAttend}, {attendance.LessonId},{attendance.AttendanceDate} ");
+
+            return rows > 0;
         }
     }
 }

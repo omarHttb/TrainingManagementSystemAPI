@@ -11,10 +11,10 @@ namespace Application.RepositoryInterfaces
     public interface IGradeRepository : IBaseRepository<Grade>
     {
 
-        Task<Grade> AddGrade(Grade grade);
+        Task<bool> AddTraineeGradeUsingSp(Grade grade);
 
-        Task<AverageGradeForCourseDTO> GetAverageGradeForCourse(int courseId);
+        Task<AverageGradeForCourseDTO> GetAverageGradeForCourseUsingSp(int courseId);
 
-        Task<Grade> UpdateGrade(Grade grade , int Id);
+        Task<bool> UpdateTraineeGradeUsingSp(Grade grade , int Id);
     }
 }
