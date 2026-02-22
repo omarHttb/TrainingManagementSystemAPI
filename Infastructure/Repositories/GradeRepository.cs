@@ -39,9 +39,9 @@ namespace Infastructure.Repositories
             return averageGrade;
         }
 
-        public async Task<bool> UpdateTraineeGradeUsingSp(Grade grade, int Id)
+        public async Task<bool> UpdateTraineeGradeUsingSp(decimal TraineeNewGrade, int Id)
         {
-            var rows = await _context.Database.ExecuteSqlInterpolatedAsync($"EXEC SP_UpdateGradeForTrainee {Id}, {grade.Grade1}");
+            var rows = await _context.Database.ExecuteSqlInterpolatedAsync($"EXEC SP_UpdateGradeForTrainee {Id}, {TraineeNewGrade}");
 
             return rows > 0;    
         }

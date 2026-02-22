@@ -6,10 +6,10 @@ namespace Application.ServiceInterfaces
 {
     public interface IGradeService
     {
-        Task<bool> AddTraineeGradeUsingSp(Grade grade);
+        Task<bool> AddTraineeGradeUsingSp(AddTraineeGradeDTO grade);
 
         Task<AverageGradeForCourseDTO> GetAverageGradeForCourseUsingSp(int courseId);
 
-        Task<bool> UpdateTraineeGradeUsingSp(Grade grade, int Id);
+        Task<bool> UpdateTraineeGradeUsingSp(decimal grade, int Id);
     }
 }

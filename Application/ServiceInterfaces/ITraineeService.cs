@@ -6,9 +6,8 @@ namespace Application.ServiceInterfaces
 {
     public interface ITraineeService
     {
-        Task<bool> CreateTraineeUsingSP(Trainee trainee);
+        Task<bool> CreateTraineeUsingSP(CreateTraineeDTO trainee);
 
-        Task<bool> UpdateTraineeUsingSP(Trainee trainee, int Id);
 
         Task<bool> DeleteTraineeUsingSP(int id);
 

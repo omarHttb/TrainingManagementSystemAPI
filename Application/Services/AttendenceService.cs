@@ -1,3 +1,4 @@
+using Application.Models;
 using Application.ServiceInterfaces;
 using System;
 using System.Collections.Generic;
@@ -13,8 +14,21 @@ namespace Application.Services
         public AttendenceService(IUnitOfWork unitOfWork) 
         {
             _UnitOfWork = unitOfWork;
-        }    
+        }
 
-     
+        public async Task<decimal> CalculateAttendancePercentagePerTraineeEnrollmentUsingSP(int enrollmentId)
+        { 
+
+            return await _UnitOfWork.AttendenceRepository.CalculateAttendancePercentagePerTraineeEnrollmentUsingSP(enrollmentId);
+        }
+
+        public async Task<bool> RecordAttendancePerLessonUsingSP(Attendence attendance)
+        {
+            var result = await _UnitOfWork.AttendenceRepository.RecordAttendancePerLessonUsingSP(attendance);
+
+            _UnitOfWork.Complete();
+
+            return result;
+        }
     }
 }

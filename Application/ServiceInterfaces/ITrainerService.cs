@@ -6,9 +6,9 @@ namespace Application.ServiceInterfaces
 {
     public interface ITrainerService
     {
-        Task<bool> CreateTrainerUsingSP(Trainer trainer);
+        Task<bool> CreateTrainerUsingSP(CreateTrainerDTO trainer);
 
-        Task<bool> UpdateTrainerUsingSP(Trainer trainer, int Id);
+        Task<bool> UpdateTrainerTeachingSubjectUsingSP(string TeachingSubject, int Id);
 
         Task<bool> DeleteTrainerUsingSP(int Id);
 

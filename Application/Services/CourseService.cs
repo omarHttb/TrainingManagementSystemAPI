@@ -1,4 +1,7 @@
+using Application.DTOS;
+using Application.Models;
 using Application.ServiceInterfaces;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +13,75 @@ namespace Application.Services
     public class CourseService : ICourseService
     {
         private readonly IUnitOfWork _UnitOfWork;
-        public CourseService(IUnitOfWork unitOfWork) 
+        private readonly IMapper _mapper;
+        public CourseService(IUnitOfWork unitOfWork, IMapper mapper) 
         {
             _UnitOfWork = unitOfWork;
-        }    
+            _mapper = mapper;
+        }
 
-     
+        public async Task<bool> AssignTrainerToCourseUsingSP(int Id, int TrainerId)
+        {
+            var result = await _UnitOfWork.CourseRepository.AssignTrainerToCourseUsingSP(Id, TrainerId);
+
+           await _UnitOfWork.CompleteAsync();
+
+            return result;
+        }
+
+        public async Task<bool> CreateCourseUsingSP(CreateCourseDTO courseDTO)
+        { 
+            var course = _mapper.Map<Course>(courseDTO);    
+
+            var result = await _UnitOfWork.CourseRepository.CreateCourseUsingSP(course);
+
+          await  _UnitOfWork.CompleteAsync();
+
+            return  result;
+        }
+
+        public async Task<bool> DeleteCourseUsingSP(int id)
+        {
+            var result = await _UnitOfWork.CourseRepository.DeleteCourseUsingSP(id);
+
+          await  _UnitOfWork.CompleteAsync();
+
+            return result;
+        }
+
+        public async Task<List<GetCourseDetailsDTO>> GetAllCourseDetailsUsingSP()
+        {
+            return await _UnitOfWork.CourseRepository.GetAllCourseDetailsUsingSP();
+        }
+
+        public async Task<GetCourseDetailsDTO> GetCourseDetailsByIdUsingSP(int id)
+        {
+           return await _UnitOfWork.CourseRepository.GetCourseDetailsByIdUsingSP(id);
+        }
+
+        public async Task<bool> SetCourseCpacityUsingSP(int Capacity, int id)
+        {
+           var result = await _UnitOfWork.CourseRepository.SetCourseCpacityUsingSP(Capacity, id);
+
+           await _UnitOfWork.CompleteAsync();
+
+            return result;
+        }
+
+        public async Task<bool> UpdateCourseUsingSP(int id, UpdateCourseDTO courseDTO)
+        {
+            var existingCourse = await _UnitOfWork.CourseRepository.GetByIdAsync(id);
+
+            if (existingCourse == null)
+                return false;
+
+            _mapper.Map(courseDTO, existingCourse);
+
+            var result = await _UnitOfWork.CourseRepository.UpdateCourseUsingSP(id, existingCourse);
+
+            await _UnitOfWork.CompleteAsync();
+
+            return result;
+        }
     }
 }

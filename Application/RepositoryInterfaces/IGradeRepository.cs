@@ -15,6 +15,6 @@ namespace Application.RepositoryInterfaces
 
         Task<AverageGradeForCourseDTO> GetAverageGradeForCourseUsingSp(int courseId);
 
-        Task<bool> UpdateTraineeGradeUsingSp(Grade grade , int Id);
+        Task<bool> UpdateTraineeGradeUsingSp(decimal TraineeNewGrade, int Id);
     }
 }

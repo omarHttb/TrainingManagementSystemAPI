@@ -29,6 +29,6 @@ namespace Application
 
         ILessonRepository LessonRepository { get; }
 
-        int Complete();
+        Task<int> CompleteAsync();
     }
 }

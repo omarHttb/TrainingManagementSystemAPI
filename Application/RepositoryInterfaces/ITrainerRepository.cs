@@ -13,7 +13,7 @@ namespace Application.RepositoryInterfaces
 
         Task<bool> CreateTrainerUsingSP(Trainer trainer);
 
-        Task<bool> UpdateTrainerUsingSP(Trainer trainer, int Id);
+        Task<bool> UpdateTrainerUsingSP(string TeachingSubject, int Id);
 
         Task<bool> DeleteTrainerUsingSP(int Id);
 

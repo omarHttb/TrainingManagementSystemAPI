@@ -53,10 +53,10 @@ namespace Infastructure.Repositories
 
         }
 
-        public async Task<bool> UpdateTrainerUsingSP(Trainer trainer, int Id)
+        public async Task<bool> UpdateTrainerUsingSP(string TeachingSubject, int Id)
         {
             var rows = await _context.Database.ExecuteSqlInterpolatedAsync
-                ($"EXEC SP_UpdateTrainer {Id} {trainer.UserId},{trainer.TeachingSubject},{trainer.JoinDate}");
+                ($"EXEC SP_UpdateTrainer {Id} {TeachingSubject}");
 
             return rows > 0;
 

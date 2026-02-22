@@ -1,10 +1,11 @@
 
+using Application.DTOS;
 using Application.Models;
 
 namespace Application.ServiceInterfaces
 {
     public interface IEnrollmentService
     {
-        Task<bool> EnrollTraineeIntoACourseUsingSp(Enrollment enrollment);
+        Task<bool> EnrollTraineeIntoACourseUsingSp(CreateEnrollmentDTO enrollment);
     }
 }
