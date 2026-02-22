@@ -47,15 +47,25 @@ namespace Infastructure.Repositories
             return result;
 
         }
-
-        public Task<TraineeDetailsDTO> SeachTraineeByEmailOrNameUsingSP(string name = "", string email = "")
+        
+        public async Task<List<TraineeDetailsDTO>> SeachTraineeByEmailOrNameUsingSP(string FirstName = "",string LastName="", string email = ""
+            )
         {
-            throw new NotImplementedException();
+            var results = await _context.Database
+                 .SqlQuery<TraineeDetailsDTO>(
+                     $"EXEC SP_GetTraineesByNameOrEmail @FirstName={FirstName}, @LastName={LastName}, @Email={email}")
+                 .ToListAsync();
+
+            return results;
         }
 
-        public Task<bool> UpdateTraineeUsingSP(Trainee trainee, int Id)
+        public async Task<bool> UpdateTraineeUsingSP(Trainee trainee, int Id)
         {
-            throw new NotImplementedException();
+            var rows = await _context.Database.ExecuteSqlInterpolatedAsync
+                ($"EXEC SP_UpdateTrainee {Id},{trainee.UserId},{trainee.JoinDate}");
+
+            return rows > 0;
+
         }
     }
 }

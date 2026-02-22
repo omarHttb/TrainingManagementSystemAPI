@@ -12,6 +12,5 @@ namespace Application.RepositoryInterfaces
 
         Task<bool> EnrollTraineeIntoACourseUsingSp(Enrollment enrollment);
 
-        Task<>
     }
 }

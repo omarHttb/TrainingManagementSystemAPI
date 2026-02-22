@@ -47,7 +47,7 @@ namespace Infastructure.Repositories
 
         public async Task<TrainerWithDetailsDTO> GetTrainerByIdUsingSP(int Id)
         {
-            var result = await _context.TrainerWithDetailsDTO.FromSqlInterpolated($"EXEC SP_GetAllTrainerDetails {Id}").FirstOrDefaultAsync();
+            var result = await _context.TrainerWithDetailsDTO.FromSqlInterpolated($"EXEC SP_GetTrainerDetailsById {Id}").FirstOrDefaultAsync();
 
             return result ?? new TrainerWithDetailsDTO();
 

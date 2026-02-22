@@ -12,6 +12,8 @@ namespace Application.DTOS
 
         public string FullName { get; set; }  = string.Empty;   
 
+        public string Email { get; set; } = string.Empty ;
+
         public DateTime JoinDate    { get; set; }
     }
 }

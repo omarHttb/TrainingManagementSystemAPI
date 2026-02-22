@@ -18,7 +18,7 @@ namespace Application.RepositoryInterfaces
 
         Task<List<TraineeDetailsDTO>> GetAllTrainesWithPaginationUsingSP(int pageNumber, int pageSize);
 
-        Task<TraineeDetailsDTO> SeachTraineeByEmailOrNameUsingSP(string name = "", string email = "");
+        Task<List<TraineeDetailsDTO>> SeachTraineeByEmailOrNameUsingSP(string FirstName = "", string LastName = "", string email = "");
 
     }
 }
