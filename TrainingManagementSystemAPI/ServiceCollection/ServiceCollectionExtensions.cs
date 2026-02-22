@@ -2,6 +2,7 @@
 using Application.RepositoryInterfaces;
 using Application.ServiceInterfaces;
 using Application.Services;
+using FluentValidation;
 using Infastructure;
 using Infastructure.Repositories;
 
@@ -30,6 +31,9 @@ namespace TrainingManagementSystemAPI.ServiceCollection
 
         public static IServiceCollection AddValidatorsFromAssemblies(this IServiceCollection services)
         {
+
+            //services.AddValidatorsFromAssemblyContaining<PersonDTOValidator>();
+
             return services;
         }
     }
