@@ -1,7 +1,9 @@
 ﻿using Application;
+using Application.DTOS;
 using Application.RepositoryInterfaces;
 using Application.ServiceInterfaces;
 using Application.Services;
+using Application.Validators;
 using FluentValidation;
 using Infastructure;
 using Infastructure.Repositories;
@@ -32,7 +34,11 @@ namespace TrainingManagementSystemAPI.ServiceCollection
         public static IServiceCollection AddValidatorsFromAssemblies(this IServiceCollection services)
         {
 
-            //services.AddValidatorsFromAssemblyContaining<PersonDTOValidator>();
+            services.AddValidatorsFromAssemblyContaining<AddTraineeGradeValidatorDTO>();
+            services.AddValidatorsFromAssemblyContaining<AttendanceDTOValidator>();
+            services.AddValidatorsFromAssemblyContaining<CreateCourseDTOValidator>();
+            services.AddValidatorsFromAssemblyContaining<EnrollmentDTOValidator>();
+            services.AddValidatorsFromAssemblyContaining<UpdateCourseValidatorDTO>();
 
             return services;
         }

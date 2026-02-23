@@ -14,7 +14,7 @@ namespace Application.Services
     {
         private readonly IUnitOfWork _UnitOfWork;
         private readonly IMapper _mappers;
-        public TrainerService(IUnitOfWork unitOfWork, IMapper mapper) 
+        public TrainerService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _UnitOfWork = unitOfWork;
             _mappers = mapper;
@@ -22,6 +22,9 @@ namespace Application.Services
 
         public async Task<bool> CreateTrainerUsingSP(CreateTrainerDTO trainerDTO)
         {
+
+            if (trainerDTO.TeachingSubject == "" || trainerDTO.TeachingSubject == null) throw new ArgumentException("Trainer must have a teaching subject");
+
             var trainer = _mappers.Map<Trainer>(trainerDTO);
 
             var result = await _UnitOfWork.TrainerRepository.CreateTrainerUsingSP(trainer);
@@ -54,6 +57,10 @@ namespace Application.Services
 
             if (ExistingTrainer == null)
                 return false;
+            
+
+            if (TeachingSubject == "" || TeachingSubject == null) throw new ArgumentException("Trainer must have a teaching subject");
+
 
             var result = await _UnitOfWork.TrainerRepository.UpdateTrainerUsingSP(TeachingSubject, Id);
 
