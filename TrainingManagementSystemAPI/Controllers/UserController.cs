@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Application.ServiceInterfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace TrainingManagementSystemAPI.Controllers
 {
@@ -6,5 +7,13 @@ namespace TrainingManagementSystemAPI.Controllers
     [ApiController]
     public class UserController : ControllerBase 
     {
+        private readonly IUserService _UserService;
+
+          public UserController(IUserService UserService)
+          {
+
+             _UserService = UserService;
+          }    
+    
     }
 }
