@@ -1,4 +1,5 @@
 
+using Application.DTOS;
 using Application.Models;
 
 namespace Application.ServiceInterfaces
@@ -6,7 +7,7 @@ namespace Application.ServiceInterfaces
     public interface IAttendenceService
     {
 
-        Task<bool> RecordAttendancePerLessonUsingSP(Attendence attendance);
+        Task<bool> RecordAttendancePerLessonUsingSP(CreateAttendanceDTO attendance);
 
         Task<decimal> CalculateAttendancePercentagePerTraineeEnrollmentUsingSP(int enrollmentId);
     }

@@ -2,6 +2,7 @@ using Application.DTOS;
 using Application.Models;
 using Application.ServiceInterfaces;
 using AutoMapper;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,14 +15,20 @@ namespace Application.Services
     {
         private readonly IUnitOfWork _UnitOfWork;
         private readonly IMapper _mapper;
-        public EnrollmentService(IUnitOfWork unitOfWork, IMapper mapper) 
+        private readonly IValidator<CreateEnrollmentDTO> _validator;
+
+        public EnrollmentService(IUnitOfWork unitOfWork, IMapper mapper, IValidator<CreateEnrollmentDTO> validator) 
         {
             _UnitOfWork = unitOfWork;
             _mapper = mapper;
+            _validator = validator;
         }
 
         public async Task<bool> EnrollTraineeIntoACourseUsingSp(CreateEnrollmentDTO enrollmentDTO)
         {
+    
+            await _validator.ValidateAndThrowAsync(enrollmentDTO);
+             
             var enrollment = _mapper.Map<Enrollment>(enrollmentDTO);
 
             var result = await _UnitOfWork.EnrollmentRepository.EnrollTraineeIntoACourseUsingSp(enrollment);

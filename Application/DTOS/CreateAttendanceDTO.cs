@@ -10,7 +10,7 @@ namespace Application.DTOS
     {
         public int enrollmentId { get; set; }
 
-        public DateOnly? AttendanceDate { get; set; }
+        public DateOnly? AttendanceDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
 
         public bool DidAttend { get; set; }
     }

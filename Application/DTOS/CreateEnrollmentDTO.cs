@@ -8,7 +8,7 @@ namespace Application.DTOS
 {
     public class CreateEnrollmentDTO
     {
-        public int CourseSemesterId { get; set; }
+        public int CourseId { get; set; }
 
         public int TraineeId { get; set; }
 

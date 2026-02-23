@@ -26,6 +26,14 @@ namespace TrainingManagementSystemAPI.Middleware
             {
                 await _next(context);
             }
+            catch (ArgumentException ex) 
+            {
+                _logger.LogWarning(ex, ex.Message);
+
+                context.Response.StatusCode = StatusCodes.Status400BadRequest;
+                await WriteResponse(context, ex.Message);
+
+            }
             catch (KeyNotFoundException ex)
             {
                 _logger.LogWarning(ex, ex.Message);
