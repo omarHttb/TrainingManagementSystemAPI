@@ -1,6 +1,7 @@
-using Application.Mappings;
+using Application.Mapping;
 using Infastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using TrainingManagementSystemAPI.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +11,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection") ));
 
 builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
-
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<ApiResponseWrapperFilter>();
+});
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -24,6 +28,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
+
+app.UseMiddleware<GlobalExceptionHandler>();
 
 app.UseHttpsRedirection();
 
