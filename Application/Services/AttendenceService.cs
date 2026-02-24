@@ -24,7 +24,7 @@ namespace Application.Services
             _validator = validator;
         }
 
-        public async Task<decimal> CalculateAttendancePercentagePerTraineeEnrollmentUsingSP(int enrollmentId)
+        public async Task<double> CalculateAttendancePercentagePerTraineeEnrollmentUsingSP(int enrollmentId)
         { 
 
             return await _UnitOfWork.AttendenceRepository.CalculateAttendancePercentagePerTraineeEnrollmentUsingSP(enrollmentId);

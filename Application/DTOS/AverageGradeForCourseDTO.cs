@@ -10,7 +10,7 @@ namespace Application.DTOS
     {
         public string CourseName { get; set; } = string.Empty;
 
-        public decimal Grade { get; set; }
+        public double AverageGrade { get; set; }
 
         public int TotalGrades { get; set; }
     }

@@ -13,7 +13,7 @@ namespace Application.DTOS
         public decimal Price { get; set; }
         public DateTime CreationDate { get; set; }
         public int Capacity { get; set; }
-        public string FullName { get; set; } = string.Empty;
+        public string TrainerName { get; set; } = string.Empty;
         public string TeachingSubject { get; set; } = string.Empty;
     }
 }

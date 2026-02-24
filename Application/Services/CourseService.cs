@@ -57,7 +57,7 @@ namespace Application.Services
 
             var result = await _UnitOfWork.CourseRepository.DeleteCourseUsingSP(id);
 
-          await  _UnitOfWork.CompleteAsync();
+            await  _UnitOfWork.CompleteAsync();
 
             return result;
         }
@@ -87,15 +87,11 @@ namespace Application.Services
         public async Task<bool> UpdateCourseUsingSP(int id, UpdateCourseDTO courseDTO)
         {
 
-
             var existingCourse = await _UnitOfWork.CourseRepository.GetByIdAsync(id);
 
             if (existingCourse == null)
-                return false;
-            if(existingCourse.TrainerId > 0)
-            {
-                throw new ArgumentException("a Trainer is already assigned to this course", nameof(existingCourse.TrainerId));
-            }
+                throw new ArgumentException("Course was not found");
+      
 
             await _UpdateValidator.ValidateAndThrowAsync(courseDTO);
 

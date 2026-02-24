@@ -1,7 +1,9 @@
+using System;
 using Application.Mapping;
 using Infastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using TrainingManagementSystemAPI.Middleware;
+using TrainingManagementSystemAPI.ServiceCollection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +12,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection") ));
 
-builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
+builder.Services.AddApplicationServices(builder.Configuration)
+                .AddValidatorsFromAssemblies();
+
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add<ApiResponseWrapperFilter>();

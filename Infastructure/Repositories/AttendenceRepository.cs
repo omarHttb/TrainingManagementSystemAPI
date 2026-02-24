@@ -19,12 +19,13 @@ namespace Infastructure.Repositories
             }
         }
 
-        public async Task<decimal> CalculateAttendancePercentagePerTraineeEnrollmentUsingSP(int enrollmentId)
+        public async Task<double> CalculateAttendancePercentagePerTraineeEnrollmentUsingSP(int enrollmentId)
         {
-            var percentage = await _context.Database.SqlQuery<decimal>
-                ($"EXEC SP_CalculateAttendancePercentagePerTrainee {enrollmentId}").SingleAsync();
+            var result = await _context.Database
+            .SqlQuery<double>($"EXEC SP_CalculateAttendancePercentagePerTrainee {enrollmentId}")
+            .ToListAsync();
 
-            return percentage;
+            return result.SingleOrDefault();
         }
 
         public async Task<bool> RecordAttendancePerLessonUsingSP(Attendence attendance)

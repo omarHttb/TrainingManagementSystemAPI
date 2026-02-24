@@ -9,6 +9,6 @@ namespace Application.ServiceInterfaces
 
         Task<bool> RecordAttendancePerLessonUsingSP(CreateAttendanceDTO attendance);
 
-        Task<decimal> CalculateAttendancePercentagePerTraineeEnrollmentUsingSP(int enrollmentId);
+        Task<double> CalculateAttendancePercentagePerTraineeEnrollmentUsingSP(int enrollmentId);
     }
 }

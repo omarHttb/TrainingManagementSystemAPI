@@ -47,12 +47,11 @@ namespace Infastructure.Repositories
             return result;
 
         }
-        
+
         public async Task<List<TraineeDetailsDTO>> SeachTraineeByEmailOrNameUsingSP(string FirstName = "",string LastName="", string email = ""
             )
         {
-            var results = await _context.Database
-                 .SqlQuery<TraineeDetailsDTO>(
+            var results = await _context.TraineeDetailsDTO.FromSqlInterpolated(
                      $"EXEC SP_GetTraineesByNameOrEmail @FirstName={FirstName}, @LastName={LastName}, @Email={email}")
                  .ToListAsync();
 

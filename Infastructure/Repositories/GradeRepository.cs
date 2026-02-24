@@ -31,12 +31,11 @@ namespace Infastructure.Repositories
 
         public async Task<AverageGradeForCourseDTO> GetAverageGradeForCourseUsingSp(int courseId)
         {
-            var averageGrade = await _context.Database
-                .SqlQuery<AverageGradeForCourseDTO>(
-                    $"EXEC SP_GetAverageGradeForCourse @courseId = {courseId}")
-                .SingleAsync();
+            var averageGrade = await _context.AverageGradeForCourseDTO.FromSqlInterpolated(
+                    $"EXEC [SP_GetAverageGradeForCourse] @courseId = {courseId}")
+                .ToListAsync();
 
-            return averageGrade;
+            return averageGrade.SingleOrDefault() ?? new AverageGradeForCourseDTO();
         }
 
         public async Task<bool> UpdateTraineeGradeUsingSp(decimal TraineeNewGrade, int Id)

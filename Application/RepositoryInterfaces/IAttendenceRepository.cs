@@ -12,7 +12,7 @@ namespace Application.RepositoryInterfaces
 
         Task<bool> RecordAttendancePerLessonUsingSP(Attendence attendance);
 
-        Task<decimal> CalculateAttendancePercentagePerTraineeEnrollmentUsingSP(int enrollmentId);
+        Task<double> CalculateAttendancePercentagePerTraineeEnrollmentUsingSP(int enrollmentId);
         
     }
 }

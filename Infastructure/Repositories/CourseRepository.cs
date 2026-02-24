@@ -53,13 +53,13 @@ namespace Infastructure.Repositories
             return result;
 
         }
-
-        public Task<GetCourseDetailsDTO> GetCourseDetailsByIdUsingSP(int Id)
+        public async Task<GetCourseDetailsDTO> GetCourseDetailsByIdUsingSP(int id)
         {
-            var result = _context.getCourseDetailsDTO.FromSqlInterpolated($"EXEC SP_GetCourseDetails {Id}")
-                .FirstOrDefaultAsync();
+            var result = await _context.getCourseDetailsDTO
+                .FromSqlInterpolated($"EXEC SP_GetCourseDetails {id}")
+                .ToListAsync();
 
-            return result;
+            return result.SingleOrDefault() ?? new GetCourseDetailsDTO();
         }
 
         public async Task<bool> SetCourseCpacityUsingSP(int Capacity, int Id)
@@ -72,7 +72,7 @@ namespace Infastructure.Repositories
         public async Task<bool> UpdateCourseUsingSP(int Id, Course course)
         {
             var rows = await _context.Database.ExecuteSqlInterpolatedAsync
-                ($"EXEC SP_UpdateCourse {Id} ,{course.Title},{course.Description},{course.Price},{course.CreationDate},{course.TrainerId},{course.Capacity}");
+                ($"EXEC SP_UpdateCourse {Id} ,{course.Title},{course.Description},{course.Price},{course.Capacity}");
 
             return rows > 0;
         }

@@ -1,4 +1,6 @@
+using Application.DTOS;
 using Application.ServiceInterfaces;
+using Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TrainingManagementSystemAPI.Controllers
@@ -7,7 +9,7 @@ namespace TrainingManagementSystemAPI.Controllers
     [ApiController]
     public class EnrollmentController : ControllerBase 
     {
-        private readonly IEnrollmentService _EnrollmentService
+        private readonly IEnrollmentService _EnrollmentService;
 
 
          public EnrollmentController(IEnrollmentService EnrollmentService)
@@ -15,6 +17,16 @@ namespace TrainingManagementSystemAPI.Controllers
         
                     _EnrollmentService = EnrollmentService;
         
-         }    
+         }
+
+        [HttpPost]
+        public async Task<IActionResult> EnrollTraineeIntoACourse(CreateEnrollmentDTO createEnrollmentDTO)
+        {
+            var result = _EnrollmentService.EnrollTraineeIntoACourseUsingSp(createEnrollmentDTO);
+
+            return Ok(result);
+        }
+
+
     }
 }

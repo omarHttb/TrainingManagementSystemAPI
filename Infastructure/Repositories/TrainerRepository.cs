@@ -45,11 +45,18 @@ namespace Infastructure.Repositories
             return result;
         }
 
+//        var result = await _context.getCourseDetailsDTO
+//.FromSqlInterpolated($"EXEC SP_GetCourseDetails {id}")
+//.ToListAsync();
+
+//            return result.SingleOrDefault() ?? new GetCourseDetailsDTO();
+
+
         public async Task<TrainerWithDetailsDTO> GetTrainerByIdUsingSP(int Id)
         {
-            var result = await _context.TrainerWithDetailsDTO.FromSqlInterpolated($"EXEC SP_GetTrainerDetailsById {Id}").FirstOrDefaultAsync();
+            var result = await _context.TrainerWithDetailsDTO.FromSqlInterpolated($"EXEC SP_GetTrainerDetailsById {Id}").ToListAsync();
 
-            return result ?? new TrainerWithDetailsDTO();
+            return result.SingleOrDefault() ?? new TrainerWithDetailsDTO();
 
         }
 
