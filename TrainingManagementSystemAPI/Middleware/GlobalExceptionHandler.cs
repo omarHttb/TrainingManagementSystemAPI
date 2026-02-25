@@ -12,9 +12,7 @@ namespace TrainingManagementSystemAPI.Middleware
         private readonly RequestDelegate _next;
         private readonly ILogger<GlobalExceptionHandler> _logger;
 
-        public GlobalExceptionHandler(
-            RequestDelegate next,
-            ILogger<GlobalExceptionHandler> logger)
+        public GlobalExceptionHandler(RequestDelegate next, ILogger<GlobalExceptionHandler> logger)
         {
             _next = next;
             _logger = logger;
@@ -26,87 +24,88 @@ namespace TrainingManagementSystemAPI.Middleware
             {
                 await _next(context);
             }
-            catch (ArgumentException ex) 
-            {
-                _logger.LogWarning(ex, ex.Message);
-
-                context.Response.StatusCode = StatusCodes.Status400BadRequest;
-                await WriteResponse(context, ex.Message);
-
-            }
-            catch (KeyNotFoundException ex)
-            {
-                _logger.LogWarning(ex, ex.Message);
-
-                context.Response.StatusCode = StatusCodes.Status404NotFound;
-                await WriteResponse(context, ex.Message);
-            }
-            catch (FluentValidation.ValidationException ex)
-            {
-
-                _logger.LogWarning(ex, ex.Message);
-
-                var errorDetails = ex.Errors
-                .Select(e => new { Field = e.PropertyName, Message = e.ErrorMessage });
-
-                context.Response.StatusCode = StatusCodes.Status400BadRequest;
-                await WriteResponse(context, errorDetails);
-            }
-
-            // EXTREMLY IMPORTANT NOTE
-            // THE CATCH BELOW ONLY WORKS WELL WHEN THE FOREGIN KEY IS NAMED LIKE THIS
-            // FK_ExampleTable1_ExampleTable2Id
-            catch (DbUpdateException ex) when (IsForeignKeyViolation(ex, out var field))
-            {
-                _logger.LogWarning(ex, "Foreign key violation on {Field}", field);
-
-                context.Response.StatusCode = StatusCodes.Status400BadRequest;
-                await WriteResponse(context, new
-                {
-                    Field = field,
-                    Message = $"Invalid {field}"
-                });
-            }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Unhandled exception");
-
-                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-                await WriteResponse(context, ex.Message);
+                await HandleExceptionAsync(context, ex);
             }
         }
-        private static bool IsForeignKeyViolation(
-            DbUpdateException ex,
-            out string fieldName)
+
+        private async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
-            fieldName = "Id";
+            var statusCode = StatusCodes.Status500InternalServerError;
+            var code = "INTERNAL_SERVER_ERROR";
+            var title = "Server Error";
+            var detail = exception.Message;
+            object? details = null;
 
-            if (ex.InnerException is not SqlException sqlEx || sqlEx.Number != 547)
-                return false;
+            switch (exception)
+            {
+                case ArgumentException:
+                    statusCode = StatusCodes.Status400BadRequest;
+                    code = "INVALID_INPUT";
+                    title = "Bad Request";
+                    break;
 
-            var match = Regex.Match(
-                sqlEx.Message,
-                @"FK_[A-Za-z0-9]+_([A-Za-z0-9]+)");
+                case KeyNotFoundException:
+                    statusCode = StatusCodes.Status404NotFound;
+                    code = "NOT_FOUND";
+                    title = "Resource Not Found";
+                    break;
 
-            if (!match.Success)
-                return true;
+                case FluentValidation.ValidationException vex:
+                    statusCode = StatusCodes.Status400BadRequest;
+                    code = "VALIDATION_FAILED";
+                    title = "Validation Error";
+                    detail = "One or more validation failures occurred.";
+                    details = vex.Errors.Select(e => new { field = e.PropertyName, message = e.ErrorMessage });
+                    break;
 
-            fieldName = match.Groups[1].Value;
-            return true;
+                case DbUpdateException dbEx when IsForeignKeyViolation(dbEx, out var field):
+                    statusCode = StatusCodes.Status400BadRequest;
+                    code = "FOREIGN_KEY_VIOLATION";
+                    title = "Dependency Error";
+                    detail = $"The provided {field} does not exist.";
+                    details = new[] { new { field, message = $"Invalid {field}" } };
+                    break;
+            }
+
+            _logger.LogError(exception, "An error occurred: {Message}", exception.Message);
+
+            await WriteResponse(context, statusCode, title, detail, code, details);
         }
 
-        private static async Task WriteResponse(HttpContext context, object errorData)
+        private static async Task WriteResponse(
+            HttpContext context,
+            int statusCode,
+            string title,
+            string detail,
+            string code,
+            object? details)
         {
+            context.Response.StatusCode = statusCode;
             context.Response.ContentType = "application/json";
 
             var response = new
             {
-                error = errorData
+                statusCode,
+                title,
+                detail,
+                instance = context.Request.Path.Value,
+                code,
+                details
             };
 
-            await context.Response.WriteAsync(JsonSerializer.Serialize(response));
+            var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+            await context.Response.WriteAsync(JsonSerializer.Serialize(response, options));
         }
 
-
+        private static bool IsForeignKeyViolation(DbUpdateException ex, out string fieldName)
+        {
+            fieldName = "Id";
+            if (ex.InnerException is not SqlException sqlEx || sqlEx.Number != 547) return false;
+            var match = Regex.Match(sqlEx.Message, @"FK_[A-Za-z0-9]+_([A-Za-z0-9]+)");
+            if (match.Success) fieldName = match.Groups[1].Value;
+            return true;
+        }
     }
 }
