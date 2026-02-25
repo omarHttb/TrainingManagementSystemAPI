@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Validators
 {
-    public class UserValidator : AbstractValidator<CreateUserDTO>
+    public class UserValidator : AbstractValidator<RegisterUserDTO>
     {
         public UserValidator() 
         {

@@ -10,7 +10,7 @@ namespace Application.DTOS
     {
         public int EnrollmentId { get; set; }
 
-        public int Grade { get; set; }
+        public double Grade { get; set; }
 
         public bool IsPass { get; set; }
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.DTOS
 {
-    public class CreateUserDTO
+    public class RegisterUserDTO
     {
     }
 }

@@ -11,6 +11,6 @@ namespace Application.DTOS
         public string CourseTitle { get; set; }
 
         public string CourseSemester { get; set; }
-        public int GradeAverage { get; set; }
+        public double GradeAverage { get; set; }
     }
 }
