@@ -1,4 +1,4 @@
-using Application.DTOS;
+using Application.DTOS.TrainersDTOS;
 using Application.Models;
 using Application.RepositoryInterfaces;
 using Infastructure.Data;
@@ -45,11 +45,7 @@ namespace Infastructure.Repositories
             return result;
         }
 
-//        var result = await _context.getCourseDetailsDTO
-//.FromSqlInterpolated($"EXEC SP_GetCourseDetails {id}")
-//.ToListAsync();
 
-//            return result.SingleOrDefault() ?? new GetCourseDetailsDTO();
 
 
         public async Task<TrainerWithDetailsDTO> GetTrainerByIdUsingSP(int Id)

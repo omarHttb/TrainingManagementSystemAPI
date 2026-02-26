@@ -1,4 +1,8 @@
 ﻿using Application.DTOS;
+using Application.DTOS.AttendanceDTOS;
+using Application.DTOS.CoursesDTOS;
+using Application.DTOS.TraineesDTOS;
+using Application.DTOS.TrainersDTOS;
 using Application.Models;
 using Microsoft.EntityFrameworkCore;
 using System;

@@ -1,4 +1,4 @@
-using Application.DTOS;
+using Application.DTOS.AttendanceDTOS;
 using Application.ServiceInterfaces;
 using Microsoft.AspNetCore.Mvc;
 

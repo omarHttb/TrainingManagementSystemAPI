@@ -19,6 +19,8 @@ public partial class Course
 
     public int Capacity { get; set; }
 
+    public bool IsActive { get; set; }  
+
     public virtual ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
 
     public virtual ICollection<Lessons> Lessons { get; set; } = new List<Lessons>();

@@ -1,14 +1,10 @@
-using Application.DTOS;
+using Application.DTOS.TraineesDTOS;
 using Application.Models;
 using Application.RepositoryInterfaces;
 using Infastructure.Data;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Infastructure.Repositories
 {
@@ -30,13 +26,13 @@ namespace Infastructure.Repositories
 
         }
 
-        public async Task<bool> DeleteTraineeUsingSP(int id)
-        {
-            var rows = await _context.Database.ExecuteSqlRawAsync("EXEC SP_DeleteTrainee @Id",
-                        new SqlParameter("@Id", id));
+        //public async Task<bool> DeleteTraineeUsingSP(int id)
+        //{
+        //    var rows = await _context.Database.ExecuteSqlRawAsync("EXEC SP_DeleteTrainee @Id",
+        //                new SqlParameter("@Id", id));
 
-            return rows > 0;
-        }
+        //    return rows > 0;
+        //}
 
         public async Task<List<TraineeDetailsDTO>> GetAllTrainesWithPaginationUsingSP(int pageNumber, int pageSize)
         {
@@ -58,13 +54,13 @@ namespace Infastructure.Repositories
             return results;
         }
 
-        public async Task<bool> UpdateTraineeUsingSP(Trainee trainee, int Id)
-        {
-            var rows = await _context.Database.ExecuteSqlInterpolatedAsync
-                ($"EXEC SP_UpdateTrainee {Id},{trainee.UserId},{trainee.JoinDate}");
+        //public async Task<bool> UpdateTraineeUsingSP(Trainee trainee, int Id)
+        //{
+        //    var rows = await _context.Database.ExecuteSqlInterpolatedAsync
+        //        ($"EXEC SP_UpdateTrainee {Id},{trainee.UserId},{trainee.JoinDate}");
 
-            return rows > 0;
+        //    return rows > 0;
 
-        }
+        //}
     }
 }

@@ -1,4 +1,4 @@
-using Application.DTOS;
+using Application.DTOS.TraineeDTOS;
 using Application.ServiceInterfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,12 +33,12 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("searchtrainee")]
-        public async Task <IActionResult> SearchTraineesByNameOrEmail(string fisrtName,string LastName , string Email)
-        {
-            var result = await _TraineeService.SeachTraineeByEmailOrNameUsingSP(fisrtName, LastName, Email);
+        //[HttpGet("searchtrainee")]
+        //public async Task <IActionResult> SearchTraineesByNameOrEmail(string fisrtName,string LastName , string Email)
+        //{
+        //    //var result = await _TraineeService.SeachTraineeByEmailOrNameUsingSP(fisrtName, LastName, Email);
 
-            return Ok(result);
-        }
+        //    return Ok(result);
+        //}
     }
 }

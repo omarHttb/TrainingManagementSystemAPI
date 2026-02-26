@@ -6,11 +6,15 @@ using System.Threading.Tasks;
 
 namespace Application.DTOS
 {
-    public class TraineeAttendancePercentageDTO
+    public class GetAllTraineesEnrolledInACourseDTO
     {
+
+        public string CourseTitle { get; set; } = string.Empty;
+
         public string TraineeFullName { get; set; } = string.Empty;
 
-        public int TraineeAttendancePercentage { get; set; }
+        public DateTime EnrollmentDate { get; set; } 
 
+        public double AttendancePercentage { get; set; }
     }
 }

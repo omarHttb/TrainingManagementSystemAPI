@@ -1,5 +1,4 @@
-
-using Application.DTOS;
+using Application.DTOS.AttendanceDTOS;
 using Application.Models;
 
 namespace Application.ServiceInterfaces

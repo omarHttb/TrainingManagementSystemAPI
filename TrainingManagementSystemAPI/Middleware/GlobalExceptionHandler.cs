@@ -42,7 +42,7 @@ namespace TrainingManagementSystemAPI.Middleware
             {
                 case ArgumentException:
                     statusCode = StatusCodes.Status400BadRequest;
-                    code = "INVALID_INPUT";
+                    code = "INVALID INPUT";
                     title = "Bad Request";
                     break;
 
@@ -54,7 +54,7 @@ namespace TrainingManagementSystemAPI.Middleware
 
                 case FluentValidation.ValidationException vex:
                     statusCode = StatusCodes.Status400BadRequest;
-                    code = "VALIDATION_FAILED";
+                    code = "VALIDATION FAILED";
                     title = "Validation Error";
                     detail = "One or more validation failures occurred.";
                     details = vex.Errors.Select(e => new { field = e.PropertyName, message = e.ErrorMessage });
@@ -62,7 +62,7 @@ namespace TrainingManagementSystemAPI.Middleware
 
                 case DbUpdateException dbEx when IsForeignKeyViolation(dbEx, out var field):
                     statusCode = StatusCodes.Status400BadRequest;
-                    code = "FOREIGN_KEY_VIOLATION";
+                    code = "FOREIGN KEY VIOLATION";
                     title = "Dependency Error";
                     detail = $"The provided {field} does not exist.";
                     details = new[] { new { field, message = $"Invalid {field}" } };

@@ -1,4 +1,4 @@
-using Application.DTOS;
+using Application.DTOS.GradesDTOS;
 using Application.ServiceInterfaces;
 using Application.Services;
 using Microsoft.AspNetCore.Mvc;

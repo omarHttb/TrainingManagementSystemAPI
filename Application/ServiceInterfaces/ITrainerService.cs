@@ -1,5 +1,4 @@
-
-using Application.DTOS;
+using Application.DTOS.TrainersDTOS;
 using Application.Models;
 
 namespace Application.ServiceInterfaces

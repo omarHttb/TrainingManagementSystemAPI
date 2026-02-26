@@ -1,4 +1,4 @@
-using Application.DTOS;
+using Application.DTOS.EnrollmensDTOS;
 using Application.Models;
 using Application.ServiceInterfaces;
 using AutoMapper;

@@ -1,4 +1,4 @@
-using Application.DTOS;
+using Application.DTOS.TrainersDTOS;
 using Application.Models;
 using Application.ServiceInterfaces;
 using AutoMapper;

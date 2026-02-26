@@ -9,10 +9,9 @@ namespace TrainingManagementSystemAPI.Middleware
       ResultExecutingContext context,
       ResultExecutionDelegate next)
         {
-            // Only wrap ObjectResult (normal JSON responses)
             if (context.Result is ObjectResult objectResult)
             {
-                // Avoid double wrapping
+                
                 if (objectResult.Value is not null &&
                     objectResult.Value.GetType().IsGenericType &&
                     objectResult.Value.GetType().GetGenericTypeDefinition() == typeof(ApiResponse<>))

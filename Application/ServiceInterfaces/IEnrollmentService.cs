@@ -1,5 +1,4 @@
-
-using Application.DTOS;
+using Application.DTOS.EnrollmensDTOS;
 using Application.Models;
 
 namespace Application.ServiceInterfaces

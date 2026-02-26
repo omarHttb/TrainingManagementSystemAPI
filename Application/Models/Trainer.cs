@@ -11,6 +11,14 @@ public partial class Trainer
 
     public string TeachingSubject { get; set; } = null!;
 
+    public bool IsActive { get; set; }
+
+    public string Headline { get; set; } = null!;
+
+    public string Bio { get; set; } = null!;
+
+    public short ExperienceYears { get; set; }
+
     public DateTime? JoinDate { get; set; }
 
     public virtual ICollection<Course> Courses { get; set; } = new List<Course>();

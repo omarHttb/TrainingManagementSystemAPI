@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.DTOS
+namespace Application.DTOS.CoursesDTOS
 {
     public class GetCourseDetailsDTO
     {
-        public string Title { get; set; } = string.Empty;
+        public int Id { get; set; }
+        public string CourseTitle { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public decimal Price { get; set; }
         public DateTime CreationDate { get; set; }

@@ -1,4 +1,9 @@
 ﻿using Application.DTOS;
+using Application.DTOS.AttendanceDTOS;
+using Application.DTOS.EnrollmensDTOS;
+using Application.DTOS.GradesDTOS;
+using Application.DTOS.TraineeDTOS;
+using Application.DTOS.TrainersDTOS;
 using Application.Models;
 using AutoMapper;
 using System;

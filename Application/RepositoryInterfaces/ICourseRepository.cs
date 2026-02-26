@@ -1,4 +1,5 @@
 using Application.DTOS;
+using Application.DTOS.CoursesDTOS;
 using Application.Models;
 using System;
 using System.Collections.Generic;
@@ -24,5 +25,9 @@ namespace Application.RepositoryInterfaces
         Task<bool> SetCourseCpacityUsingSP(int Capacity, int Id);
 
         Task<bool> AssignTrainerToCourseUsingSP(int Id, int TrainerId);
+
+        Task<List<GetAllTraineeCoursesDTO>> GetAllTraineeCoursesUsingSP(int TraineeId);
+
+        Task<List<GetAllTraineesEnrolledInACourseDTO>> GetAllTraineesEnrolledInACourseUsingSP(int CourseId);
     }
 }

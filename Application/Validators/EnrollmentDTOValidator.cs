@@ -1,4 +1,4 @@
-﻿using Application.DTOS;
+﻿using Application.DTOS.EnrollmensDTOS;
 using FluentValidation;
 using System;
 using System.Collections.Generic;

@@ -1,5 +1,6 @@
 
 using Application.DTOS;
+using Application.DTOS.CoursesDTOS;
 using Application.Models;
 
 namespace Application.ServiceInterfaces
@@ -20,5 +21,7 @@ namespace Application.ServiceInterfaces
         Task<bool> SetCourseCpacityUsingSP(int Capacity, int id);
 
         Task<bool> AssignTrainerToCourseUsingSP(int id, int TrainerId);
+
+        
     }
 }

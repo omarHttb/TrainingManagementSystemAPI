@@ -1,4 +1,4 @@
-using Application.DTOS;
+using Application.DTOS.TrainersDTOS;
 using Application.Models;
 using System;
 using System.Collections.Generic;

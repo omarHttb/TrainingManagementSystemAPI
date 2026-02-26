@@ -1,4 +1,5 @@
-using Application.DTOS;
+using Application.DTOS.TraineeDTOS;
+using Application.DTOS.TraineesDTOS;
 using Application.Models;
 using Application.ServiceInterfaces;
 using AutoMapper;
@@ -31,22 +32,22 @@ namespace Application.Services
             return result;
         }
 
-        public async Task<bool> DeleteTraineeUsingSP(int id)
-        {
-            var result = await _UnitOfWork.TraineeRepository.DeleteTraineeUsingSP(id);
+        //public async Task<bool> DeleteTraineeUsingSP(int id)
+        //{
+        //    var result = await _UnitOfWork.TraineeRepository.DeleteTraineeUsingSP(id);
 
-            return result;
-        }
+        //    return result;
+        //}
 
         public Task<List<TraineeDetailsDTO>> GetAllTrainesWithPaginationUsingSP(int pageNumber, int pageSize)
         {
             return _UnitOfWork.TraineeRepository.GetAllTrainesWithPaginationUsingSP(pageNumber, pageSize);
         }
 
-        public Task<List<TraineeDetailsDTO>> SeachTraineeByEmailOrNameUsingSP(string FirstName = "", string LastName = "", string email = "")
-        {
-            return _UnitOfWork.TraineeRepository.SeachTraineeByEmailOrNameUsingSP(FirstName, LastName,email);
-        }
+        //public Task<List<TraineeDetailsDTO>> SeachTraineeByEmailOrNameUsingSP(string FirstName = "", string LastName = "", string email = "")
+        //{
+        //    return _UnitOfWork.TraineeRepository.SeachTraineeByEmailOrNameUsingSP(FirstName, LastName,email);
+        //}
 
 
     }

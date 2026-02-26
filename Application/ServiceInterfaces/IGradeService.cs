@@ -1,5 +1,6 @@
 
 using Application.DTOS;
+using Application.DTOS.GradesDTOS;
 using Application.Models;
 
 namespace Application.ServiceInterfaces
