@@ -1,12 +1,7 @@
-﻿using Application.DTOS;
-using Application.DTOS.AttendanceDTOS;
-using Application.DTOS.CoursesDTOS;
-using Application.DTOS.TraineesDTOS;
-using Application.DTOS.TrainersDTOS;
+﻿using System;
+using System.Collections.Generic;
 using Application.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 
 namespace Infastructure.Data;
 
@@ -29,9 +24,9 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<Grade> Grades { get; set; }
 
-    public virtual DbSet<Role> Roles { get; set; }
+    public virtual DbSet<Lesson> Lessons { get; set; }
 
-    public virtual DbSet<Trainee> Trainees { get; set; }
+    public virtual DbSet<Role> Roles { get; set; }
 
     public virtual DbSet<Trainer> Trainers { get; set; }
 
@@ -39,56 +34,37 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<UserRole> UserRoles { get; set; }
 
-    public virtual DbSet<Lessons> Lessons { get; set; }
-
-    public DbSet<GetCourseDetailsDTO> getCourseDetailsDTO { get; set; }
-    public DbSet<GetAllCoursesTraineesDTO> getAllCoursesTraineesDTO { get; set; }
-    public DbSet<GetAttendanceReportPerCourseDTO> getAttendanceReportPerCourseDTO { get; set; }
-    public DbSet<AverageGradeForCourseDTO> AverageGradeForCourseDTO { get; set; }
-    public DbSet<TrainerWithDetailsDTO> TrainerWithDetailsDTO { get; set; }
-    public DbSet<TraineeDetailsDTO> TraineeDetailsDTO { get; set; }
-
-    
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-
-
-
         modelBuilder.Entity<Attendence>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Attenden__3214EC07944E5F8E");
 
             entity.ToTable("Attendence");
 
+            entity.HasIndex(e => e.EnrollmentId, "IX_Attendence_EnrollmentId");
+
+            entity.HasIndex(e => e.LessonId, "IX_Attendence_LessonId");
+
             entity.Property(e => e.AttendanceDate).HasDefaultValueSql("(getdate())");
 
             entity.HasOne(d => d.Enrollment).WithMany(p => p.Attendences)
                 .HasForeignKey(d => d.EnrollmentId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Attendence_Enrollments");
+                .HasConstraintName("FK_Enrollments_Attendence");
 
-            entity.HasOne(d => d.Lessons).WithMany(p => p.Attendences).
-            HasForeignKey(d => d.LessonId)
-            .OnDelete(DeleteBehavior.ClientSetNull).
-            HasConstraintName("FK_Attendence_Lesson");
-        });
-
-
-        modelBuilder.Entity<Lessons>(entity =>
-        {
-            entity.HasKey(e => e.Id);
-
-            entity.ToTable("Lessons");
-
-            entity.HasOne(d => d.course).WithMany(p => p.Lessons)
-            .HasForeignKey(d => d.CourseId).OnDelete(DeleteBehavior.ClientSetNull)
-            .HasConstraintName("FK_Lesson_Course");
+            entity.HasOne(d => d.Lesson).WithMany(p => p.Attendences)
+                .HasForeignKey(d => d.LessonId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Attendence_Lesson");
         });
 
         modelBuilder.Entity<Course>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Courses__3214EC07CE5EA62B");
+
+            entity.HasIndex(e => e.TrainerId, "IX_Courses_TrainerId");
 
             entity.Property(e => e.CreationDate).HasColumnType("datetime");
             entity.Property(e => e.Price).HasColumnType("decimal(10, 2)");
@@ -96,7 +72,6 @@ public partial class AppDbContext : DbContext
 
             entity.HasOne(d => d.Trainer).WithMany(p => p.Courses)
                 .HasForeignKey(d => d.TrainerId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Courses_Trainers");
         });
 
@@ -104,7 +79,9 @@ public partial class AppDbContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("PK__Enrollme__3214EC076D19D3C3");
 
-            entity.HasIndex(e => new { e.CourseId, e.TraineeId }, "UQ_COURSE_TRAINEE").IsUnique();
+            entity.HasIndex(e => e.UserId, "IX_Enrollments_TraineeId");
+
+            entity.HasIndex(e => new { e.CourseId, e.UserId }, "UQ_COURSE_TRAINEE").IsUnique();
 
             entity.Property(e => e.EnrollmentDate)
                 .HasDefaultValueSql("(getdate())")
@@ -113,24 +90,38 @@ public partial class AppDbContext : DbContext
             entity.HasOne(d => d.Course).WithMany(p => p.Enrollments)
                 .HasForeignKey(d => d.CourseId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Erollments_Courses");
+                .HasConstraintName("FK_Enrollments_Courses");
 
-            entity.HasOne(d => d.Trainee).WithMany(p => p.Enrollments)
-                .HasForeignKey(d => d.TraineeId)
+            entity.HasOne(d => d.User).WithMany(p => p.Enrollments)
+                .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Trainees_CourseSemester");
+                .HasConstraintName("FK_Enrollments_Users");
         });
 
         modelBuilder.Entity<Grade>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Grades__3214EC0731E85DB3");
 
-            entity.Property(e => e.Grade1).HasColumnName("Grade");
+            entity.HasIndex(e => e.EnrollmentId, "IX_Grades_EnrollmentId");
+
+            entity.Property(e => e.Grade1)
+                .HasColumnType("decimal(10, 2)")
+                .HasColumnName("Grade");
 
             entity.HasOne(d => d.Enrollment).WithMany(p => p.Grades)
                 .HasForeignKey(d => d.EnrollmentId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Grades_Enrollments");
+                .HasConstraintName("FK_Enrollments_Grades");
+        });
+
+        modelBuilder.Entity<Lesson>(entity =>
+        {
+            entity.HasIndex(e => e.CourseId, "IX_Lessons_CourseId");
+
+            entity.HasOne(d => d.Course).WithMany(p => p.Lessons)
+                .HasForeignKey(d => d.CourseId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Lesson_Course");
         });
 
         modelBuilder.Entity<Role>(entity =>
@@ -142,24 +133,14 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.RoleName).HasMaxLength(50);
         });
 
-        modelBuilder.Entity<Trainee>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__Trainees__3214EC076D37624D");
-
-            entity.Property(e => e.JoinDate)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
-
-            entity.HasOne(d => d.User).WithMany(p => p.Trainees)
-                .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Trainees_Users");
-        });
-
         modelBuilder.Entity<Trainer>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Trainers__3214EC07A5D57AF5");
 
+            entity.HasIndex(e => e.UserId, "IX_Trainers_userId");
+
+            entity.Property(e => e.Headline).HasMaxLength(200);
+            entity.Property(e => e.IsActive).HasColumnName("isActive");
             entity.Property(e => e.JoinDate)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
@@ -197,6 +178,8 @@ public partial class AppDbContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("PK__UserRole__3214EC073E14292C");
 
+            entity.HasIndex(e => e.RoleId, "IX_UserRoles_RoleId");
+
             entity.HasIndex(e => new { e.UserId, e.RoleId }, "UQ_User_Role").IsUnique();
 
             entity.Property(e => e.RoleAssignDate)
@@ -213,13 +196,6 @@ public partial class AppDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_UserRoles_Users");
         });
-        
-        modelBuilder.Entity<TraineeDetailsDTO>().HasNoKey();
-        modelBuilder.Entity<GetCourseDetailsDTO>().HasNoKey();
-        modelBuilder.Entity<GetAllCoursesTraineesDTO>().HasNoKey();
-        modelBuilder.Entity<GetAttendanceReportPerCourseDTO>().HasNoKey();
-        modelBuilder.Entity<AverageGradeForCourseDTO>().HasNoKey();
-        modelBuilder.Entity<TrainerWithDetailsDTO>().HasNoKey();
 
         OnModelCreatingPartial(modelBuilder);
     }

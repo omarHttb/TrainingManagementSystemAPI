@@ -8,9 +8,9 @@ namespace Application.DTOS.GradesDTOS
 {
     public class GradeAverageDTO
     {
-        public string CourseTitle { get; set; }
+        public string CourseTitle { get; set; } = string.Empty;
 
-        public string CourseSemester { get; set; }
+        public string CourseSemester { get; set; } = string.Empty;
         public double GradeAverage { get; set; }
     }
 }

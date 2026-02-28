@@ -15,15 +15,15 @@ public partial class Course
 
     public DateTime CreationDate { get; set; }
 
-    public int TrainerId { get; set; }
+    public int? TrainerId { get; set; }
 
     public int Capacity { get; set; }
 
-    public bool IsActive { get; set; }  
+    public bool? IsActive { get; set; }
 
     public virtual ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
 
-    public virtual ICollection<Lessons> Lessons { get; set; } = new List<Lessons>();
+    public virtual ICollection<Lesson> Lessons { get; set; } = new List<Lesson>();
 
-    public virtual Trainer Trainer { get; set; } = null!;
+    public virtual Trainer? Trainer { get; set; }
 }

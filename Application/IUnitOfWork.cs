@@ -19,7 +19,6 @@ namespace Application
 
         IRoleRepository RoleRepository { get; }
 
-        ITraineeRepository TraineeRepository { get; }
 
         ITrainerRepository TrainerRepository { get; }
 

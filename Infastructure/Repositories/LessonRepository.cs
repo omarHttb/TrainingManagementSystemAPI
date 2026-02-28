@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Infastructure.Repositories
 {
-    public class LessonRepository : BaseRepository<Lessons>, ILessonRepository
+    public class LessonRepository : BaseRepository<Lesson>, ILessonRepository
     {
         public LessonRepository(AppDbContext context) : base(context)
         {

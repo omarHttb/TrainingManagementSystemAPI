@@ -34,7 +34,7 @@ namespace Infastructure.Repositories
                    .Value = enrollment.CourseId;
 
             command.Parameters.Add("@TraineeId", SqlDbType.Int)
-                   .Value = enrollment.TraineeId;
+                   .Value = enrollment.UserId;
             command.Parameters.Add("@EnrollmentDate", SqlDbType.DateTime)
                    .Value = enrollment.EnrollmentDate;
 

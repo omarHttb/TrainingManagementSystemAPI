@@ -9,7 +9,7 @@ public partial class Enrollment
 
     public int CourseId { get; set; }
 
-    public int TraineeId { get; set; }
+    public int UserId { get; set; }
 
     public DateTime EnrollmentDate { get; set; }
 
@@ -19,5 +19,5 @@ public partial class Enrollment
 
     public virtual ICollection<Grade> Grades { get; set; } = new List<Grade>();
 
-    public virtual Trainee Trainee { get; set; } = null!;
+    public virtual User User { get; set; } = null!;
 }

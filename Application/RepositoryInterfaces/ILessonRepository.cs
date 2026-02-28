@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.RepositoryInterfaces
 {
-    public interface ILessonRepository : IBaseRepository<Lessons>
+    public interface ILessonRepository : IBaseRepository<Lesson>
     {
     }
 }

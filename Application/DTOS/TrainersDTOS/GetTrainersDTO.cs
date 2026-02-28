@@ -14,9 +14,9 @@ namespace Application.DTOS.TrainersDTOS
 
         public DateTime? JoinDate { get; set; }
 
-        public string FullName { get; set; }
+        public string FullName { get; set; } = string.Empty;
 
-        public string Email { get; set; }
+        public string Email { get; set; } = string.Empty;
 
     }
 }

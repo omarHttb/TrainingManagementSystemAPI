@@ -17,5 +17,5 @@ public partial class Attendence
 
     public virtual Enrollment Enrollment { get; set; } = null!;
 
-    public virtual Lessons Lessons { get; set; } = null!;
+    public virtual Lesson Lesson { get; set; } = null!;
 }

@@ -22,7 +22,7 @@ namespace TrainingManagementSystemAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> EnrollTraineeIntoACourse(CreateEnrollmentDTO createEnrollmentDTO)
         {
-            var result = _EnrollmentService.EnrollTraineeIntoACourseUsingSp(createEnrollmentDTO);
+            var result = await _EnrollmentService.EnrollTraineeIntoACourseUsingSp(createEnrollmentDTO);
 
             return Ok(result);
         }

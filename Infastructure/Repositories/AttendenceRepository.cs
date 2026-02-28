@@ -25,7 +25,7 @@ namespace Infastructure.Repositories
         public async Task<double> CalculateAttendancePercentagePerTraineeEnrollmentUsingSP(int enrollmentId)
         {
             using var connection = new SqlConnection(_context.Database.GetConnectionString());
-            using var command = new SqlCommand("SP_CalculateAttendancePercentagePerTrainee", connection);
+            using var command = new SqlCommand("SP_CalculateAttendancePercentagePerTraineeEnrollment", connection);
 
             command.CommandType = CommandType.StoredProcedure;
 

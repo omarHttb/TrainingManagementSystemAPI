@@ -216,11 +216,8 @@ namespace Infastructure.Repositories
                 };
             }
 
-            var result = await _context.getCourseDetailsDTO
-                .FromSqlInterpolated($"EXEC SP_GetCourseDetails {id}")
-                .ToListAsync();
+            return new GetCourseDetailsDTO();
 
-            return result.SingleOrDefault() ?? new GetCourseDetailsDTO();
         }
 
         public async Task<bool> SetCourseCpacityUsingSP(int Capacity, int Id)

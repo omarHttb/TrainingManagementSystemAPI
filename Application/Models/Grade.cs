@@ -9,7 +9,7 @@ public partial class Grade
 
     public int EnrollmentId { get; set; }
 
-    public double Grade1 { get; set; }
+    public decimal Grade1 { get; set; }
 
     public bool? IsPass { get; set; }
 

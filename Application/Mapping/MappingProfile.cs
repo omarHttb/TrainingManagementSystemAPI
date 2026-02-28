@@ -4,8 +4,8 @@ using Application.DTOS.EnrollmensDTOS;
 using Application.DTOS.GradesDTOS;
 using Application.DTOS.TraineeDTOS;
 using Application.DTOS.TrainersDTOS;
-using Application.Models;
 using AutoMapper;
+using Application.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +29,6 @@ namespace Application.Mapping
 
             CreateMap<AddTraineeGradeDTO,Grade>();
 
-            CreateMap<CreateTraineeDTO, Trainee>();
 
             CreateMap<CreateTrainerDTO, Trainer>();
 

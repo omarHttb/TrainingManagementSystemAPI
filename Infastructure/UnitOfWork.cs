@@ -29,7 +29,6 @@ namespace Infastructure
 
         public IRoleRepository RoleRepository { get; private set; }
 
-        public ITraineeRepository TraineeRepository { get; private set; }
 
         public ITrainerRepository TrainerRepository { get; private set; }
 
@@ -49,7 +48,6 @@ namespace Infastructure
             EnrollmentRepository = new EnrollmentRepository(_context);
             GradeRepository = new GradeRepository(_context);
             RoleRepository = new RoleRepository(_context);
-            TraineeRepository = new TraineeRepository(_context);
             TrainerRepository = new TrainerRepository(_context);
             UserRepository = new UserRepository(_context);
             UserRoleRepository = new UserRoleRepository(_context);

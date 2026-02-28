@@ -22,7 +22,6 @@ namespace TrainingManagementSystemAPI.ServiceCollection
             services.AddScoped<IGradeService, GradeService>();
             services.AddScoped<ILessonService, LessonService>();
             services.AddScoped<IRoleService, RoleService>();
-            services.AddScoped<ITraineeService, TraineeService>();
             services.AddScoped<ITrainerService, TrainerService>();
             services.AddScoped<IUserRoleService, UserRoleService>();
             services.AddScoped<IUserService, UserService>();

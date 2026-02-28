@@ -38,22 +38,14 @@ namespace Infastructure.Repositories
 
         }
 
-        public async Task<List<TrainerWithDetailsDTO>> GetAllTrainersUsingSP()
+        public Task<List<TrainerWithDetailsDTO>> GetAllTrainersUsingSP()
         {
-            var result = await _context.TrainerWithDetailsDTO.FromSqlRaw("EXEC SP_GetAllTrainerDetails").ToListAsync();
-
-            return result;
+            throw new NotImplementedException();
         }
 
-
-
-
-        public async Task<TrainerWithDetailsDTO> GetTrainerByIdUsingSP(int Id)
+        public Task<TrainerWithDetailsDTO> GetTrainerByIdUsingSP(int Id)
         {
-            var result = await _context.TrainerWithDetailsDTO.FromSqlInterpolated($"EXEC SP_GetTrainerDetailsById {Id}").ToListAsync();
-
-            return result.SingleOrDefault() ?? new TrainerWithDetailsDTO();
-
+            throw new NotImplementedException();
         }
 
         public async Task<bool> UpdateTrainerUsingSP(string TeachingSubject, int Id)
