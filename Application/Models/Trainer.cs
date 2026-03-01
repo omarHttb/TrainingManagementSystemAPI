@@ -11,9 +11,11 @@ public partial class Trainer
 
     public string TeachingSubject { get; set; } = null!;
 
-    public DateTime? JoinDate { get; set; }
+    public DateTime? JoinDate { get; set; } = DateTime.Now;
 
-    public bool? IsActive { get; set; }
+    public bool IsActive { get; set; }
+
+    public bool isVerified { get; set; }
 
     public string? Headline { get; set; }
 

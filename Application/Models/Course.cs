@@ -19,7 +19,11 @@ public partial class Course
 
     public int Capacity { get; set; }
 
-    public bool? IsActive { get; set; }
+    public bool IsActive { get; set; }
+
+    public bool  IsVerified { get; set; }   
+
+    public string? Thumbnail { get; set; }
 
     public virtual ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
 

@@ -21,6 +21,8 @@ public partial class User
 
     public string PasswordHash { get; set; } = null!;
 
+    public string? ProfilePicture { get; set; }
+
     public virtual ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
 
     public virtual ICollection<Trainer> Trainers { get; set; } = new List<Trainer>();

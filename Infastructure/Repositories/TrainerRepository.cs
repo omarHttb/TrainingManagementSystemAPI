@@ -1,3 +1,4 @@
+using Application.DTOS.CoursesDTOS;
 using Application.DTOS.TrainersDTOS;
 using Application.Models;
 using Application.RepositoryInterfaces;
@@ -6,6 +7,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,37 +25,144 @@ namespace Infastructure.Repositories
 
         public async Task<bool> CreateTrainerUsingSP(Trainer trainer)
         {
-            var rows = await _context.Database.ExecuteSqlInterpolatedAsync
-                ($"EXEC SP_CreateTrainer {trainer.UserId},{trainer.TeachingSubject},{trainer.JoinDate}");
+            using var connection = new SqlConnection(_context.Database.GetConnectionString());
+            using var command = new SqlCommand("SP_CreateTrainer", connection);
 
-            return rows > 0;
+            command.CommandType = CommandType.StoredProcedure;
+
+            command.Parameters.Add("@UserId", SqlDbType.Int)
+                .Value = trainer.UserId;
+
+            command.Parameters.Add("@TeachingSubject", SqlDbType.NVarChar)
+                .Value = trainer.TeachingSubject;
+
+            command.Parameters.Add("@JoinDate", SqlDbType.Decimal)
+                .Value = trainer.JoinDate;
+
+            command.Parameters.Add("@Headline", SqlDbType.NVarChar)
+                .Value = trainer.Headline;
+
+            command.Parameters.Add(" @Bio", SqlDbType.NVarChar)
+                .Value = trainer.Bio;
+
+            command.Parameters.Add("@YearsOfExperiance", SqlDbType.SmallInt)
+                .Value = trainer.YearsOfExperiance;
+
+            await connection.OpenAsync();
+               
+
+            var rowsAffected = await command.ExecuteNonQueryAsync();
+            return rowsAffected > 0;
+        
         }
 
         public async Task<bool> DeleteTrainerUsingSP(int Id)
         {
-            var rows = await _context.Database.ExecuteSqlRawAsync("EXEC SP_DeleteTrainer @Id",
-            new SqlParameter("@Id", Id));
 
-            return rows > 0;
+           
+            using var connection = new SqlConnection(_context.Database.GetConnectionString());
+            using var command = new SqlCommand("SP_DeleteTrainer", connection);
+
+            command.CommandType = CommandType.StoredProcedure;
+
+            command.Parameters.Add("@Id", SqlDbType.Int)
+                .Value = Id;
+
+            await connection.OpenAsync();
+
+
+            var rowsAffected = await command.ExecuteNonQueryAsync();
+            return rowsAffected > 0;
 
         }
 
-        public Task<List<TrainerWithDetailsDTO>> GetAllTrainersUsingSP()
+        public async Task<List<TrainerWithDetailsDTO>> GetAllTrainersUsingSP()
         {
-            throw new NotImplementedException();
+            var result = new List<TrainerWithDetailsDTO>();
+
+            using var connection = new SqlConnection(_context.Database.GetConnectionString());
+            using var command = new SqlCommand("SP_GetAllTrainerDetails", connection);
+
+            command.CommandType = CommandType.StoredProcedure;
+
+
+            await connection.OpenAsync();
+
+            using var reader = await command.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
+            {
+                result.Add(new TrainerWithDetailsDTO
+                {
+                    Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                    FullName = reader.GetString(reader.GetOrdinal("fullName")),
+                    Email = reader.GetString(reader.GetOrdinal("Email")),
+                    TeachingSubject = reader.GetString(reader.GetOrdinal("TeachingSubject")),
+                    JoinDate = reader.GetDateTime(reader.GetOrdinal("JoinDate")),
+                    Headline = reader.GetString(reader.GetOrdinal("Headline")),
+                    IsActive = reader.GetBoolean(reader.GetOrdinal("IsActive")),
+                    IsVerified = reader.GetBoolean(reader.GetOrdinal("IsVerified")),
+                });
+            }
+
+            return result;
         }
 
-        public Task<TrainerWithDetailsDTO> GetTrainerByIdUsingSP(int Id)
+        public async Task<TrainerWithDetailsDTO> GetTrainerByIdUsingSP(int Id)
         {
-            throw new NotImplementedException();
+            using var connection = new SqlConnection(_context.Database.GetConnectionString());
+            using var command = new SqlCommand("SP_GetCourseDetails", connection);
+
+            command.CommandType = CommandType.StoredProcedure;
+
+            command.Parameters.Add("@Id", SqlDbType.Int)
+                   .Value = Id;
+
+            await connection.OpenAsync();
+
+            using var reader = await command.ExecuteReaderAsync();
+
+            if (await reader.ReadAsync())
+            {
+                return new TrainerWithDetailsDTO
+                {
+                    Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                    FullName = reader.GetString(reader.GetOrdinal("fullName")),
+                    Email = reader.GetString(reader.GetOrdinal("Email")),
+                    TeachingSubject = reader.GetString(reader.GetOrdinal("TeachingSubject")),
+                    JoinDate = reader.GetDateTime(reader.GetOrdinal("JoinDate")),
+                    Headline = reader.GetString(reader.GetOrdinal("Headline")),
+                    IsActive = reader.GetBoolean(reader.GetOrdinal("IsActive")),
+                    IsVerified = reader.GetBoolean(reader.GetOrdinal("IsVerified")),
+                };
+            }
+
+            return new TrainerWithDetailsDTO();
         }
 
-        public async Task<bool> UpdateTrainerUsingSP(string TeachingSubject, int Id)
+        public async Task<bool> UpdateTrainerUsingSP(Trainer trainer, int Id)
         {
-            var rows = await _context.Database.ExecuteSqlInterpolatedAsync
-                ($"EXEC SP_UpdateTrainer {Id} {TeachingSubject}");
+            using var connection = new SqlConnection(_context.Database.GetConnectionString());
+            using var command = new SqlCommand("SP_UpdateTrainer", connection);
 
-            return rows > 0;
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("@Id", SqlDbType.Int)
+            .Value = Id;
+            command.Parameters.Add("@TeachingSubject", SqlDbType.NVarChar)
+            .Value = trainer.TeachingSubject;
+
+            command.Parameters.Add("@YearsOfExperiance", SqlDbType.SmallInt)
+            .Value = trainer.YearsOfExperiance;
+            command.Parameters.Add("@Headline", SqlDbType.Decimal)
+            .Value = trainer.Headline;
+            command.Parameters.Add("@Bio", SqlDbType.Int)
+            .Value = trainer.Bio;
+
+            await connection.OpenAsync();
+
+            var rowsAffected = await command.ExecuteNonQueryAsync();
+
+            return rowsAffected > 0;
 
         }
     }

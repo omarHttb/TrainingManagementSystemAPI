@@ -16,7 +16,16 @@ namespace Application.DTOS.TrainersDTOS
 
         public string TeachingSubject { get; set; } = string.Empty;
 
-
         public DateTime JoinDate { get; set; }
+
+        public string Headline { get; set; } = string.Empty;
+
+        public int yearsOfExperience { get; set; }
+
+        public bool IsVerified { get; set; }
+
+        public bool IsActive { get; set; }  
+
+
     }
 }

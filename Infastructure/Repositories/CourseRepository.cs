@@ -244,11 +244,12 @@ namespace Infastructure.Repositories
         public async Task<bool> UpdateCourseUsingSP(int Id, Course course)
         {
             using var connection = new SqlConnection(_context.Database.GetConnectionString());
-            using var command = new SqlCommand("SP_SetCourseCapacity", connection);
+            using var command = new SqlCommand("SP_UpdateCourse", connection);
+
 
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.Add("@Id", SqlDbType.Int)
-            .Value = course.Id;
+            .Value = Id;
             command.Parameters.Add("@Title", SqlDbType.NVarChar)
             .Value = course.Title;
 
