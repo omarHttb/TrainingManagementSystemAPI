@@ -17,7 +17,7 @@ public partial class User
 
     public DateOnly DateOfBirth { get; set; }
 
-    public DateTime UserCreationDate { get; set; }
+    public DateTime UserCreationDate { get; set; } = DateTime.Now;
 
     public string PasswordHash { get; set; } = null!;
 

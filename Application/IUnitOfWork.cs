@@ -19,7 +19,7 @@ namespace Application
 
         IRoleRepository RoleRepository { get; }
 
-
+        IQuizzRepository QuizzRepository { get; }
         ITrainerRepository TrainerRepository { get; }
 
         IUserRepository UserRepository { get; }

@@ -10,9 +10,9 @@ namespace Application.RepositoryInterfaces
     public interface IUserRepository : IBaseRepository<User>
     {
 
-        Task<User> CreateUserUsingSP(User user);
+        Task<bool> RegisterUserUsingSP(User user);
 
-
+        Task<bool> DoesEmailExist(string email, int? excludePersonId = null);
 
     }
 }

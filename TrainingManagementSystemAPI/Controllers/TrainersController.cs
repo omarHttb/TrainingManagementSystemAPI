@@ -50,9 +50,9 @@ namespace TrainingManagementSystemAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateTrainerTeachingSubject(string TeachingSubject, int id)
+        public async Task<IActionResult> UpdateTrainer(UpdateTrainerDTO updateTrainerDTO, int id)
         {
-            var result = await _TrainersService.UpdateTrainerTeachingSubjectUsingSP(TeachingSubject, id);
+            var result = await _TrainersService.UpdateTrainerUsingSP(updateTrainerDTO, id);
 
             return Ok(result);
         }

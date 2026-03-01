@@ -22,7 +22,7 @@ namespace Infastructure
 
         public ICourseRepository CourseRepository { get; private set; }
 
-
+        public IQuizzRepository QuizzRepository { get; private set; }
         public IEnrollmentRepository EnrollmentRepository { get; private set; }
 
         public IGradeRepository GradeRepository { get; private set; }
@@ -52,6 +52,7 @@ namespace Infastructure
             UserRepository = new UserRepository(_context);
             UserRoleRepository = new UserRoleRepository(_context);
             LessonRepository = new LessonRepository(_context);
+            QuizzRepository = new QuizzRepository(_context);
         }
 
 

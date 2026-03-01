@@ -7,7 +7,7 @@ namespace Application.ServiceInterfaces
     {
         Task<bool> CreateTrainerUsingSP(CreateTrainerDTO trainer);
 
-        Task<bool> UpdateTrainerTeachingSubjectUsingSP(string TeachingSubject, int Id);
+        Task<bool> UpdateTrainerUsingSP(UpdateTrainerDTO updateTrainerDTO, int Id);
 
         Task<bool> DeleteTrainerUsingSP(int Id);
 

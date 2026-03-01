@@ -25,6 +25,9 @@ namespace TrainingManagementSystemAPI.ServiceCollection
             services.AddScoped<ITrainerService, TrainerService>();
             services.AddScoped<IUserRoleService, UserRoleService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IQuizzService, QuizzService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+
 
 
             return services;
@@ -38,6 +41,7 @@ namespace TrainingManagementSystemAPI.ServiceCollection
             services.AddValidatorsFromAssemblyContaining<CreateCourseDTOValidator>();
             services.AddValidatorsFromAssemblyContaining<EnrollmentDTOValidator>();
             services.AddValidatorsFromAssemblyContaining<UpdateCourseValidatorDTO>();
+            services.AddValidatorsFromAssemblyContaining<RegisterUserValidator>();  
 
             return services;
         }

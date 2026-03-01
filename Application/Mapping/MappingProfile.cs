@@ -2,7 +2,6 @@
 using Application.DTOS.AttendanceDTOS;
 using Application.DTOS.EnrollmensDTOS;
 using Application.DTOS.GradesDTOS;
-using Application.DTOS.TraineeDTOS;
 using Application.DTOS.TrainersDTOS;
 using AutoMapper;
 using Application.Models;
@@ -11,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.DTOS.UsersDTOS;
 
 namespace Application.Mapping
 {
@@ -29,10 +29,14 @@ namespace Application.Mapping
 
             CreateMap<AddTraineeGradeDTO,Grade>();
 
+            CreateMap<RegisterUserDTO, User>();
+
 
             CreateMap<CreateTrainerDTO, Trainer>();
 
-            CreateMap<CreateAttendanceDTO, Attendence>();   
+            CreateMap<CreateAttendanceDTO, Attendence>();
+
+            CreateMap<UpdateTrainerDTO, Trainer>();
         } 
     }
 }

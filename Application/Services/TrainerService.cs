@@ -51,18 +51,16 @@ namespace Application.Services
             return _UnitOfWork.TrainerRepository.GetTrainerByIdUsingSP(Id);
         }
 
-        public async Task<bool> UpdateTrainerTeachingSubjectUsingSP(string TeachingSubject, int Id)
+
+        public async Task<bool> UpdateTrainerUsingSP(UpdateTrainerDTO updateTrainerDTO, int Id)
         {
             var ExistingTrainer = await _UnitOfWork.TrainerRepository.GetByIdAsync(Id);
 
-            if (ExistingTrainer == null)
-                return false;
-            
+            if (ExistingTrainer == null) throw new ArgumentException($"No trainer found with ID {Id}", nameof(Id));
 
-            if (TeachingSubject == "" || TeachingSubject == null) throw new ArgumentException("Trainer must have a teaching subject");
+            var trainer = _mappers.Map<Trainer>(updateTrainerDTO);
 
-
-            var result = await _UnitOfWork.TrainerRepository.UpdateTrainerUsingSP(TeachingSubject, Id);
+            var result = await _UnitOfWork.TrainerRepository.UpdateTrainerUsingSP(trainer, Id);
 
 
             return result;

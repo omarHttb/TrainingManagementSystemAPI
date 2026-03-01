@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.DTOS
+namespace Application.ServiceInterfaces
 {
-    public class RegisterUserDTO
+    public interface IQuizzService
     {
     }
 }
