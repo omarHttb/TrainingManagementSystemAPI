@@ -22,6 +22,10 @@ namespace Application.ServiceInterfaces
 
         Task<bool> AssignTrainerToCourseUsingSP(int id, int TrainerId);
 
-        
+        Task<List<GetAllTraineesEnrolledInACourseDTO>> GetAllTraineesEnrolledInACourseUsingSP(int CourseId);
+
+
+
+
     }
 }

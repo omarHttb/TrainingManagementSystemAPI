@@ -14,7 +14,7 @@ namespace TrainingManagementSystemAPI.Controllers
             _courseService = courseService;
         }
 
-        
+
         [HttpPost("assigntrainer/{trainerId:int}/tocourse/{courseId:int}")]
         public async Task<IActionResult> AssignTrainerToCourse(int courseId, int trainerId)
         {
@@ -22,7 +22,7 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok(result);
         }
 
-        
+
         [HttpPost]
         public async Task<IActionResult> CreateCourse([FromBody] CreateCourseDTO createCourseDTO)
         {
@@ -30,7 +30,7 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok(result);
         }
 
-        
+
         [HttpDelete("{courseId:int}")]
         public async Task<IActionResult> DeleteCourse(int courseId)
         {
@@ -38,7 +38,7 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok(result);
         }
 
-        
+
         [HttpGet]
         public async Task<IActionResult> GetAllCoursesDetails()
         {
@@ -46,7 +46,7 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok(result);
         }
 
-        
+
         [HttpGet("{courseId:int}")]
         public async Task<IActionResult> GetCourseDetailsById(int courseId)
         {
@@ -54,7 +54,7 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok(result);
         }
 
-        
+
         [HttpPut("{courseId:int}/capacity")]
         public async Task<IActionResult> SetCourseCapacity(int courseId, [FromBody] int capacity)
         {
@@ -62,11 +62,18 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok(result);
         }
 
-        
+
         [HttpPut("{courseId:int}")]
         public async Task<IActionResult> UpdateCourse(int courseId, [FromBody] UpdateCourseDTO updateCourseDTO)
         {
             var result = await _courseService.UpdateCourseUsingSP(courseId, updateCourseDTO);
+            return Ok(result);
+        }
+
+        [HttpGet("{courseId:int}/traineesenrolledincourse")]
+        public async Task<IActionResult> GetAllTraineesEnrolledInACourse(int courseId)
+        {
+            var result = await _courseService.GetAllTraineesEnrolledInACourseUsingSP(courseId);
             return Ok(result);
         }
     }

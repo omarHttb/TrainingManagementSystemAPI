@@ -1,4 +1,5 @@
 using Application.DTOS.AttendanceDTOS;
+using Application.DTOS.AttendancesDTOS;
 using Application.Models;
 
 namespace Application.ServiceInterfaces
@@ -9,5 +10,9 @@ namespace Application.ServiceInterfaces
         Task<bool> RecordAttendancePerLessonUsingSP(CreateAttendanceDTO attendance);
 
         Task<double> CalculateAttendancePercentagePerTraineeEnrollmentUsingSP(int enrollmentId);
+
+        Task<List<AttendanceCourseReportDTO>> GetAttendanceReportForACourseUsingSP(int courseId);
+
     }
+
 }

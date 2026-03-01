@@ -32,5 +32,12 @@ namespace TrainingManagementSystemAPI.Controllers
 
             return Ok(result);
         }
+
+        [HttpGet("attendancereport/{courseId}")]
+        public async Task<IActionResult> AttendanceReportForCourse(int courseId)
+        {
+            var result = await _AttendanceService.GetAttendanceReportForACourseUsingSP(courseId);
+            return Ok(result);
+        }
     }
 }

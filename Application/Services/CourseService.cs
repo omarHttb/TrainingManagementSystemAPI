@@ -67,6 +67,11 @@ namespace Application.Services
             return await _UnitOfWork.CourseRepository.GetAllCourseDetailsUsingSP();
         }
 
+        public async Task<List<GetAllTraineesEnrolledInACourseDTO>> GetAllTraineesEnrolledInACourseUsingSP(int CourseId)
+        {
+            return await _UnitOfWork.CourseRepository.GetAllTraineesEnrolledInACourseUsingSP(CourseId);
+        }
+
         public async Task<GetCourseDetailsDTO> GetCourseDetailsByIdUsingSP(int id)
         {
            return await _UnitOfWork.CourseRepository.GetCourseDetailsByIdUsingSP(id);

@@ -1,4 +1,5 @@
 using Application.DTOS.AttendanceDTOS;
+using Application.DTOS.AttendancesDTOS;
 using Application.Models;
 using Application.ServiceInterfaces;
 using AutoMapper;
@@ -28,6 +29,11 @@ namespace Application.Services
         { 
 
             return await _UnitOfWork.AttendenceRepository.CalculateAttendancePercentagePerTraineeEnrollmentUsingSP(enrollmentId);
+        }
+
+        public async Task<List<AttendanceCourseReportDTO>> GetAttendanceReportForACourseUsingSP(int courseId)
+        {
+            return await _UnitOfWork.AttendenceRepository.GetAttendanceReportForACourseUsingSP(courseId);   
         }
 
         public async Task<bool> RecordAttendancePerLessonUsingSP(CreateAttendanceDTO attendanceDTO)

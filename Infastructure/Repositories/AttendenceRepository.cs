@@ -1,3 +1,5 @@
+using Application.DTOS;
+using Application.DTOS.AttendancesDTOS;
 using Application.Models;
 using Application.RepositoryInterfaces;
 using Infastructure.Data;
@@ -42,6 +44,41 @@ namespace Infastructure.Repositories
             }
 
             throw new Exception("Failed to calculate attendance percentage.");
+        }
+
+        public async Task<List<AttendanceCourseReportDTO>> GetAttendanceReportForACourseUsingSP(int courseId)
+        {
+            var result = new List<AttendanceCourseReportDTO>();
+
+            using var connection = new SqlConnection(_context.Database.GetConnectionString());
+            using var command = new SqlCommand("SP_GetAttendanceReportPerCourse", connection);
+
+            command.CommandType = CommandType.StoredProcedure;
+
+            command.Parameters.Add("@CourseId", SqlDbType.Int)
+                .Value = courseId;
+
+            await connection.OpenAsync();
+
+            using var reader = await command.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
+            {
+                result.Add(new AttendanceCourseReportDTO
+                {
+                    Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                    CourseTitle = reader.GetString(reader.GetOrdinal("CourseTitle")),
+                    TraineeFullName = reader.GetString(reader.GetOrdinal("TraineeFullName")),
+                    AttendancePercentage = reader.GetDouble(reader.GetOrdinal("AttendancePercentage")),
+                    EnrollmentDate = reader.GetDateTime(reader.GetOrdinal("EnrollmentDate")),
+                    TrainerExperienceYears = reader.GetInt16(reader.GetOrdinal("TrainerExperienceYears")),
+                    TrainerFullName = reader.GetString(reader.GetOrdinal("TrainerFullName")),
+                    TrainerHeadline = reader.GetString(reader.GetOrdinal("TrainerHeadline")),
+                    TrainerTeachingSubject = reader.GetString(reader.GetOrdinal("TrainerTeachingSubject"))
+                });
+            }
+
+            return result;
         }
 
         public async Task<bool> RecordAttendancePerLessonUsingSP(Attendence attendance)

@@ -1,3 +1,4 @@
+using Application.DTOS.AttendancesDTOS;
 using Application.Models;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,8 @@ namespace Application.RepositoryInterfaces
         Task<bool> RecordAttendancePerLessonUsingSP(Attendence attendance);
 
         Task<double> CalculateAttendancePercentagePerTraineeEnrollmentUsingSP(int enrollmentId);
-        
+
+        Task<List<AttendanceCourseReportDTO>> GetAttendanceReportForACourseUsingSP(int courseId);    
+            
     }
 }
