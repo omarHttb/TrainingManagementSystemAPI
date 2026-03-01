@@ -1,7 +1,9 @@
+using Application.DTOS;
 using Application.DTOS.TrainersDTOS;
 using Application.Models;
 using Application.ServiceInterfaces;
 using AutoMapper;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,16 +16,21 @@ namespace Application.Services
     {
         private readonly IUnitOfWork _UnitOfWork;
         private readonly IMapper _mappers;
-        public TrainerService(IUnitOfWork unitOfWork, IMapper mapper)
+        private readonly IValidator<CreateTrainerDTO> _CreateTrainerValidater;
+        private readonly IValidator<UpdateTrainerDTO> _UpdateTrainerValidater;
+
+        public TrainerService(IUnitOfWork unitOfWork, IMapper mapper, IValidator<CreateTrainerDTO> CreateTrainerValidater, IValidator<UpdateTrainerDTO> updateTrainerValidater)
         {
+
             _UnitOfWork = unitOfWork;
             _mappers = mapper;
+            _CreateTrainerValidater = CreateTrainerValidater;
+            _UpdateTrainerValidater = updateTrainerValidater;
         }
 
         public async Task<bool> CreateTrainerUsingSP(CreateTrainerDTO trainerDTO)
         {
-
-            if (trainerDTO.TeachingSubject == "" || trainerDTO.TeachingSubject == null) throw new ArgumentException("Trainer must have a teaching subject");
+            await _CreateTrainerValidater.ValidateAndThrowAsync(trainerDTO);
 
             var trainer = _mappers.Map<Trainer>(trainerDTO);
 
@@ -57,6 +64,8 @@ namespace Application.Services
             var ExistingTrainer = await _UnitOfWork.TrainerRepository.GetByIdAsync(Id);
 
             if (ExistingTrainer == null) throw new ArgumentException($"No trainer found with ID {Id}", nameof(Id));
+
+            _UpdateTrainerValidater.ValidateAndThrow(updateTrainerDTO);
 
             var trainer = _mappers.Map<Trainer>(updateTrainerDTO);
 

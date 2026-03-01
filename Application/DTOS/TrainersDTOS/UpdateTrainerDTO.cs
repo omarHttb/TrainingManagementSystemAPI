@@ -10,8 +10,6 @@ namespace Application.DTOS.TrainersDTOS
     {
         public string TeachingSubject { get; set; } = null!;
 
-        public bool IsActive { get; set; }
-
         public string Bio { get; set; } = null!;
 
         public string Headline { get; set; } = null!;

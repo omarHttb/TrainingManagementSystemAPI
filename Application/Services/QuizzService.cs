@@ -8,6 +8,11 @@ using System.Threading.Tasks;
 namespace Application.Services
 {
     public class QuizzService : IQuizzService
-    {
+    {   
+        private readonly IUnitOfWork _UnitOfWork;
+        public QuizzService(IUnitOfWork unitOfWork)
+        {
+            _UnitOfWork = unitOfWork;
+        }
     }
 }

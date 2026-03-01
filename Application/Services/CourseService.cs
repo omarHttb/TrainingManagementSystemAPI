@@ -31,10 +31,9 @@ namespace Application.Services
             if (Id <= 0) throw new ArgumentException("Course ID must be greater than 0", nameof(Id));
             if (TrainerId <= 0) throw new ArgumentException("Trainer ID must be greater than 0", nameof(TrainerId));
 
-
             var result = await _UnitOfWork.CourseRepository.AssignTrainerToCourseUsingSP(Id, TrainerId);
 
-           await _UnitOfWork.CompleteAsync();
+            await _UnitOfWork.CompleteAsync();
 
             return result;
         }
