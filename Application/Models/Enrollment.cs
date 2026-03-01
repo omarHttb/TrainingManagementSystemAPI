@@ -13,6 +13,7 @@ public partial class Enrollment
 
     public DateTime EnrollmentDate { get; set; }
 
+
     public virtual ICollection<Attendence> Attendences { get; set; } = new List<Attendence>();
 
     public virtual Course Course { get; set; } = null!;

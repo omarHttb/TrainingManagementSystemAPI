@@ -13,6 +13,10 @@ public partial class Lesson
 
     public int CourseId { get; set; }
 
+    public bool IsActive { get; set; }
+
+    public virtual ICollection<Quizz> Quizzes { get; set; } = new List<Quizz>();
+
     public virtual ICollection<Attendence> Attendences { get; set; } = new List<Attendence>();
 
     public virtual Course Course { get; set; } = null!;

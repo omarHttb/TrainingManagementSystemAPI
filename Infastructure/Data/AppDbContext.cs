@@ -16,6 +16,7 @@ public partial class AppDbContext : DbContext
     {
     }
 
+    public virtual DbSet<Quizz> Quizzes { get; set; }
     public virtual DbSet<Attendence> Attendences { get; set; }
 
     public virtual DbSet<Course> Courses { get; set; }
@@ -195,6 +196,19 @@ public partial class AppDbContext : DbContext
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_UserRoles_Users");
+        });
+
+        modelBuilder.Entity<Quizz>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Quizzes__3214EC07B1C9F8A7");
+            entity.HasIndex(e => e.Lesson, "FK_Quizz_Lesson");
+            entity.Property(e => e.QuizzDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.HasOne(d => d.Lesson).WithMany(p => p.Quizzes)
+                .HasForeignKey(d => d.LessonId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Enrollments_Quizzes");
         });
 
         OnModelCreatingPartial(modelBuilder);
