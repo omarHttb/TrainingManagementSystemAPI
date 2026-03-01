@@ -23,6 +23,7 @@ public partial class User
 
     public string? ProfilePicture { get; set; }
 
+    public string PhoneNumber { get; set; } = null!;    
     public virtual ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
 
     public virtual ICollection<Trainer> Trainers { get; set; } = new List<Trainer>();
