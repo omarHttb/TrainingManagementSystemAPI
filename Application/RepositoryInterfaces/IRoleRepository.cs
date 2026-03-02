@@ -9,5 +9,6 @@ namespace Application.RepositoryInterfaces
 {
     public interface IRoleRepository : IBaseRepository<Role>
     {
+        Task<bool> AssignRoleToUser(int userId, int roleId);
     }
 }

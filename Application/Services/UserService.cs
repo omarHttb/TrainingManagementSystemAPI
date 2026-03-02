@@ -29,6 +29,11 @@ namespace Application.Services
             _LoginValidator = LoginValidator;
         }
 
+        public async Task<List<UsersDTO>> GetUsersByRoles(int RoleId)
+        {
+            return await _UnitOfWork.UserRepository.GetUsersByRoles(RoleId);
+        }
+
         public async Task<LoginDTO> LoginUser(LoginDTO loginDTO)
         {
            await _LoginValidator.ValidateAndThrowAsync(loginDTO);
@@ -67,5 +72,7 @@ namespace Application.Services
             return result;
 
         }
+
+        
     }
 }

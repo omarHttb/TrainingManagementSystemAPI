@@ -1,4 +1,5 @@
-﻿using Application.Models;
+﻿using Application.DTOS.LessonsDTOS;
+using Application.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,10 @@ namespace Application.RepositoryInterfaces
 {
     public interface ILessonRepository : IBaseRepository<Lesson>
     {
+
+        Task<List<LessonsDTO>> GetAllLessonsByCourseId(int courseId);
+
+        Task<List<LessonsUserAttended>> GetAllLessonsUserAttended(int EnrollmentId);
+        
     }
 }

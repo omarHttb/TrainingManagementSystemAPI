@@ -36,5 +36,13 @@ namespace TrainingManagementSystemAPI.Controllers
 
             return Ok(token);
         }
+
+        [HttpGet("usersbyroles")]
+        public async Task<IActionResult> GetUsersByRole(int roleId)
+        {
+            var result = _UserService.GetUsersByRoles(roleId);
+
+            return Ok(result);
+        }
     }
 }

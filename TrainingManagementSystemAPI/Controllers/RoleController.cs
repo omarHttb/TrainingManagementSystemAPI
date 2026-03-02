@@ -13,6 +13,14 @@ namespace TrainingManagementSystemAPI.Controllers
          {
 
             _RoleService = RoleService;
-         }    
+         }
+
+        [HttpPost("assign")]
+        public async Task<IActionResult> AssignRoleToUser(int userId,int RoleId)
+        {
+            var result = await _RoleService.AssignRoleToUser(userId, RoleId);
+
+            return Ok(result);
+        }
     }
 }

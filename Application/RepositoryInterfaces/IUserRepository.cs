@@ -19,5 +19,7 @@ namespace Application.RepositoryInterfaces
 
         Task<List<string>> GetUserRoles(int userId);
 
+        Task<List<UsersDTO>> GetUsersByRoles(int RoleId);
+
     }
 }

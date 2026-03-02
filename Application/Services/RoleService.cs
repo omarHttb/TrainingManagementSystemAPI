@@ -13,8 +13,13 @@ namespace Application.Services
         public RoleService(IUnitOfWork unitOfWork) 
         {
             _UnitOfWork = unitOfWork;
-        }    
+        }
 
-     
+        public Task<bool> AssignRoleToUser(int userId, int roleId)
+        {
+          var result =   _UnitOfWork.RoleRepository.AssignRoleToUser(userId, roleId);
+
+            return result;
+        }
     }
 }

@@ -1,5 +1,6 @@
 using Application.DTOS.AttendanceDTOS;
 using Application.DTOS.AttendancesDTOS;
+using Application.DTOS.LessonsDTOS;
 using Application.Models;
 
 namespace Application.ServiceInterfaces
@@ -12,6 +13,7 @@ namespace Application.ServiceInterfaces
         Task<double> CalculateAttendancePercentagePerTraineeEnrollmentUsingSP(int enrollmentId);
 
         Task<List<AttendanceCourseReportDTO>> GetAttendanceReportForACourseUsingSP(int courseId);
+
 
     }
 

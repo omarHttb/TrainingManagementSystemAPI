@@ -124,6 +124,39 @@ namespace Infastructure.Repositories
 
 
         }
+
+        public async Task<List<UsersDTO>> GetUsersByRoles(int RoleId)
+        {
+            var result = new List<UsersDTO>();
+
+            using var connection = new SqlConnection(_context.Database.GetConnectionString());
+            using var command = new SqlCommand("SP_GetUsersByRole", connection);
+
+            command.CommandType = CommandType.StoredProcedure;
+
+
+            command.Parameters.Add("@RoleId", SqlDbType.Int)
+                    .Value = RoleId;
+
+            await connection.OpenAsync();
+            using var reader = await command.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
+            {
+                result.Add(new UsersDTO
+                {
+                    Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                    FullName = reader.GetString(reader.GetOrdinal("fullname")),
+                    Email = reader.GetString(reader.GetOrdinal("Email")),
+                    PhoneNumber = reader.GetString(reader.GetOrdinal("PhoneNumber")),
+                    Gender = reader.GetString(reader.GetOrdinal("Gender")),
+                    ProfilePicture = reader.GetString(reader.GetOrdinal("ProfilePicture")),
+                    age = reader.GetInt32(reader.GetOrdinal("age"))
+                });
+            }
+
+            return result;
+        }
     }
 }
 

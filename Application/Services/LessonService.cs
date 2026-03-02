@@ -1,4 +1,5 @@
-﻿using Application.ServiceInterfaces;
+﻿using Application.DTOS.LessonsDTOS;
+using Application.ServiceInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,14 @@ namespace Application.Services
             _UnitOfWork = unitOfWork;
         }
 
+        public Task<List<LessonsDTO>> GetAllLessonsByCourseId(int courseId)
+        {
+            return _UnitOfWork.LessonRepository.GetAllLessonsByCourseId(courseId);
+        }
+
+        public Task<List<LessonsUserAttended>> GetAllLessonsUserAttended(int EnrollmentId)
+        {
+            return _UnitOfWork.LessonRepository.GetAllLessonsUserAttended(EnrollmentId);
+        }
     }
 }
