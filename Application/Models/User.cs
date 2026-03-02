@@ -17,16 +17,21 @@ public partial class User
 
     public DateOnly DateOfBirth { get; set; }
 
-    public DateTime UserCreationDate { get; set; } = DateTime.Now;
+    public DateTime UserCreationDate { get; set; }
 
     public string PasswordHash { get; set; } = null!;
 
     public string? ProfilePicture { get; set; }
 
-    public string PhoneNumber { get; set; } = null!;    
+    public string PhoneNumber { get; set; } = null!;
+
+    public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
+
     public virtual ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
 
     public virtual ICollection<Trainer> Trainers { get; set; } = new List<Trainer>();
 
     public virtual ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
+
+    public virtual ICollection<Trainer> VerifiedTrainers { get; set; } = new List<Trainer>();
 }

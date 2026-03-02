@@ -11,11 +11,9 @@ public partial class Trainer
 
     public string TeachingSubject { get; set; } = null!;
 
-    public DateTime? JoinDate { get; set; } = DateTime.Now;
+    public DateTime JoinDate { get; set; }
 
     public bool IsActive { get; set; }
-
-    public bool isVerified { get; set; }
 
     public string? Headline { get; set; }
 
@@ -23,13 +21,15 @@ public partial class Trainer
 
     public short? YearsOfExperiance { get; set; }
 
-    public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
+    public bool IsVerified { get; set; }
 
-    public virtual User User { get; set; } = null!;
-
-    public int? VerifiedBy { get; set; }
+    public int? VerifiedById { get; set; }
 
     public DateTime? VerifiedAt { get; set; }
 
     public DateTime? UpdatedAt { get; set; }
+
+    public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
+    public virtual User? VerifiedBy { get; set; }      
+    public virtual User User { get; set; } = null!;
 }

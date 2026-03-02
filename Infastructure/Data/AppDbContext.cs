@@ -16,7 +16,6 @@ public partial class AppDbContext : DbContext
     {
     }
 
-    public virtual DbSet<Quizz> Quizzes { get; set; }
     public virtual DbSet<Attendence> Attendences { get; set; }
 
     public virtual DbSet<Course> Courses { get; set; }
@@ -26,6 +25,8 @@ public partial class AppDbContext : DbContext
     public virtual DbSet<Grade> Grades { get; set; }
 
     public virtual DbSet<Lesson> Lessons { get; set; }
+
+    public virtual DbSet<Quizz> Quizzs { get; set; }
 
     public virtual DbSet<Role> Roles { get; set; }
 
@@ -67,13 +68,22 @@ public partial class AppDbContext : DbContext
 
             entity.HasIndex(e => e.TrainerId, "IX_Courses_TrainerId");
 
+            entity.HasIndex(e => e.Title, "UQ_Courses_courseTitle").IsUnique();
+
+            entity.Property(e => e.CreatedAt).HasColumnType("datetime");
             entity.Property(e => e.CreationDate).HasColumnType("datetime");
             entity.Property(e => e.Price).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.Title).HasMaxLength(50);
+            entity.Property(e => e.UpdatedAt).HasColumnType("datetime");
+            entity.Property(e => e.VerifiedAt).HasColumnType("datetime");
 
             entity.HasOne(d => d.Trainer).WithMany(p => p.Courses)
                 .HasForeignKey(d => d.TrainerId)
-                .HasConstraintName("FK_Courses_Trainers");
+                .HasConstraintName("FK_Trainers_Courses");
+
+            entity.HasOne(d => d.VerifiedBy).WithMany(p => p.Courses)
+                .HasForeignKey(d => d.VerifiedById)
+                .HasConstraintName("FK_Courses_VerfiedByUserId");
         });
 
         modelBuilder.Entity<Enrollment>(entity =>
@@ -91,7 +101,7 @@ public partial class AppDbContext : DbContext
             entity.HasOne(d => d.Course).WithMany(p => p.Enrollments)
                 .HasForeignKey(d => d.CourseId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Enrollments_Courses");
+                .HasConstraintName("FK_Courses_Enrollments");
 
             entity.HasOne(d => d.User).WithMany(p => p.Enrollments)
                 .HasForeignKey(d => d.UserId)
@@ -119,10 +129,32 @@ public partial class AppDbContext : DbContext
         {
             entity.HasIndex(e => e.CourseId, "IX_Lessons_CourseId");
 
+            entity.Property(e => e.CreatedAt).HasColumnType("datetime");
+            entity.Property(e => e.UpdatedAt).HasColumnType("datetime");
+
             entity.HasOne(d => d.Course).WithMany(p => p.Lessons)
                 .HasForeignKey(d => d.CourseId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Lesson_Course");
+                .HasConstraintName("FK_Course_Lesson");
+        });
+
+        modelBuilder.Entity<Quizz>(entity =>
+        {
+            entity.ToTable("Quizz");
+
+            entity.HasIndex(e => new { e.EnrollmentId, e.LessonId }, "UQ_Quizz_Enrollment_Lesson").IsUnique();
+
+            entity.Property(e => e.QuizzDate).HasColumnType("datetime");
+
+            entity.HasOne(d => d.Enrollment).WithMany(p => p.Quizzs)
+                .HasForeignKey(d => d.EnrollmentId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Quizz_Enrollment");
+
+            entity.HasOne(d => d.Lesson).WithMany(p => p.Quizzs)
+                .HasForeignKey(d => d.LessonId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Quizz_Lesson");
         });
 
         modelBuilder.Entity<Role>(entity =>
@@ -141,17 +173,22 @@ public partial class AppDbContext : DbContext
             entity.HasIndex(e => e.UserId, "IX_Trainers_userId");
 
             entity.Property(e => e.Headline).HasMaxLength(200);
-            entity.Property(e => e.IsActive).HasColumnName("isActive");
             entity.Property(e => e.JoinDate)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
             entity.Property(e => e.TeachingSubject).HasMaxLength(50);
-            entity.Property(e => e.UserId).HasColumnName("userId");
+            entity.Property(e => e.UpdatedAt).HasColumnType("datetime");
+            entity.Property(e => e.VerifiedAt).HasColumnType("datetime");
 
             entity.HasOne(d => d.User).WithMany(p => p.Trainers)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Trainers_Users");
+            entity.HasOne(d => d.VerifiedBy)
+                .WithMany(p => p.VerifiedTrainers)
+                .HasForeignKey(d => d.VerifiedById)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("FK_Trainers_VerifiedByUserId");
         });
 
         modelBuilder.Entity<User>(entity =>
@@ -170,6 +207,7 @@ public partial class AppDbContext : DbContext
                 .IsFixedLength();
             entity.Property(e => e.LastName).HasMaxLength(50);
             entity.Property(e => e.PasswordHash).HasMaxLength(255);
+            entity.Property(e => e.PhoneNumber).HasMaxLength(50);
             entity.Property(e => e.UserCreationDate)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
@@ -196,25 +234,6 @@ public partial class AppDbContext : DbContext
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_UserRoles_Users");
-        });
-
-        modelBuilder.Entity<Quizz>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__Quizzes__3214EC07B1C9F8A7");
-            entity.HasIndex(e => e.Lesson, "FK_Quizz_Lesson");
-            entity.Property(e => e.QuizzDate)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
-            entity.HasOne(d => d.Lesson).WithMany(p => p.Quizzes)
-                .HasForeignKey(d => d.LessonId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Quizz_Lesson");
-
-            entity.HasOne(d => d.Enrollment).WithMany(p => p.Quizzs)
-                .HasForeignKey(d => d.EnrollmentId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Quizz_Enrollment");
-
         });
 
         OnModelCreatingPartial(modelBuilder);

@@ -21,17 +21,17 @@ public partial class Course
 
     public bool IsActive { get; set; }
 
-    public bool  IsVerified { get; set; }   
+    public bool IsVerified { get; set; }
 
     public string? Thumbnail { get; set; }
 
-    public int? VerifiedBy { get; set; }
+    public int? VerifiedById { get; set; }
 
     public DateTime? VerifiedAt { get; set; }
 
     public DateTime? UpdatedAt { get; set; }
 
-    public DateTime? CreatedAt { get; set; } = DateTime.Now;
+    public DateTime? CreatedAt { get; set; }
 
     public virtual ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
 
@@ -39,5 +39,5 @@ public partial class Course
 
     public virtual Trainer? Trainer { get; set; }
 
-
+    public virtual User? VerifiedBy { get; set; }
 }

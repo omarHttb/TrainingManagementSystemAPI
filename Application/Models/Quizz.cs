@@ -1,28 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Application.Models
+namespace Application.Models;
+
+public partial class Quizz
 {
-    public class Quizz
-    {
-            
-        public int Id { get; set; }
+    public int Id { get; set; }
 
-        public int LessonId { get; set; }
+    public int LessonId { get; set; }
 
-        public int EnrollmentId { get; set; }
+    public short GradeEarned { get; set; }
 
-        public short GradeEarned { get; set; }
+    public short MaxGrade { get; set; }
 
-        public short MaxGrade { get; set; }
+    public DateTime QuizzDate { get; set; }
 
-        public DateTime QuizzDate { get; set; }
+    public int EnrollmentId { get; set; }
 
-        public virtual Enrollment Enrollment { get; set; } = new Enrollment();
-        public virtual Lesson Lesson { get; set; } = null!;
+    public virtual Enrollment Enrollment { get; set; } = null!;
 
-    }
+    public virtual Lesson Lesson { get; set; } = null!;
 }
