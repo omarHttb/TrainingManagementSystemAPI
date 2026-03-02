@@ -26,4 +26,10 @@ public partial class Trainer
     public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
 
     public virtual User User { get; set; } = null!;
+
+    public int? VerifiedBy { get; set; }
+
+    public DateTime? VerifiedAt { get; set; }
+
+    public DateTime? UpdatedAt { get; set; }
 }

@@ -208,7 +208,13 @@ public partial class AppDbContext : DbContext
             entity.HasOne(d => d.Lesson).WithMany(p => p.Quizzes)
                 .HasForeignKey(d => d.LessonId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Enrollments_Quizzes");
+                .HasConstraintName("FK_Quizz_Lesson");
+
+            entity.HasOne(d => d.Enrollment).WithMany(p => p.Quizzs)
+                .HasForeignKey(d => d.EnrollmentId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Quizz_Enrollment");
+
         });
 
         OnModelCreatingPartial(modelBuilder);

@@ -25,9 +25,19 @@ public partial class Course
 
     public string? Thumbnail { get; set; }
 
+    public int? VerifiedBy { get; set; }
+
+    public DateTime? VerifiedAt { get; set; }
+
+    public DateTime? UpdatedAt { get; set; }
+
+    public DateTime? CreatedAt { get; set; } = DateTime.Now;
+
     public virtual ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
 
     public virtual ICollection<Lesson> Lessons { get; set; } = new List<Lesson>();
 
     public virtual Trainer? Trainer { get; set; }
+
+
 }

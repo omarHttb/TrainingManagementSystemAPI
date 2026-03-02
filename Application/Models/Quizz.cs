@@ -13,12 +13,15 @@ namespace Application.Models
 
         public int LessonId { get; set; }
 
+        public int EnrollmentId { get; set; }
+
         public short GradeEarned { get; set; }
 
         public short MaxGrade { get; set; }
 
         public DateTime QuizzDate { get; set; }
 
+        public virtual Enrollment Enrollment { get; set; } = new Enrollment();
         public virtual Lesson Lesson { get; set; } = null!;
 
     }

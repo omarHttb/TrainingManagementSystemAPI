@@ -15,6 +15,10 @@ public partial class Lesson
 
     public bool IsActive { get; set; }
 
+    public DateTime? CreatedAt { get; set; } = DateTime.Now;
+
+    public DateTime? UpdatedAt { get; set; }
+
     public virtual ICollection<Quizz> Quizzes { get; set; } = new List<Quizz>();
 
     public virtual ICollection<Attendence> Attendences { get; set; } = new List<Attendence>();
