@@ -1,4 +1,5 @@
-﻿using Application.Models;
+﻿using Application.DTOS.UsersDTOS;
+using Application.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,10 @@ namespace Application.RepositoryInterfaces
         Task<bool> RegisterUserUsingSP(User user);
 
         Task<bool> DoesEmailExist(string email, int? excludePersonId = null);
+
+        Task<LoginDTO> Login(string email, string password);
+
+        Task<List<string>> GetUserRoles(int userId);
 
     }
 }

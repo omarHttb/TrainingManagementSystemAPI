@@ -5,5 +5,8 @@ namespace Application.ServiceInterfaces
     public interface IUserService
     {
         Task<bool> RegisterNewUser(RegisterUserDTO registerUserDTO);
+
+        Task<LoginDTO> LoginUser(LoginDTO loginDTO);
+
     }
 }

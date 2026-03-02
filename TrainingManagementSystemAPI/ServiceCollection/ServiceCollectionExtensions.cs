@@ -1,5 +1,6 @@
 ﻿using Application;
 using Application.DTOS;
+using Application.DTOS.UsersDTOS;
 using Application.RepositoryInterfaces;
 using Application.ServiceInterfaces;
 using Application.Services;
@@ -7,6 +8,8 @@ using Application.Validators;
 using FluentValidation;
 using Infastructure;
 using Infastructure.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.OpenApi.Models;
 
 namespace TrainingManagementSystemAPI.ServiceCollection
 {
@@ -42,6 +45,43 @@ namespace TrainingManagementSystemAPI.ServiceCollection
             services.AddValidatorsFromAssemblyContaining<EnrollmentDTOValidator>();
             services.AddValidatorsFromAssemblyContaining<UpdateCourseValidatorDTO>();
             services.AddValidatorsFromAssemblyContaining<RegisterUserValidator>();  
+            services.AddValidatorsFromAssemblyContaining<LoginDTO>();
+
+            return services;
+        }
+
+        public static IServiceCollection AddSwaggerGenWithAuth(this IServiceCollection services)
+        {
+            services.AddSwaggerGen(o =>
+            {
+                var securityScheme = new OpenApiSecurityScheme
+                {
+                    Name = "JWT Authentication",
+                    Description = "Enter your jwt token in this field",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = JwtBearerDefaults.AuthenticationScheme,
+                    BearerFormat = "JWT"
+                    
+                };
+
+                o.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, securityScheme);
+
+                var securityRequirement = new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference= new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = JwtBearerDefaults.AuthenticationScheme
+                            }
+                        },[]
+                    }
+                };
+                o.AddSecurityRequirement(securityRequirement);
+            });
 
             return services;
         }

@@ -17,13 +17,40 @@ namespace Application.Services
         private readonly IUnitOfWork _UnitOfWork;
         private readonly IMapper _mapper;
         private readonly IValidator<RegisterUserDTO> _RegisterUserValidator;
+        private readonly IValidator<LoginDTO> _LoginValidator;
+        
 
-        public UserService(IUnitOfWork unitOfWork, IMapper mapper , IValidator<RegisterUserDTO> RegisterUserValidator) 
+        public UserService(IUnitOfWork unitOfWork, IMapper mapper , IValidator<RegisterUserDTO> RegisterUserValidator,
+            IValidator<LoginDTO> LoginValidator) 
         {
             _mapper = mapper;
             _UnitOfWork = unitOfWork;
             _RegisterUserValidator = RegisterUserValidator;
-        }    
+            _LoginValidator = LoginValidator;
+        }
+
+        public async Task<LoginDTO> LoginUser(LoginDTO loginDTO)
+        {
+           await _LoginValidator.ValidateAndThrowAsync(loginDTO);
+
+            var userLoginDTO = await _UnitOfWork.UserRepository.Login(loginDTO.Email, loginDTO.Password);
+
+            if (userLoginDTO == null) 
+            {
+                loginDTO.Password = BCrypt.Net.BCrypt.HashPassword(loginDTO.Password);
+                userLoginDTO = await _UnitOfWork.UserRepository.Login(loginDTO.Email, loginDTO.Password);
+            }
+
+            if (userLoginDTO == null) 
+            {
+                return new LoginDTO();
+            }
+
+            userLoginDTO.Roles = await _UnitOfWork.UserRepository.GetUserRoles(userLoginDTO.Id);
+
+            return userLoginDTO;
+            
+        }
 
         public async Task<bool> RegisterNewUser(RegisterUserDTO registerUserDTO)
         {
