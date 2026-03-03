@@ -194,9 +194,9 @@ namespace Infastructure.Repositories
 
             command.Parameters.Add("@YearsOfExperiance", SqlDbType.SmallInt)
             .Value = trainer.YearsOfExperiance;
-            command.Parameters.Add("@Headline", SqlDbType.Decimal)
+            command.Parameters.Add("@Headline", SqlDbType.NVarChar)
             .Value = trainer.Headline;
-            command.Parameters.Add("@Bio", SqlDbType.Int)
+            command.Parameters.Add("@Bio", SqlDbType.NVarChar)
             .Value = trainer.Bio;
 
             await connection.OpenAsync();
