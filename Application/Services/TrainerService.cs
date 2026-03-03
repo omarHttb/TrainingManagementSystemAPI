@@ -58,6 +58,19 @@ namespace Application.Services
             return _UnitOfWork.TrainerRepository.GetTrainerByIdUsingSP(Id);
         }
 
+        public Task<bool> SetActivateTrainer(int TrainerId, bool isActive)
+        {
+            var result = _UnitOfWork.TrainerRepository.SetActivateTrainer(TrainerId, isActive);
+
+            return result;
+        }
+
+        public Task<bool> SetVerifyTrainer(int TrainerId, bool isVerified,  int VerifiedById)
+        {
+           var VerifiedAt = DateTime.Now;
+            var result = _UnitOfWork.TrainerRepository.SetVerifyTrainer(TrainerId, isVerified, VerifiedAt, VerifiedById);
+            return result;
+        }
 
         public async Task<bool> UpdateTrainerUsingSP(UpdateTrainerDTO updateTrainerDTO, int Id)
         {

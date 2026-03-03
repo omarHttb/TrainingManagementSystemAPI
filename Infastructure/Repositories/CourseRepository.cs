@@ -220,6 +220,24 @@ namespace Infastructure.Repositories
 
         }
 
+        public async Task<bool> SetActivateCourse(int CourseId, bool isActive)
+        {
+            using var connection = new SqlConnection(_context.Database.GetConnectionString());
+            using var command = new SqlCommand("SP_ActivateCourse", connection);
+
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("@Activate", SqlDbType.Bit)
+            .Value = isActive;
+            command.Parameters.Add("@CourseId", SqlDbType.Int)
+            .Value = CourseId;
+
+            await connection.OpenAsync();
+
+            var rowsAffected = await command.ExecuteNonQueryAsync();
+
+            return rowsAffected > 0;
+        }
+
         public async Task<bool> SetCourseCpacityUsingSP(int Capacity, int Id)
         {
             using var connection = new SqlConnection(_context.Database.GetConnectionString());
@@ -238,6 +256,29 @@ namespace Infastructure.Repositories
             return rowsAffected > 0;
 
 
+
+        }
+
+        public async Task<bool> SetVerifyCourse(int CourseId, bool isVerified, DateTime VerifiedAt, int VerifiedById)
+        {
+            using var connection = new SqlConnection(_context.Database.GetConnectionString());
+            using var command = new SqlCommand("SP_VerifyCourse", connection);
+
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("@Verify", SqlDbType.Bit)
+            .Value = isVerified;
+            command.Parameters.Add("@VerifiedAt", SqlDbType.DateTime)
+            .Value = VerifiedAt;
+            command.Parameters.Add("@CourseId", SqlDbType.Int)
+           .Value = CourseId;
+            command.Parameters.Add("@VerifiedBy", SqlDbType.Int)
+           .Value = VerifiedById;
+
+            await connection.OpenAsync();
+
+            var rowsAffected = await command.ExecuteNonQueryAsync();
+
+            return rowsAffected > 0;
 
         }
 

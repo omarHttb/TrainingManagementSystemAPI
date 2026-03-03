@@ -21,6 +21,10 @@ namespace Application.RepositoryInterfaces
 
         Task<List<TrainerWithDetailsDTO>> GetAllTrainersUsingSP();
 
+        Task<bool> SetActivateTrainer(int TrainerId, bool isActive);
+
+        Task<bool> SetVerifyTrainer (int TrainerId, bool isVerified, DateTime VerifiedAt, int VerifiedById);
+
 
     }
 }

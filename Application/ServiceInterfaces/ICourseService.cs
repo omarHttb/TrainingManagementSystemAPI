@@ -25,7 +25,9 @@ namespace Application.ServiceInterfaces
         Task<List<GetAllTraineesEnrolledInACourseDTO>> GetAllTraineesEnrolledInACourseUsingSP(int CourseId);
 
 
+        Task<bool> SetActivateCourse(int CourseId, bool isActive);
 
+        Task<bool> SetVerifyCourse(int CourseId, bool isVerified, int VerifiedById);
 
     }
 }

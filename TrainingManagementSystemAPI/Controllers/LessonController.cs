@@ -1,4 +1,5 @@
 using Application.ServiceInterfaces;
+using Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TrainingManagementSystemAPI.Controllers
@@ -24,10 +25,19 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("lessonsAttended")]
+        [HttpGet("lessonsattended")]
         public async Task<IActionResult> GetAttendedLessonsEnrollmentId(int EnrollmentId)
         {
             var result = await _LessonService.GetAllLessonsUserAttended(EnrollmentId);
+            return Ok(result);
+        }
+
+
+        [HttpPatch("activatelesson")]
+        public async Task<IActionResult> ActivateLesson(int lessonId, bool isActive)
+        {
+            var result = await _LessonService.SetActivateLesson(lessonId, isActive);
+
             return Ok(result);
         }
     }

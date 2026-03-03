@@ -77,6 +77,13 @@ namespace Application.Services
            return await _UnitOfWork.CourseRepository.GetCourseDetailsByIdUsingSP(id);
         }
 
+        public Task<bool> SetActivateCourse(int CourseId, bool isActive)
+        {
+            var result = _UnitOfWork.CourseRepository.SetActivateCourse(CourseId, isActive);
+
+            return result;
+        }
+
         public async Task<bool> SetCourseCpacityUsingSP(int Capacity, int id)
         {
             if (id <= 0) throw new ArgumentException("Course ID must be greater than 0", nameof(id));
@@ -85,6 +92,15 @@ namespace Application.Services
             var result = await _UnitOfWork.CourseRepository.SetCourseCpacityUsingSP(Capacity, id);
 
            await _UnitOfWork.CompleteAsync();
+
+            return result;
+        }
+
+        public Task<bool> SetVerifyCourse(int CourseId, bool isVerified, int VerifiedById)
+        {
+           var VerifiedAt = DateTime.Now;
+
+            var result = _UnitOfWork.CourseRepository.SetVerifyCourse(CourseId,isVerified, VerifiedAt, VerifiedById);
 
             return result;
         }

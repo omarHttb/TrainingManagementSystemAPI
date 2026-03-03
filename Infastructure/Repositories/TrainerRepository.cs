@@ -140,6 +140,47 @@ namespace Infastructure.Repositories
             return new TrainerWithDetailsDTO();
         }
 
+        public async Task<bool> SetActivateTrainer(int TrainerId, bool isActive)
+        {
+            using var connection = new SqlConnection(_context.Database.GetConnectionString());
+            using var command = new SqlCommand("SP_ActivateTrainer", connection);
+
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("@Activate", SqlDbType.Bit)
+            .Value = isActive;
+            command.Parameters.Add("@TrainerId", SqlDbType.Int)
+            .Value = TrainerId  ;
+
+            await connection.OpenAsync();
+
+            var rowsAffected = await command.ExecuteNonQueryAsync();
+
+            return rowsAffected > 0;
+        }
+
+        public async Task<bool> SetVerifyTrainer(int TrainerId, bool isVerified, DateTime VerifiedAt, int VerifiedById)
+        {
+            using var connection = new SqlConnection(_context.Database.GetConnectionString());
+            using var command = new SqlCommand("SP_VerifyTrainer", connection);
+
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("@Verify", SqlDbType.Bit)
+            .Value = isVerified;
+            command.Parameters.Add("@VerifiedAt", SqlDbType.DateTime)
+            .Value = VerifiedAt;
+            command.Parameters.Add("@TrainerId", SqlDbType.Int)
+           .Value = TrainerId;
+            command.Parameters.Add("@VerifiedBy", SqlDbType.Int)
+           .Value = VerifiedById;
+
+            await connection.OpenAsync();
+
+            var rowsAffected = await command.ExecuteNonQueryAsync();
+
+            return rowsAffected > 0;
+
+        }
+
         public async Task<bool> UpdateTrainerUsingSP(Trainer trainer, int Id)
         {
             using var connection = new SqlConnection(_context.Database.GetConnectionString());

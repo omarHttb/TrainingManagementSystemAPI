@@ -57,5 +57,20 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok(result);
         }
 
+        [HttpPatch("activatetrainer")]
+        public async Task<IActionResult> ActivateTrainer(int trainerId, bool isActive)
+        {
+            var result = await _TrainersService.SetActivateTrainer(trainerId, isActive);
+
+            return Ok(result);
+        }
+
+        [HttpPatch("verifytrainer")]
+        public async Task<IActionResult> VerifyCourse(int trainerId, int verifiedById, bool isVerfie)
+        {
+            var result = await _TrainersService.SetVerifyTrainer(trainerId, isVerfie, verifiedById);
+
+            return Ok(result);
+        }
     }
 }

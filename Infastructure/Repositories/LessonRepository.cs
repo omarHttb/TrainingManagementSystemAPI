@@ -83,5 +83,23 @@ namespace Infastructure.Repositories
 
             return lessons;
         }
+
+        public async Task<bool> SetActivateLesson(int lessonId, bool isActive)
+        {
+            using var connection = new SqlConnection(_context.Database.GetConnectionString());
+            using var command = new SqlCommand("SP_ActivateLesson", connection);
+
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("@Activate", SqlDbType.Bit)
+            .Value = isActive;
+            command.Parameters.Add("@LessonId", SqlDbType.Int)
+            .Value = lessonId;
+
+            await connection.OpenAsync();
+
+            var rowsAffected = await command.ExecuteNonQueryAsync();
+
+            return rowsAffected > 0;
+        }
     }
 }

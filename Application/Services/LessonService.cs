@@ -25,5 +25,12 @@ namespace Application.Services
         {
             return _UnitOfWork.LessonRepository.GetAllLessonsUserAttended(EnrollmentId);
         }
+
+        public Task<bool> SetActivateLesson(int lessonId, bool isActive)
+        {
+            var result = _UnitOfWork.LessonRepository.SetActivateLesson(lessonId, isActive);
+
+            return result;
+        }
     }
 }

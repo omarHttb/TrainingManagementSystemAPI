@@ -13,5 +13,7 @@ namespace Application.ServiceInterfaces
 
         Task<List<LessonsUserAttended>> GetAllLessonsUserAttended(int EnrollmentId);
 
+        Task<bool> SetActivateLesson(int lessonId, bool isActive);
+
     }
 }

@@ -30,6 +30,8 @@ public partial class Trainer
     public DateTime? UpdatedAt { get; set; }
 
     public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
-    public virtual User? VerifiedBy { get; set; }      
+
+    public virtual User? VerifiedBy { get; set; }    
+    
     public virtual User User { get; set; } = null!;
 }
