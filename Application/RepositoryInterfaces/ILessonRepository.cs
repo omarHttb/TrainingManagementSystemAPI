@@ -16,6 +16,9 @@ namespace Application.RepositoryInterfaces
         Task<List<LessonsUserAttended>> GetAllLessonsUserAttended(int enrollmentId);
 
         Task<bool> SetActivateLesson(int lessonId,bool isActive);
-        
+
+        Task<List<AllCourseLessonsDTO>> GetAllCourseLessonsUsingSP(int courseId);
+
+        Task<LessonsDTO> GetLessonByIdUsingSp (int lessonId);      
     }
 }

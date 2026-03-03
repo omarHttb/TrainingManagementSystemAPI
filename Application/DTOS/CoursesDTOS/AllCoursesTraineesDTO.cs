@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace Application.DTOS.CoursesDTOS
 {
-    public class GetAllCoursesTraineesDTO
+    public class AllCoursesTraineesDTO
     {
         public string CourseTitle { get; set; } = string.Empty;
 
         public string TraineeFullName { get; set; } = string.Empty;
+
         public DateTime EnrollmentDate { get; set; }
 
     }

@@ -1,5 +1,6 @@
 using Application.DTOS;
 using Application.DTOS.CoursesDTOS;
+using Application.DTOS.LessonsDTOS;
 using Application.Models;
 using System;
 using System.Collections.Generic;
@@ -26,12 +27,15 @@ namespace Application.RepositoryInterfaces
 
         Task<bool> AssignTrainerToCourseUsingSP(int Id, int TrainerId);
 
-        Task<List<GetAllTraineeCoursesDTO>> GetAllTraineeCoursesUsingSP(int TraineeId);
+        Task<List<AllTraineeCoursesDTO>> GetAllTraineeCoursesUsingSP(int TraineeId);
 
-        Task<List<GetAllTraineesEnrolledInACourseDTO>> GetAllTraineesEnrolledInACourseUsingSP(int CourseId);
+        Task<List<AllTraineesEnrolledInACourseDTO>> GetAllTraineesEnrolledInACourseUsingSP(int CourseId);
 
         Task<bool> SetActivateCourse(int CourseId, bool isActive);
 
         Task<bool> SetVerifyCourse(int CourseId, bool isVerified, DateTime VerifiedAt, int VerifiedById);
+
+        Task<List<AllCoursesDTO>> GetAllCoursesUsingSP();
+
     }
 }

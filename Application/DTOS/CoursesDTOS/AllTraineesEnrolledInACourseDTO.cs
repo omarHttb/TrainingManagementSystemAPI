@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.DTOS
 {
-    public class GetAllTraineesEnrolledInACourseDTO
+    public class AllTraineesEnrolledInACourseDTO
     {
 
         public string CourseTitle { get; set; } = string.Empty;

@@ -40,5 +40,15 @@ namespace TrainingManagementSystemAPI.Controllers
 
             return Ok(result);
         }
+
+        [HttpGet("courselessons")]
+        public async Task<IActionResult> GetAllCourseLessons(int courseId)
+        {
+            var result = await _LessonService.GetAllCourseLessonsUsingSP(courseId);
+
+            return Ok(result);
+        }
+
+
     }
 }

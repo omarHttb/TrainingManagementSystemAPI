@@ -15,5 +15,8 @@ namespace Application.ServiceInterfaces
 
         Task<bool> SetActivateLesson(int lessonId, bool isActive);
 
+        Task<List<AllCourseLessonsDTO>> GetAllCourseLessonsUsingSP(int courseId);
+
+        Task<LessonsDTO> GetLessonByIdUsingSp(int lessonId);
     }
 }

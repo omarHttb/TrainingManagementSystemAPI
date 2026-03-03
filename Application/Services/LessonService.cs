@@ -16,14 +16,24 @@ namespace Application.Services
             _UnitOfWork = unitOfWork;
         }
 
-        public Task<List<LessonsDTO>> GetAllLessonsByCourseId(int courseId)
+        public async Task<List<AllCourseLessonsDTO>> GetAllCourseLessonsUsingSP(int courseId)
         {
-            return _UnitOfWork.LessonRepository.GetAllLessonsByCourseId(courseId);
+            return await _UnitOfWork.LessonRepository.GetAllCourseLessonsUsingSP(courseId);
+        }
+
+        public async Task<List<LessonsDTO>> GetAllLessonsByCourseId(int courseId)
+        {
+            return await _UnitOfWork.LessonRepository.GetAllLessonsByCourseId(courseId);
         }
 
         public async Task<List<LessonsUserAttended>> GetAllLessonsUserAttended(int EnrollmentId)
         {
             return await _UnitOfWork.LessonRepository.GetAllLessonsUserAttended(EnrollmentId);
+        }
+
+        public async Task<LessonsDTO> GetLessonByIdUsingSp(int lessonId)
+        {
+            return await _UnitOfWork.LessonRepository.GetLessonByIdUsingSp(lessonId);
         }
 
         public async Task<bool> SetActivateLesson(int lessonId, bool isActive)

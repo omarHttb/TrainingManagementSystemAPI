@@ -1,4 +1,5 @@
-﻿using Application.DTOS.LessonsDTOS;
+﻿using Application.DTOS.CoursesDTOS;
+using Application.DTOS.LessonsDTOS;
 using Application.DTOS.UsersDTOS;
 using Application.Models;
 using Application.RepositoryInterfaces;
@@ -18,6 +19,37 @@ namespace Infastructure.Repositories
     {
         public LessonRepository(AppDbContext context) : base(context)
         {
+        }
+
+        public async Task<List<AllCourseLessonsDTO>> GetAllCourseLessonsUsingSP(int courseId)
+        {
+            var lessons = new List<AllCourseLessonsDTO>();
+            using var connection = new SqlConnection(_context.Database.GetConnectionString());
+            using var command = new SqlCommand("SP_GetAllLessonsByCourseId", connection);
+
+            command.CommandType = CommandType.StoredProcedure;
+
+
+            command.Parameters.Add("@CourseId", SqlDbType.Int)
+                    .Value = courseId;
+
+
+            await connection.OpenAsync();
+            using var reader = await command.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
+            {
+                lessons.Add(new AllCourseLessonsDTO
+                {
+                    LessonName = reader.GetString(reader.GetOrdinal("LessonName")),
+                     DidAttend = reader.GetBoolean(reader.GetOrdinal("DidAttend")),
+                    Id = reader.GetInt32(reader.GetOrdinal("Id")),
+
+                });
+            }
+
+            return lessons;
+
         }
 
         public async Task<List<LessonsDTO>> GetAllLessonsByCourseId(int courseId)
@@ -82,6 +114,34 @@ namespace Infastructure.Repositories
             }
 
             return lessons;
+        }
+
+        public async Task<LessonsDTO> GetLessonByIdUsingSp(int lessonId)
+        {
+            using var connection = new SqlConnection(_context.Database.GetConnectionString());
+            using var command = new SqlCommand("SP_GetLessonById", connection);
+
+            command.CommandType = CommandType.StoredProcedure;
+
+            command.Parameters.Add("@LessonId", SqlDbType.Int)
+                   .Value = lessonId;
+
+            await connection.OpenAsync();
+
+            using var reader = await command.ExecuteReaderAsync();
+
+            if (await reader.ReadAsync())
+            {
+                return new LessonsDTO
+                {
+                    LessonName = reader.GetString(reader.GetOrdinal("LessonName")),
+                    LessonDescription = reader.GetString(reader.GetOrdinal("LessonDescription")),
+                    lessonId = reader.GetInt32(reader.GetOrdinal("Id")),
+                };
+            }
+
+            return new LessonsDTO();
+
         }
 
         public async Task<bool> SetActivateLesson(int lessonId, bool isActive)

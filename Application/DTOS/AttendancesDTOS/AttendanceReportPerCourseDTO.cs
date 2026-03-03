@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.DTOS.AttendanceDTOS
 {
-    public class GetAttendanceReportPerCourseDTO
+    public class AttendanceReportPerCourseDTO
     {
         public int EnrollmentID { get; set; }   
 

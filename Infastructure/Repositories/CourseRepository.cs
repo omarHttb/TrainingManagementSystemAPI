@@ -123,9 +123,39 @@ namespace Infastructure.Repositories
             return result;
         }
 
-        public async Task<List<GetAllTraineeCoursesDTO>> GetAllTraineeCoursesUsingSP(int TraineeId)
+        public  async Task<List<AllCoursesDTO>> GetAllCoursesUsingSP()
         {
-            var result = new List<GetAllTraineeCoursesDTO>();
+            var result = new List<AllCoursesDTO>();
+
+            using var connection = new SqlConnection(_context.Database.GetConnectionString());
+            using var command = new SqlCommand("SP_GetAllCourses", connection);
+
+            command.CommandType = CommandType.StoredProcedure;
+
+
+            await connection.OpenAsync();
+
+            using var reader = await command.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
+            {
+                result.Add(new AllCoursesDTO
+                {
+                    Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                    CourseTitle = reader.GetString(reader.GetOrdinal("Title")),
+                    Description = reader.GetString(reader.GetOrdinal("Description")),
+                    Price = reader.GetDecimal(reader.GetOrdinal("Price")),
+                    TrainerName = reader.GetString(reader.GetOrdinal("TrainerName")),
+                    Capacity = reader.GetInt32(reader.GetOrdinal("Capacity"))
+                });
+            }
+
+            return result;
+        }
+
+        public async Task<List<AllTraineeCoursesDTO>> GetAllTraineeCoursesUsingSP(int TraineeId)
+        {
+            var result = new List<AllTraineeCoursesDTO>();
 
             using var connection = new SqlConnection(_context.Database.GetConnectionString());
             using var command = new SqlCommand("SP_GetAllTraineeCourses", connection);
@@ -144,7 +174,7 @@ namespace Infastructure.Repositories
 
             while (await reader.ReadAsync())
             {
-                result.Add(new GetAllTraineeCoursesDTO
+                result.Add(new AllTraineeCoursesDTO
                 {
                     CourseName = reader.GetString(reader.GetOrdinal("CourseTitle")),
                     TrainerName = reader.GetString(reader.GetOrdinal("TrainerName")),
@@ -157,9 +187,9 @@ namespace Infastructure.Repositories
 
         }
 
-        public async Task<List<GetAllTraineesEnrolledInACourseDTO>> GetAllTraineesEnrolledInACourseUsingSP(int CourseId)
+        public async Task<List<AllTraineesEnrolledInACourseDTO>> GetAllTraineesEnrolledInACourseUsingSP(int CourseId)
         {
-            var result = new List<GetAllTraineesEnrolledInACourseDTO>();
+            var result = new List<AllTraineesEnrolledInACourseDTO>();
 
             using var connection = new SqlConnection(_context.Database.GetConnectionString());
             using var command = new SqlCommand("SP_GetAllTraineesEnrolledInCourse", connection);
@@ -176,7 +206,7 @@ namespace Infastructure.Repositories
 
             while (await reader.ReadAsync())
             {
-                result.Add(new GetAllTraineesEnrolledInACourseDTO
+                result.Add(new AllTraineesEnrolledInACourseDTO
                 {
                     CourseTitle = reader.GetString(reader.GetOrdinal("CourseTitle")),
                     TraineeFullName = reader.GetString(reader.GetOrdinal("TraineeFullName")),
