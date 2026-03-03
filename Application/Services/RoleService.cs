@@ -15,9 +15,12 @@ namespace Application.Services
             _UnitOfWork = unitOfWork;
         }
 
-        public Task<bool> AssignRoleToUser(int userId, int roleId)
+        public async Task<bool> AssignRoleToUser(int userId, int roleId)
         {
-          var result =   _UnitOfWork.RoleRepository.AssignRoleToUser(userId, roleId);
+          var result = await   _UnitOfWork.RoleRepository.AssignRoleToUser(userId, roleId);
+
+            await _UnitOfWork.CompleteAsync();
+
 
             return result;
         }

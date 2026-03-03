@@ -37,6 +37,8 @@ namespace Application.Mapping
             CreateMap<CreateAttendanceDTO, Attendence>();
 
             CreateMap<UpdateTrainerDTO, Trainer>();
+
+            CreateMap<UpdateUserDTO, User>();
         } 
     }
 }

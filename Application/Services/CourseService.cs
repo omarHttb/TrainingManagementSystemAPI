@@ -77,9 +77,10 @@ namespace Application.Services
            return await _UnitOfWork.CourseRepository.GetCourseDetailsByIdUsingSP(id);
         }
 
-        public Task<bool> SetActivateCourse(int CourseId, bool isActive)
+        public async Task<bool> SetActivateCourse(int CourseId, bool isActive)
         {
-            var result = _UnitOfWork.CourseRepository.SetActivateCourse(CourseId, isActive);
+            var result = await _UnitOfWork.CourseRepository.SetActivateCourse(CourseId, isActive);
+
 
             return result;
         }
@@ -96,11 +97,13 @@ namespace Application.Services
             return result;
         }
 
-        public Task<bool> SetVerifyCourse(int CourseId, bool isVerified, int VerifiedById)
+        public async Task<bool> SetVerifyCourse(int CourseId, bool isVerified, int VerifiedById)
         {
            var VerifiedAt = DateTime.Now;
 
-            var result = _UnitOfWork.CourseRepository.SetVerifyCourse(CourseId,isVerified, VerifiedAt, VerifiedById);
+            var result = await _UnitOfWork.CourseRepository.SetVerifyCourse(CourseId,isVerified, VerifiedAt, VerifiedById);
+
+            await _UnitOfWork.CompleteAsync();
 
             return result;
         }

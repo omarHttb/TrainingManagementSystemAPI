@@ -46,6 +46,7 @@ namespace TrainingManagementSystemAPI.ServiceCollection
             services.AddValidatorsFromAssemblyContaining<UpdateCourseValidatorDTO>();
             services.AddValidatorsFromAssemblyContaining<RegisterUserValidator>();  
             services.AddValidatorsFromAssemblyContaining<LoginDTO>();
+            services.AddValidatorsFromAssemblyContaining<UpdateUserDTO>();
 
             return services;
         }

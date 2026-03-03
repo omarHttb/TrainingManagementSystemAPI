@@ -18,15 +18,17 @@ namespace Application.Services
         private readonly IMapper _mapper;
         private readonly IValidator<RegisterUserDTO> _RegisterUserValidator;
         private readonly IValidator<LoginDTO> _LoginValidator;
-        
+        private readonly IValidator<UpdateUserDTO> _UpdateUserValidator;
+
 
         public UserService(IUnitOfWork unitOfWork, IMapper mapper , IValidator<RegisterUserDTO> RegisterUserValidator,
-            IValidator<LoginDTO> LoginValidator) 
+            IValidator<LoginDTO> LoginValidator, IValidator<UpdateUserDTO> UpdateUserValidator) 
         {
             _mapper = mapper;
             _UnitOfWork = unitOfWork;
             _RegisterUserValidator = RegisterUserValidator;
             _LoginValidator = LoginValidator;
+            _UpdateUserValidator = UpdateUserValidator;
         }
 
         public async Task<List<UsersDTO>> GetUsersByRoles(int RoleId)
@@ -67,12 +69,30 @@ namespace Application.Services
 
             var result = await _UnitOfWork.UserRepository.RegisterUserUsingSP(user);
 
-            await _UnitOfWork.CompleteAsync();
 
             return result;
 
         }
 
-        
+        public async Task<bool> UpdateUser(UpdateUserDTO updateUserDTO)
+        {
+            var existingUser = await _UnitOfWork.UserRepository.GetByIdAsync(updateUserDTO.Id);
+
+            if(existingUser == null)
+            {
+                throw new ArgumentException("User with the Id does not exist");
+            }
+             await _UpdateUserValidator.ValidateAndThrowAsync(updateUserDTO);
+
+
+            var user = _mapper.Map<User>(updateUserDTO);
+
+            var result = await _UnitOfWork.UserRepository.UpdateUserUsingSP(user);
+
+
+            return result;
+
+
+        }
     }
 }

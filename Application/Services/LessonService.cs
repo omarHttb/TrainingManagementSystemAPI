@@ -21,14 +21,14 @@ namespace Application.Services
             return _UnitOfWork.LessonRepository.GetAllLessonsByCourseId(courseId);
         }
 
-        public Task<List<LessonsUserAttended>> GetAllLessonsUserAttended(int EnrollmentId)
+        public async Task<List<LessonsUserAttended>> GetAllLessonsUserAttended(int EnrollmentId)
         {
-            return _UnitOfWork.LessonRepository.GetAllLessonsUserAttended(EnrollmentId);
+            return await _UnitOfWork.LessonRepository.GetAllLessonsUserAttended(EnrollmentId);
         }
 
-        public Task<bool> SetActivateLesson(int lessonId, bool isActive)
+        public async Task<bool> SetActivateLesson(int lessonId, bool isActive)
         {
-            var result = _UnitOfWork.LessonRepository.SetActivateLesson(lessonId, isActive);
+            var result = await _UnitOfWork.LessonRepository.SetActivateLesson(lessonId, isActive);
 
             return result;
         }

@@ -44,7 +44,6 @@ namespace Application.Services
 
             var result = await _UnitOfWork.AttendenceRepository.RecordAttendancePerLessonUsingSP(attendance);
 
-            await  _UnitOfWork.CompleteAsync();
 
             return result;
         }

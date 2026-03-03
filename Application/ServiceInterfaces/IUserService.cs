@@ -9,5 +9,7 @@ namespace Application.ServiceInterfaces
         Task<LoginDTO> LoginUser(LoginDTO loginDTO);
 
         Task<List<UsersDTO>> GetUsersByRoles(int RoleId);
+
+        Task<bool> UpdateUser(UpdateUserDTO updateUserDTO);
     }
 }

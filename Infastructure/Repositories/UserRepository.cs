@@ -38,17 +38,21 @@ namespace Infastructure.Repositories
             command.Parameters.Add("@LastName", SqlDbType.NVarChar)
                 .Value = user.LastName;
 
-            command.Parameters.Add("@Gender", SqlDbType.Decimal)
+            command.Parameters.Add("@PhoneNumber", SqlDbType.NVarChar)
+             .Value = user.PhoneNumber;
+
+            command.Parameters.Add("@Gender", SqlDbType.Char)
                 .Value = user.Gender;
 
             command.Parameters.Add("@DateOfBirth", SqlDbType.DateTime)
                 .Value = user.DateOfBirth;
 
-            command.Parameters.Add("@UserCreationDate", SqlDbType.Int)
+            command.Parameters.Add("@UserCreationDate", SqlDbType.DateTime)
                 .Value = user.UserCreationDate;
 
             command.Parameters.Add("@PasswordHash", SqlDbType.Int)
                 .Value = user.PasswordHash;
+
 
             await connection.OpenAsync();
 
@@ -156,6 +160,42 @@ namespace Infastructure.Repositories
             }
 
             return result;
+        }
+
+        public async Task<bool> UpdateUserUsingSP(User user)
+        {
+            using var connection = new SqlConnection(_context.Database.GetConnectionString());
+            using var command = new SqlCommand("SP_CreateNewUser", connection);
+
+            command.CommandType = CommandType.StoredProcedure;
+
+
+            command.Parameters.Add("@Id", SqlDbType.NVarChar)
+                .Value = user.Id;
+
+            command.Parameters.Add("@FirstName", SqlDbType.NVarChar)
+                .Value = user.FirstName;
+
+            command.Parameters.Add("@LastName", SqlDbType.NVarChar)
+                .Value = user.LastName;
+            command.Parameters.Add("@Email", SqlDbType.NVarChar)
+               .Value = user.Email;
+
+            command.Parameters.Add("@PhoneNumber", SqlDbType.NVarChar)
+               .Value = user.PhoneNumber;
+
+            command.Parameters.Add("@ProfilePicture", SqlDbType.NVarChar)
+                           .Value = user.ProfilePicture;
+
+
+
+
+            await connection.OpenAsync();
+
+            var rowsAffected = await command.ExecuteNonQueryAsync();
+
+            return rowsAffected > 0;
+
         }
     }
 }

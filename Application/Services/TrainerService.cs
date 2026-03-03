@@ -36,14 +36,15 @@ namespace Application.Services
 
             var result = await _UnitOfWork.TrainerRepository.CreateTrainerUsingSP(trainer);
 
-            await _UnitOfWork.CompleteAsync();
 
             return result;
         }
 
-        public Task<bool> DeleteTrainerUsingSP(int Id)
+        public async Task<bool> DeleteTrainerUsingSP(int Id)
         {
-            var result = _UnitOfWork.TrainerRepository.DeleteTrainerUsingSP(Id);
+            var result = await _UnitOfWork.TrainerRepository.DeleteTrainerUsingSP(Id);
+
+
 
             return result;
         }
@@ -58,17 +59,21 @@ namespace Application.Services
             return _UnitOfWork.TrainerRepository.GetTrainerByIdUsingSP(Id);
         }
 
-        public Task<bool> SetActivateTrainer(int TrainerId, bool isActive)
+        public async Task<bool> SetActivateTrainer(int TrainerId, bool isActive)
         {
-            var result = _UnitOfWork.TrainerRepository.SetActivateTrainer(TrainerId, isActive);
+            var result = await _UnitOfWork.TrainerRepository.SetActivateTrainer(TrainerId, isActive);
+
+
 
             return result;
         }
 
-        public Task<bool> SetVerifyTrainer(int TrainerId, bool isVerified,  int VerifiedById)
+        public async Task<bool> SetVerifyTrainer(int TrainerId, bool isVerified,  int VerifiedById)
         {
            var VerifiedAt = DateTime.Now;
-            var result = _UnitOfWork.TrainerRepository.SetVerifyTrainer(TrainerId, isVerified, VerifiedAt, VerifiedById);
+            var result = await _UnitOfWork.TrainerRepository.SetVerifyTrainer(TrainerId, isVerified, VerifiedAt, VerifiedById);
+
+
             return result;
         }
 
@@ -84,6 +89,7 @@ namespace Application.Services
 
             var result = await _UnitOfWork.TrainerRepository.UpdateTrainerUsingSP(trainer, Id);
 
+          await  _UnitOfWork.CompleteAsync();
 
             return result;
         }

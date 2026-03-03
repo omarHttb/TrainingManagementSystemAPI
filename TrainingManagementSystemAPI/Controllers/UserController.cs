@@ -44,5 +44,12 @@ namespace TrainingManagementSystemAPI.Controllers
 
             return Ok(result);
         }
+
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateUser(UpdateUserDTO updateUserDTO)
+        {
+            var result = _UserService.UpdateUser(updateUserDTO);
+            return Ok(result);
+        }
     }
 }

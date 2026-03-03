@@ -21,5 +21,7 @@ namespace Application.RepositoryInterfaces
 
         Task<List<UsersDTO>> GetUsersByRoles(int RoleId);
 
+        Task<bool> UpdateUserUsingSP(User user);
+
     }
 }
