@@ -17,7 +17,7 @@ namespace TrainingManagementSystemAPI.Controllers
             _AttendanceService = AttendanceService;
         }
 
-        [HttpPost("recordattendance")]
+        [HttpPost("record")]
         public async Task<IActionResult> RecordAttendancePerLessonForTrainee(CreateAttendanceDTO dto)
         {
             var result = await _AttendanceService.RecordAttendancePerLessonUsingSP(dto);
@@ -25,7 +25,7 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("attendancepercentage/{traineeId}")]
+        [HttpGet("percentage/{traineeId}")]
         public async Task<IActionResult> AttendancePercentageForTrainee(int traineeId)
         {
             var result = await _AttendanceService.CalculateAttendancePercentagePerTraineeEnrollmentUsingSP(traineeId);
@@ -33,7 +33,7 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("attendancereport/{courseId}")]
+        [HttpGet("report/{courseId}")]
         public async Task<IActionResult> AttendanceReportForCourse(int courseId)
         {
             var result = await _AttendanceService.GetAttendanceReportForACourseUsingSP(courseId);

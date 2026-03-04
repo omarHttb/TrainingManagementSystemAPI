@@ -4,12 +4,12 @@ namespace Application.ServiceInterfaces
 {
     public interface IUserService
     {
-        Task<bool> RegisterNewUser(RegisterUserDTO registerUserDTO);
+        Task<bool> RegisterNewUserUsingSP(RegisterUserDTO registerUserDTO);
 
-        Task<LoginDTO> LoginUser(LoginDTO loginDTO);
+        Task<LoginDTO> LoginUserUsingSP(LoginDTO loginDTO);
 
-        Task<List<UsersDTO>> GetUsersByRoles(int RoleId);
+        Task<List<UsersDTO>> GetUsersByRolesUsingSP(int RoleId);
 
-        Task<bool> UpdateUser(UpdateUserDTO updateUserDTO);
+        Task<bool> UpdateUserUsingSP(UpdateUserDTO updateUserDTO);
     }
 }

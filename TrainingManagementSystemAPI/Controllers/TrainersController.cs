@@ -57,18 +57,18 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok(result);
         }
 
-        [HttpPatch("activatetrainer")]
+        [HttpPatch("activate")]
         public async Task<IActionResult> ActivateTrainer(int trainerId, bool isActive)
         {
-            var result = await _TrainersService.SetActivateTrainer(trainerId, isActive);
+            var result = await _TrainersService.SetActivateTrainerUsingSP(trainerId, isActive);
 
             return Ok(result);
         }
 
-        [HttpPatch("verifytrainer")]
+        [HttpPatch("verify")]
         public async Task<IActionResult> VerifyCourse(int trainerId, int verifiedById, bool isVerfie)
         {
-            var result = await _TrainersService.SetVerifyTrainer(trainerId, isVerfie, verifiedById);
+            var result = await _TrainersService.SetVerifyTrainerUsingSP(trainerId, isVerfie, verifiedById);
 
             return Ok(result);
         }

@@ -18,7 +18,7 @@ namespace TrainingManagementSystemAPI.Controllers
         [HttpPost("assign")]
         public async Task<IActionResult> AssignRoleToUser(int userId,int RoleId)
         {
-            var result = await _RoleService.AssignRoleToUser(userId, RoleId);
+            var result = await _RoleService.AssignRoleToUserUsingSP(userId, RoleId);
 
             return Ok(result);
         }

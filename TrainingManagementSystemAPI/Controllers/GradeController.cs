@@ -35,7 +35,7 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("averageGrade/{courseId:int}")]
+        [HttpGet("average/{courseId:int}")]
         public async Task<IActionResult> GetGradeAverageForCourse(int courseId)
         {
             var result = await _GradeService.GetAverageGradeForCourseUsingSp(courseId);

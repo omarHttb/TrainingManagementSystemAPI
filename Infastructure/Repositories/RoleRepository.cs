@@ -21,7 +21,7 @@ namespace Infastructure.Repositories
             }
         }
 
-        public async Task<bool> AssignRoleToUser(int userId, int roleId)
+        public async Task<bool> AssignRoleToUserUsingSP(int userId, int roleId)
         {
 
             using var connection = new SqlConnection(_context.Database.GetConnectionString());

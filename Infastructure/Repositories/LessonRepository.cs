@@ -52,7 +52,7 @@ namespace Infastructure.Repositories
 
         }
 
-        public async Task<List<LessonsDTO>> GetAllLessonsByCourseId(int courseId)
+        public async Task<List<LessonsDTO>> GetAllLessonsByCourseIdUsingSP(int courseId)
         {
             var lessons = new List<LessonsDTO>();
             using var connection = new SqlConnection(_context.Database.GetConnectionString());
@@ -83,7 +83,7 @@ namespace Infastructure.Repositories
             return lessons;
         }
 
-        public async Task<List<LessonsUserAttended>> GetAllLessonsUserAttended(int EnrollmentId)
+        public async Task<List<LessonsUserAttended>> GetAllLessonsUserAttendedUsingSP(int EnrollmentId)
         {
             var lessons = new List<LessonsUserAttended>();
             using var connection = new SqlConnection(_context.Database.GetConnectionString());
@@ -144,7 +144,7 @@ namespace Infastructure.Repositories
 
         }
 
-        public async Task<bool> SetActivateLesson(int lessonId, bool isActive)
+        public async Task<bool> SetActivateLessonUsingSP(int lessonId, bool isActive)
         {
             using var connection = new SqlConnection(_context.Database.GetConnectionString());
             using var command = new SqlCommand("SP_ActivateLesson", connection);

@@ -250,7 +250,7 @@ namespace Infastructure.Repositories
 
         }
 
-        public async Task<bool> SetActivateCourse(int CourseId, bool isActive)
+        public async Task<bool> SetActivateCourseUsingSP(int CourseId, bool isActive)
         {
             using var connection = new SqlConnection(_context.Database.GetConnectionString());
             using var command = new SqlCommand("SP_ActivateCourse", connection);
@@ -289,7 +289,7 @@ namespace Infastructure.Repositories
 
         }
 
-        public async Task<bool> SetVerifyCourse(int CourseId, bool isVerified, DateTime VerifiedAt, int VerifiedById)
+        public async Task<bool> SetVerifyCourseUsingSP(int CourseId, bool isVerified, DateTime VerifiedAt, int VerifiedById)
         {
             using var connection = new SqlConnection(_context.Database.GetConnectionString());
             using var command = new SqlCommand("SP_VerifyCourse", connection);

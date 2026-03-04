@@ -31,21 +31,21 @@ namespace Application.Services
             _UpdateUserValidator = UpdateUserValidator;
         }
 
-        public async Task<List<UsersDTO>> GetUsersByRoles(int RoleId)
+        public async Task<List<UsersDTO>> GetUsersByRolesUsingSP(int RoleId)
         {
-            return await _UnitOfWork.UserRepository.GetUsersByRoles(RoleId);
+            return await _UnitOfWork.UserRepository.GetUsersByRolesUsingSP(RoleId);
         }
 
-        public async Task<LoginDTO> LoginUser(LoginDTO loginDTO)
+        public async Task<LoginDTO> LoginUserUsingSP(LoginDTO loginDTO)
         {
            await _LoginValidator.ValidateAndThrowAsync(loginDTO);
 
-            var userLoginDTO = await _UnitOfWork.UserRepository.Login(loginDTO.Email, loginDTO.Password);
+            var userLoginDTO = await _UnitOfWork.UserRepository.LoginUsingSP(loginDTO.Email, loginDTO.Password);
 
             if (userLoginDTO == null) 
             {
                 loginDTO.Password = BCrypt.Net.BCrypt.HashPassword(loginDTO.Password);
-                userLoginDTO = await _UnitOfWork.UserRepository.Login(loginDTO.Email, loginDTO.Password);
+                userLoginDTO = await _UnitOfWork.UserRepository.LoginUsingSP(loginDTO.Email, loginDTO.Password);
             }
 
             if (userLoginDTO == null) 
@@ -53,13 +53,13 @@ namespace Application.Services
                 return new LoginDTO();
             }
 
-            userLoginDTO.Roles = await _UnitOfWork.UserRepository.GetUserRoles(userLoginDTO.Id);
+            userLoginDTO.Roles = await _UnitOfWork.UserRepository.GetUserRolesUsingSP(userLoginDTO.Id);
 
             return userLoginDTO;
             
         }
 
-        public async Task<bool> RegisterNewUser(RegisterUserDTO registerUserDTO)
+        public async Task<bool> RegisterNewUserUsingSP(RegisterUserDTO registerUserDTO)
         {
             await _RegisterUserValidator.ValidateAndThrowAsync(registerUserDTO);
 
@@ -74,7 +74,7 @@ namespace Application.Services
 
         }
 
-        public async Task<bool> UpdateUser(UpdateUserDTO updateUserDTO)
+        public async Task<bool> UpdateUserUsingSP(UpdateUserDTO updateUserDTO)
         {
             var existingUser = await _UnitOfWork.UserRepository.GetByIdAsync(updateUserDTO.Id);
 

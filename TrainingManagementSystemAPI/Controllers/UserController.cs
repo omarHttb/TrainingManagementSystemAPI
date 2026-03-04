@@ -22,7 +22,7 @@ namespace TrainingManagementSystemAPI.Controllers
         public async Task<IActionResult> RegisterNewUser(RegisterUserDTO registerUserDTO)
         {
 
-            var result = await _UserService.RegisterNewUser(registerUserDTO);
+            var result = await _UserService.RegisterNewUserUsingSP(registerUserDTO);
 
             return Ok("User registered successfully.");
         }
@@ -30,17 +30,17 @@ namespace TrainingManagementSystemAPI.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDTO loginDTO)
         {
-            var result = await _UserService.LoginUser(loginDTO);
+            var result = await _UserService.LoginUserUsingSP(loginDTO);
 
             string token = _tokenProvider.create(loginDTO);
 
             return Ok(token);
         }
 
-        [HttpGet("usersbyroles")]
+        [HttpGet("byroles")]
         public async Task<IActionResult> GetUsersByRole(int roleId)
         {
-            var result = _UserService.GetUsersByRoles(roleId);
+            var result = _UserService.GetUsersByRolesUsingSP(roleId);
 
             return Ok(result);
         }
@@ -48,7 +48,7 @@ namespace TrainingManagementSystemAPI.Controllers
         [HttpPut("update")]
         public async Task<IActionResult> UpdateUser(UpdateUserDTO updateUserDTO)
         {
-            var result = _UserService.UpdateUser(updateUserDTO);
+            var result = _UserService.UpdateUserUsingSP(updateUserDTO);
             return Ok(result);
         }
     }

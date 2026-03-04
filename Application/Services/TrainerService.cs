@@ -59,19 +59,19 @@ namespace Application.Services
             return _UnitOfWork.TrainerRepository.GetTrainerByIdUsingSP(Id);
         }
 
-        public async Task<bool> SetActivateTrainer(int TrainerId, bool isActive)
+        public async Task<bool> SetActivateTrainerUsingSP(int TrainerId, bool isActive)
         {
-            var result = await _UnitOfWork.TrainerRepository.SetActivateTrainer(TrainerId, isActive);
+            var result = await _UnitOfWork.TrainerRepository.SetActivateTrainerUsingSP(TrainerId, isActive);
 
 
 
             return result;
         }
 
-        public async Task<bool> SetVerifyTrainer(int TrainerId, bool isVerified,  int VerifiedById)
+        public async Task<bool> SetVerifyTrainerUsingSP(int TrainerId, bool isVerified,  int VerifiedById)
         {
            var VerifiedAt = DateTime.Now;
-            var result = await _UnitOfWork.TrainerRepository.SetVerifyTrainer(TrainerId, isVerified, VerifiedAt, VerifiedById);
+            var result = await _UnitOfWork.TrainerRepository.SetVerifyTrainerUsingSP(TrainerId, isVerified, VerifiedAt, VerifiedById);
 
 
             return result;

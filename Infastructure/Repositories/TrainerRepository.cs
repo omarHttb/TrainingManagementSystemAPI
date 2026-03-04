@@ -140,7 +140,7 @@ namespace Infastructure.Repositories
             return new TrainerWithDetailsDTO();
         }
 
-        public async Task<bool> SetActivateTrainer(int TrainerId, bool isActive)
+        public async Task<bool> SetActivateTrainerUsingSP(int TrainerId, bool isActive)
         {
             using var connection = new SqlConnection(_context.Database.GetConnectionString());
             using var command = new SqlCommand("SP_ActivateTrainer", connection);
@@ -158,7 +158,7 @@ namespace Infastructure.Repositories
             return rowsAffected > 0;
         }
 
-        public async Task<bool> SetVerifyTrainer(int TrainerId, bool isVerified, DateTime VerifiedAt, int VerifiedById)
+        public async Task<bool> SetVerifyTrainerUsingSP(int TrainerId, bool isVerified, DateTime VerifiedAt, int VerifiedById)
         {
             using var connection = new SqlConnection(_context.Database.GetConnectionString());
             using var command = new SqlCommand("SP_VerifyTrainer", connection);

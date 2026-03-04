@@ -15,7 +15,7 @@ namespace TrainingManagementSystemAPI.Controllers
         }
 
 
-        [HttpPost("assigntrainer/{trainerId:int}/tocourse/{courseId:int}")]
+        [HttpPost("assign/{trainerId:int}/course/{courseId:int}")]
         public async Task<IActionResult> AssignTrainerToCourse(int courseId, int trainerId)
         {
             var result = await _courseService.AssignTrainerToCourseUsingSP(courseId, trainerId);
@@ -78,25 +78,25 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{courseId:int}/traineesenrolledincourse")]
+        [HttpGet("{courseId:int}/enrolledtrainees")]
         public async Task<IActionResult> GetAllTraineesEnrolledInACourse(int courseId)
         {
             var result = await _courseService.GetAllTraineesEnrolledInACourseUsingSP(courseId);
             return Ok(result);
         }
 
-        [HttpPatch("verifycourse")]
+        [HttpPatch("verify")]
         public async Task<IActionResult> VerifyCourse(int courseId, int verifiedById, bool isVerfie)
         {
-            var result = await _courseService.SetVerifyCourse(courseId, isVerfie, verifiedById);
+            var result = await _courseService.SetVerifyCourseUsingSP(courseId, isVerfie, verifiedById);
 
             return Ok(result);
         }
 
-        [HttpPatch("activatecourse")]
+        [HttpPatch("activate")]
         public async Task<IActionResult> ActivateCourse(int courseId, bool isActive)
         {
-            var result = await _courseService.SetActivateCourse(courseId, isActive);
+            var result = await _courseService.SetActivateCourseUsingSP(courseId, isActive);
 
             return Ok(result);
         }

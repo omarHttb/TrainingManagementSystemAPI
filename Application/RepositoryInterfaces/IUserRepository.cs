@@ -15,11 +15,11 @@ namespace Application.RepositoryInterfaces
 
         Task<bool> DoesEmailExist(string email, int? excludePersonId = null);
 
-        Task<LoginDTO> Login(string email, string password);
+        Task<LoginDTO> LoginUsingSP(string email, string password);
 
-        Task<List<string>> GetUserRoles(int userId);
+        Task<List<string>> GetUserRolesUsingSP(int userId);
 
-        Task<List<UsersDTO>> GetUsersByRoles(int RoleId);
+        Task<List<UsersDTO>> GetUsersByRolesUsingSP(int RoleId);
 
         Task<bool> UpdateUserUsingSP(User user);
 

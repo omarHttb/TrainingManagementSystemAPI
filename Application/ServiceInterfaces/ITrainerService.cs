@@ -15,9 +15,9 @@ namespace Application.ServiceInterfaces
 
         Task<List<TrainerWithDetailsDTO>> GetAllTrainersUsingSP();
 
-        Task<bool> SetActivateTrainer(int TrainerId, bool isActive);
+        Task<bool> SetActivateTrainerUsingSP(int TrainerId, bool isActive);
 
-        Task<bool> SetVerifyTrainer(int TrainerId, bool isVerified, int VerifiedById);
+        Task<bool> SetVerifyTrainerUsingSP(int TrainerId, bool isVerified, int VerifiedById);
 
     }
 }

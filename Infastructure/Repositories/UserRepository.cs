@@ -72,7 +72,7 @@ namespace Infastructure.Repositories
             return await query.AnyAsync();
         }
 
-        public async Task<LoginDTO> Login(string email, string password)
+        public async Task<LoginDTO> LoginUsingSP(string email, string password)
         {
             using var connection = new SqlConnection(_context.Database.GetConnectionString());
             using var command = new SqlCommand("SP_VerifyUserLogin", connection);
@@ -103,7 +103,7 @@ namespace Infastructure.Repositories
             }
         }
 
-        public async Task<List<string>> GetUserRoles(int userId)
+        public async Task<List<string>> GetUserRolesUsingSP(int userId)
         {
             List<string> result = new List<string>();
 
@@ -129,7 +129,7 @@ namespace Infastructure.Repositories
 
         }
 
-        public async Task<List<UsersDTO>> GetUsersByRoles(int RoleId)
+        public async Task<List<UsersDTO>> GetUsersByRolesUsingSP(int RoleId)
         {
             var result = new List<UsersDTO>();
 

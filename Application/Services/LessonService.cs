@@ -21,14 +21,14 @@ namespace Application.Services
             return await _UnitOfWork.LessonRepository.GetAllCourseLessonsUsingSP(courseId);
         }
 
-        public async Task<List<LessonsDTO>> GetAllLessonsByCourseId(int courseId)
+        public async Task<List<LessonsDTO>> GetAllLessonsByCourseIdUsingSP(int courseId)
         {
-            return await _UnitOfWork.LessonRepository.GetAllLessonsByCourseId(courseId);
+            return await _UnitOfWork.LessonRepository.GetAllLessonsByCourseIdUsingSP(courseId);
         }
 
-        public async Task<List<LessonsUserAttended>> GetAllLessonsUserAttended(int EnrollmentId)
+        public async Task<List<LessonsUserAttended>> GetAllLessonsUserAttendedUsingSP(int EnrollmentId)
         {
-            return await _UnitOfWork.LessonRepository.GetAllLessonsUserAttended(EnrollmentId);
+            return await _UnitOfWork.LessonRepository.GetAllLessonsUserAttendedUsingSP(EnrollmentId);
         }
 
         public async Task<LessonsDTO> GetLessonByIdUsingSp(int lessonId)
@@ -36,9 +36,9 @@ namespace Application.Services
             return await _UnitOfWork.LessonRepository.GetLessonByIdUsingSp(lessonId);
         }
 
-        public async Task<bool> SetActivateLesson(int lessonId, bool isActive)
+        public async Task<bool> SetActivateLessonUsingSP(int lessonId, bool isActive)
         {
-            var result = await _UnitOfWork.LessonRepository.SetActivateLesson(lessonId, isActive);
+            var result = await _UnitOfWork.LessonRepository.SetActivateLessonUsingSP(lessonId, isActive);
 
             return result;
         }

@@ -9,11 +9,11 @@ namespace Application.ServiceInterfaces
 {
     public interface ILessonService
     {
-        Task<List<LessonsDTO>> GetAllLessonsByCourseId(int courseId);
+        Task<List<LessonsDTO>> GetAllLessonsByCourseIdUsingSP(int courseId);
 
-        Task<List<LessonsUserAttended>> GetAllLessonsUserAttended(int EnrollmentId);
+        Task<List<LessonsUserAttended>> GetAllLessonsUserAttendedUsingSP(int EnrollmentId);
 
-        Task<bool> SetActivateLesson(int lessonId, bool isActive);
+        Task<bool> SetActivateLessonUsingSP(int lessonId, bool isActive);
 
         Task<List<AllCourseLessonsDTO>> GetAllCourseLessonsUsingSP(int courseId);
 
