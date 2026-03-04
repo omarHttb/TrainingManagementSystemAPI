@@ -21,18 +21,19 @@ namespace Infastructure.Repositories
         {
         }
 
-        public async Task<List<AllCourseLessonsDTO>> GetAllCourseLessonsUsingSP(int courseId)
+        public async Task<List<AllCourseLessonsDTO>> GetAllCourseLessonsUsingSP(int courseId , int enrollmentId)
         {
             var lessons = new List<AllCourseLessonsDTO>();
             using var connection = new SqlConnection(_context.Database.GetConnectionString());
-            using var command = new SqlCommand("SP_GetAllLessonsByCourseId", connection);
+            using var command = new SqlCommand("SP_GetAllLessonsForCourse", connection);
 
             command.CommandType = CommandType.StoredProcedure;
 
 
             command.Parameters.Add("@CourseId", SqlDbType.Int)
                     .Value = courseId;
-
+            command.Parameters.Add("@EnrollmentId", SqlDbType.Int)
+                 .Value = enrollmentId;
 
             await connection.OpenAsync();
             using var reader = await command.ExecuteReaderAsync();
@@ -42,7 +43,7 @@ namespace Infastructure.Repositories
                 lessons.Add(new AllCourseLessonsDTO
                 {
                     LessonName = reader.GetString(reader.GetOrdinal("LessonName")),
-                     DidAttend = reader.GetBoolean(reader.GetOrdinal("DidAttend")),
+                     DidAttend = reader.IsDBNull(reader.GetOrdinal("DidAttend")) ? false : reader.GetBoolean(reader.GetOrdinal("DidAttend")),
                     Id = reader.GetInt32(reader.GetOrdinal("Id")),
 
                 });
@@ -52,7 +53,7 @@ namespace Infastructure.Repositories
 
         }
 
-        public async Task<List<LessonsDTO>> GetAllLessonsByCourseIdUsingSP(int courseId)
+        public async Task<List<LessonsDTO>> GetAllDetailedLessonsByCourseIdUsingSP(int courseId)
         {
             var lessons = new List<LessonsDTO>();
             using var connection = new SqlConnection(_context.Database.GetConnectionString());
@@ -92,7 +93,7 @@ namespace Infastructure.Repositories
             command.CommandType = CommandType.StoredProcedure;
 
 
-            command.Parameters.Add("@CourseId", SqlDbType.Int)
+            command.Parameters.Add("@EnrollmentId", SqlDbType.Int)
                     .Value = EnrollmentId;
 
 

@@ -99,9 +99,10 @@ namespace Infastructure.Repositories
                     Email = reader.GetString(reader.GetOrdinal("Email")),
                     TeachingSubject = reader.GetString(reader.GetOrdinal("TeachingSubject")),
                     JoinDate = reader.GetDateTime(reader.GetOrdinal("JoinDate")),
-                    Headline = reader.GetString(reader.GetOrdinal("Headline")),
+                    Headline = reader.IsDBNull(reader.GetOrdinal("Headline")) ? "" : reader.GetString(reader.GetOrdinal("Headline")),
                     IsActive = reader.GetBoolean(reader.GetOrdinal("IsActive")),
                     IsVerified = reader.GetBoolean(reader.GetOrdinal("IsVerified")),
+                    yearsOfExperience = reader.GetInt16(reader.GetOrdinal("YearsOfExperiance"))
                 });
             }
 
@@ -111,7 +112,7 @@ namespace Infastructure.Repositories
         public async Task<TrainerWithDetailsDTO> GetTrainerByIdUsingSP(int Id)
         {
             using var connection = new SqlConnection(_context.Database.GetConnectionString());
-            using var command = new SqlCommand("SP_GetCourseDetails", connection);
+            using var command = new SqlCommand("SP_GetTrainerDetailsById", connection);
 
             command.CommandType = CommandType.StoredProcedure;
 
@@ -131,9 +132,10 @@ namespace Infastructure.Repositories
                     Email = reader.GetString(reader.GetOrdinal("Email")),
                     TeachingSubject = reader.GetString(reader.GetOrdinal("TeachingSubject")),
                     JoinDate = reader.GetDateTime(reader.GetOrdinal("JoinDate")),
-                    Headline = reader.GetString(reader.GetOrdinal("Headline")),
+                    Headline = reader.IsDBNull(reader.GetOrdinal("Headline")) ? "" : reader.GetString(reader.GetOrdinal("Headline")),
                     IsActive = reader.GetBoolean(reader.GetOrdinal("IsActive")),
                     IsVerified = reader.GetBoolean(reader.GetOrdinal("IsVerified")),
+                    yearsOfExperience = reader.GetInt16(reader.GetOrdinal("YearsOfExperiance"))
                 };
             }
 

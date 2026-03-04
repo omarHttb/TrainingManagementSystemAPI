@@ -16,6 +16,7 @@ namespace Application.Mapping
 {
     public class MappingProfile : Profile
     {
+   
         public MappingProfile() 
         {
             CreateMap<CreateCourseDTO, Course>();
@@ -23,6 +24,12 @@ namespace Application.Mapping
             CreateMap<UpdateCourseDTO, Course>()
              .ForAllMembers(opt =>
                 opt.Condition((src, dest, srcMember) => srcMember != null));
+
+            CreateMap<User, UsersDTO>()
+      .ForMember(dest => dest.FullName,
+              opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}")).ForMember(
+                dest => dest.age, opt => opt.MapFrom(src => CalculateAge(src.DateOfBirth))
+                );
 
 
             CreateMap<CreateEnrollmentDTO, Enrollment>();
@@ -39,6 +46,17 @@ namespace Application.Mapping
             CreateMap<UpdateTrainerDTO, Trainer>();
 
             CreateMap<UpdateUserDTO, User>();
-        } 
+        }
+        private static int CalculateAge(DateOnly dob)
+        {
+            var today = DateOnly.FromDateTime(DateTime.Today);
+            var age = today.Year - dob.Year;
+
+            // Adjust if the birthday hasn't happened yet this year
+            if (dob > today.AddYears(-age))
+                age--;
+
+            return age;
+        }
     }
 }

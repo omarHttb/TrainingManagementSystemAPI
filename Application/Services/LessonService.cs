@@ -16,14 +16,14 @@ namespace Application.Services
             _UnitOfWork = unitOfWork;
         }
 
-        public async Task<List<AllCourseLessonsDTO>> GetAllCourseLessonsUsingSP(int courseId)
+        public async Task<List<AllCourseLessonsDTO>> GetAllCourseLessonsUsingSP(int courseId, int enrollmentId)
         {
-            return await _UnitOfWork.LessonRepository.GetAllCourseLessonsUsingSP(courseId);
+            return await _UnitOfWork.LessonRepository.GetAllCourseLessonsUsingSP(courseId, enrollmentId);
         }
 
-        public async Task<List<LessonsDTO>> GetAllLessonsByCourseIdUsingSP(int courseId)
+        public async Task<List<LessonsDTO>> GetAllDetailedLessonsByCourseIdUsingSP(int courseId)
         {
-            return await _UnitOfWork.LessonRepository.GetAllLessonsByCourseIdUsingSP(courseId);
+            return await _UnitOfWork.LessonRepository.GetAllDetailedLessonsByCourseIdUsingSP(courseId);
         }
 
         public async Task<List<LessonsUserAttended>> GetAllLessonsUserAttendedUsingSP(int EnrollmentId)

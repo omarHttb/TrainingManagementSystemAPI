@@ -40,7 +40,7 @@ namespace TrainingManagementSystemAPI.Controllers
         [HttpGet("byroles")]
         public async Task<IActionResult> GetUsersByRole(int roleId)
         {
-            var result = _UserService.GetUsersByRolesUsingSP(roleId);
+            var result = await _UserService.GetUsersByRolesUsingSP(roleId);
 
             return Ok(result);
         }
@@ -49,6 +49,22 @@ namespace TrainingManagementSystemAPI.Controllers
         public async Task<IActionResult> UpdateUser(UpdateUserDTO updateUserDTO)
         {
             var result = _UserService.UpdateUserUsingSP(updateUserDTO);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var result = await _UserService.GetAllUsers();
+
+            return Ok(result);
+        }
+
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> GetAllUsersById(int Id)
+        {
+            var result = await _UserService.GetUserById(Id);
+
             return Ok(result);
         }
     }

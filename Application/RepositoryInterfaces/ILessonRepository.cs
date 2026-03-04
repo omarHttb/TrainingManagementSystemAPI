@@ -11,13 +11,13 @@ namespace Application.RepositoryInterfaces
     public interface ILessonRepository : IBaseRepository<Lesson>
     {
 
-        Task<List<LessonsDTO>> GetAllLessonsByCourseIdUsingSP(int courseId);
+        Task<List<LessonsDTO>> GetAllDetailedLessonsByCourseIdUsingSP(int courseId);
 
         Task<List<LessonsUserAttended>> GetAllLessonsUserAttendedUsingSP(int enrollmentId);
 
         Task<bool> SetActivateLessonUsingSP(int lessonId,bool isActive);
 
-        Task<List<AllCourseLessonsDTO>> GetAllCourseLessonsUsingSP(int courseId);
+        Task<List<AllCourseLessonsDTO>> GetAllCourseLessonsUsingSP(int courseId, int enrollmentId);
 
         Task<LessonsDTO> GetLessonByIdUsingSp (int lessonId);      
     }

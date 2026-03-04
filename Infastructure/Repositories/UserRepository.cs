@@ -154,7 +154,7 @@ namespace Infastructure.Repositories
                     Email = reader.GetString(reader.GetOrdinal("Email")),
                     PhoneNumber = reader.GetString(reader.GetOrdinal("PhoneNumber")),
                     Gender = reader.GetString(reader.GetOrdinal("Gender")),
-                    ProfilePicture = reader.GetString(reader.GetOrdinal("ProfilePicture")),
+                    ProfilePicture = reader.IsDBNull(reader.GetOrdinal("ProfilePicture")) ? "" : reader.GetString(reader.GetOrdinal("ProfilePicture")),
                     age = reader.GetInt32(reader.GetOrdinal("age"))
                 });
             }

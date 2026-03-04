@@ -116,7 +116,8 @@ namespace Infastructure.Repositories
                     Price = reader.GetDecimal(reader.GetOrdinal("Price")),
                     CreationDate = reader.GetDateTime(reader.GetOrdinal("CreationDate")),
                     TrainerName = reader.GetString(reader.GetOrdinal("TrainerName")),
-                    Capacity = reader.GetInt32(reader.GetOrdinal("Capacity"))
+                    Capacity = reader.GetInt32(reader.GetOrdinal("Capacity")),
+                    TeachingSubject = reader.GetString(reader.GetOrdinal("TeachingSubject"))
                 });
             }
 
@@ -236,6 +237,7 @@ namespace Infastructure.Repositories
             {
                 return new GetCourseDetailsDTO
                 {
+                    Id = reader.GetInt32(reader.GetOrdinal("id")),
                     CourseTitle = reader.GetString(reader.GetOrdinal("Title")),
                     Description = reader.GetString(reader.GetOrdinal("Description")),
                     Price = reader.GetDecimal(reader.GetOrdinal("Price")),

@@ -84,8 +84,11 @@ namespace TrainingManagementSystemAPI.Middleware
         {
             context.Response.StatusCode = statusCode;
             context.Response.ContentType = "application/json";
+            
+            bool Success = false;
+            string Message = "Operation failed";
 
-            var response = new
+            var Errors = new
             {
                 statusCode,
                 title,
@@ -93,6 +96,13 @@ namespace TrainingManagementSystemAPI.Middleware
                 instance = context.Request.Path.Value,
                 code,
                 details
+            };
+
+            var response = new
+            {
+                Success,
+                Message,
+                Errors,
             };
 
             var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };

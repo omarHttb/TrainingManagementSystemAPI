@@ -11,5 +11,9 @@ namespace Application.ServiceInterfaces
         Task<List<UsersDTO>> GetUsersByRolesUsingSP(int RoleId);
 
         Task<bool> UpdateUserUsingSP(UpdateUserDTO updateUserDTO);
+
+        Task<List<UsersDTO>> GetAllUsers();
+
+        Task<UsersDTO> GetUserById(int id);
     }
 }

@@ -71,10 +71,10 @@ namespace Infastructure.Repositories
                     TraineeFullName = reader.GetString(reader.GetOrdinal("TraineeFullName")),
                     AttendancePercentage = reader.GetDouble(reader.GetOrdinal("AttendancePercentage")),
                     EnrollmentDate = reader.GetDateTime(reader.GetOrdinal("EnrollmentDate")),
-                    TrainerExperienceYears = reader.GetInt16(reader.GetOrdinal("TrainerExperienceYears")),
+                    TrainerExperienceYears = reader.GetInt16(reader.GetOrdinal("YearsOfExperiance")),
                     TrainerFullName = reader.GetString(reader.GetOrdinal("TrainerFullName")),
-                    TrainerHeadline = reader.GetString(reader.GetOrdinal("TrainerHeadline")),
-                    TrainerTeachingSubject = reader.GetString(reader.GetOrdinal("TrainerTeachingSubject"))
+                    TrainerHeadline = reader.IsDBNull(reader.GetOrdinal("Headline")) ? string.Empty : reader.GetString(reader.GetOrdinal("Headline")),
+                    TrainerTeachingSubject = reader.GetString(reader.GetOrdinal("TeachingSubject"))
                 });
             }
 

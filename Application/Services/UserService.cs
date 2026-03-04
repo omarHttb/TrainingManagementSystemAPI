@@ -31,6 +31,26 @@ namespace Application.Services
             _UpdateUserValidator = UpdateUserValidator;
         }
 
+        public async Task<List<UsersDTO>> GetAllUsers()
+        {
+           var result = await _UnitOfWork.UserRepository.GetAllAsync();
+
+            var userDto =  _mapper.Map<List<UsersDTO>>(result);
+
+            return userDto;
+
+        }
+
+        public async Task<UsersDTO> GetUserById(int id)
+        {
+            var result = await _UnitOfWork.UserRepository.GetByIdAsync(id);
+
+            var userDto = _mapper.Map<UsersDTO>(result);
+
+            return userDto;
+
+        }
+
         public async Task<List<UsersDTO>> GetUsersByRolesUsingSP(int RoleId)
         {
             return await _UnitOfWork.UserRepository.GetUsersByRolesUsingSP(RoleId);

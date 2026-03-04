@@ -20,12 +20,12 @@ namespace TrainingManagementSystemAPI.Controllers
         [HttpGet("detailed")]
         public async Task<IActionResult> GetAllLessons(int courseId)
         {
-            var result = await _LessonService.GetAllLessonsByCourseIdUsingSP(courseId);
+            var result = await _LessonService.GetAllDetailedLessonsByCourseIdUsingSP(courseId);
 
             return Ok(result);
         }
 
-        [HttpGet("lessonsattended")]
+        [HttpGet("attended")]
         public async Task<IActionResult> GetAttendedLessonsEnrollmentId(int EnrollmentId)
         {
             var result = await _LessonService.GetAllLessonsUserAttendedUsingSP(EnrollmentId);
@@ -41,10 +41,10 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("lessons")]
-        public async Task<IActionResult> GetAllCourseLessons(int courseId)
+        [HttpGet("course/{courseId}")]
+        public async Task<IActionResult> GetAllCourseLessons(int courseId,int enrollmentId)
         {
-            var result = await _LessonService.GetAllCourseLessonsUsingSP(courseId);
+            var result = await _LessonService.GetAllCourseLessonsUsingSP(courseId, enrollmentId);
 
             return Ok(result);
         }
