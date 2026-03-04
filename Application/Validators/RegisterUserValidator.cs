@@ -21,7 +21,7 @@ namespace Application.Validators
          RuleFor(x => x.Email).NotEmpty().NotNull().EmailAddress().WithMessage("A valid email must be added");
          RuleFor(x => x.Email).MustAsync(async (email, cancellation) =>
          {
-             return await _userRepository.DoesEmailExist(email);
+             return !await _userRepository.DoesEmailExist(email);
          }).WithMessage("Email already exists");
         }
     }

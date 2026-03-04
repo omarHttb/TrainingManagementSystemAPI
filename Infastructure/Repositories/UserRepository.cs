@@ -44,13 +44,16 @@ namespace Infastructure.Repositories
             command.Parameters.Add("@Gender", SqlDbType.Char)
                 .Value = user.Gender;
 
-            command.Parameters.Add("@DateOfBirth", SqlDbType.DateTime)
-                .Value = user.DateOfBirth;
+            command.Parameters.Add("@Email", SqlDbType.Char)
+                .Value = user.Email;
+
+            command.Parameters.Add("@DateOfBirth", SqlDbType.Date)
+                .Value = user.DateOfBirth.ToDateTime(TimeOnly.MinValue);
 
             command.Parameters.Add("@UserCreationDate", SqlDbType.DateTime)
                 .Value = user.UserCreationDate;
 
-            command.Parameters.Add("@PasswordHash", SqlDbType.Int)
+            command.Parameters.Add("@PasswordHash", SqlDbType.NVarChar)
                 .Value = user.PasswordHash;
 
 

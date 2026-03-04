@@ -20,7 +20,7 @@ namespace TrainingManagementSystemAPI.Controllers
         {
             var result = await _RoleService.AssignRoleToUserUsingSP(userId, RoleId);
 
-            return Ok(result);
+            return Ok("Role Assigned Successfully");
         }
     }
 }

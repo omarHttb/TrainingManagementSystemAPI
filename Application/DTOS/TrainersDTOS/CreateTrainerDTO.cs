@@ -18,7 +18,7 @@ namespace Application.DTOS.TrainersDTOS
 
         public string Headline { get; set; } = null!;
 
-        public short ExperienceYears { get; set; }
+        public short YearsOfExperiance { get; set; }
 
         public DateTime? JoinDate { get; set; }
 

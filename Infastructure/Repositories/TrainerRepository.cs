@@ -36,13 +36,13 @@ namespace Infastructure.Repositories
             command.Parameters.Add("@TeachingSubject", SqlDbType.NVarChar)
                 .Value = trainer.TeachingSubject;
 
-            command.Parameters.Add("@JoinDate", SqlDbType.Decimal)
+            command.Parameters.Add("@JoinDate", SqlDbType.DateTime)
                 .Value = trainer.JoinDate;
 
             command.Parameters.Add("@Headline", SqlDbType.NVarChar)
                 .Value = trainer.Headline;
 
-            command.Parameters.Add(" @Bio", SqlDbType.NVarChar)
+            command.Parameters.Add("@Bio", SqlDbType.NVarChar)
                 .Value = trainer.Bio;
 
             command.Parameters.Add("@YearsOfExperiance", SqlDbType.SmallInt)

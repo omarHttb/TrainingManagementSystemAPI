@@ -62,7 +62,7 @@ namespace TrainingManagementSystemAPI.Controllers
         {
             var result = await _TrainersService.SetActivateTrainerUsingSP(trainerId, isActive);
 
-            return Ok(result);
+            return Ok("Activation Proccess Completed");
         }
 
         [HttpPatch("verify")]
@@ -70,7 +70,7 @@ namespace TrainingManagementSystemAPI.Controllers
         {
             var result = await _TrainersService.SetVerifyTrainerUsingSP(trainerId, isVerfie, verifiedById);
 
-            return Ok(result);
+            return Ok("Verification Proccess Completed");
         }
     }
 }

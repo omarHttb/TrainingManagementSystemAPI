@@ -18,7 +18,7 @@ namespace Application.Validators
                 .NotNull()
                 .WithMessage("Teaching subject must be added");
 
-            RuleFor(x => x.ExperienceYears)
+            RuleFor(x => x.YearsOfExperiance)
                 .GreaterThan((short)0)
                 .WithMessage("Experience years must be greater than 0");
 
