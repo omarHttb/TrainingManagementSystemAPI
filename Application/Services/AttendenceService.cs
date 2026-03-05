@@ -17,12 +17,15 @@ namespace Application.Services
         private readonly IUnitOfWork _UnitOfWork;
         private readonly IMapper _mapper;
         private readonly IValidator<CreateAttendanceDTO> _validator;
+        private readonly IValidator<UpdateAttendanceDTO> _UpdateValidator;
 
-        public AttendenceService(IUnitOfWork unitOfWork, IMapper mapper, IValidator<CreateAttendanceDTO> validator) 
+        public AttendenceService(IUnitOfWork unitOfWork, IMapper mapper, IValidator<CreateAttendanceDTO> validator
+            , IValidator<UpdateAttendanceDTO> UpdateValidator) 
         {
             _UnitOfWork = unitOfWork;
             _mapper = mapper;
             _validator = validator;
+            _UpdateValidator = UpdateValidator;
         }
 
         public async Task<double> CalculateAttendancePercentagePerTraineeEnrollmentUsingSP(int enrollmentId)
@@ -44,6 +47,17 @@ namespace Application.Services
 
             var result = await _UnitOfWork.AttendenceRepository.RecordAttendancePerLessonUsingSP(attendance);
 
+
+            return result;
+        }
+
+        public async Task<bool> UpdateAttendanceUsingSP(UpdateAttendanceDTO updateAttendanceDTO)
+        {
+            await _UpdateValidator.ValidateAndThrowAsync(updateAttendanceDTO);
+
+            var attendance = _mapper.Map<Attendence>(updateAttendanceDTO);
+
+            var result = await _UnitOfWork.AttendenceRepository.UpdateAttendanceUsingSP(attendance);
 
             return result;
         }

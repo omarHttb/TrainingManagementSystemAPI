@@ -32,7 +32,9 @@ namespace TrainingManagementSystemAPI.Controllers
         {
             var result = await _UserService.LoginUserUsingSP(loginDTO);
 
-            string token = _tokenProvider.create(loginDTO);
+          
+
+            string token = _tokenProvider.create(result);
 
             return Ok(token);
         }

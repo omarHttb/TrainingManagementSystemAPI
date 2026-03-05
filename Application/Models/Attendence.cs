@@ -13,7 +13,7 @@ public partial class Attendence
 
     public int LessonId { get; set; }
 
-    public DateOnly? AttendanceDate { get; set; }
+    public DateTime? AttendanceDate { get; set; } = DateTime.Now;
 
     public virtual Enrollment Enrollment { get; set; } = null!;
 

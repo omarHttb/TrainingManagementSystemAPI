@@ -33,7 +33,7 @@ namespace Application.Services
 
             var result = await _UnitOfWork.CourseRepository.AssignTrainerToCourseUsingSP(Id, TrainerId);
 
-            await _UnitOfWork.CompleteAsync();
+
 
             return result;
         }
@@ -46,7 +46,7 @@ namespace Application.Services
 
             var result = await _UnitOfWork.CourseRepository.CreateCourseUsingSP(course);
 
-            await  _UnitOfWork.CompleteAsync();
+
 
             return  result;
         }
@@ -57,7 +57,6 @@ namespace Application.Services
 
             var result = await _UnitOfWork.CourseRepository.DeleteCourseUsingSP(id);
 
-            await  _UnitOfWork.CompleteAsync();
 
             return result;
         }
@@ -75,6 +74,11 @@ namespace Application.Services
         public async Task<List<AllTraineesEnrolledInACourseDTO>> GetAllTraineesEnrolledInACourseUsingSP(int CourseId)
         {
             return await _UnitOfWork.CourseRepository.GetAllTraineesEnrolledInACourseUsingSP(CourseId);
+        }
+
+        public async Task<List<AllCoursesDTO>> GetAllVerifiedAndActiveCoursesUsingSP()
+        {
+            return await _UnitOfWork.CourseRepository.GetAllVerifiedAndActiveCoursesUsingSP();
         }
 
         public async Task<GetCourseDetailsDTO> GetCourseDetailsByIdUsingSP(int id)
@@ -97,7 +101,6 @@ namespace Application.Services
 
             var result = await _UnitOfWork.CourseRepository.SetCourseCpacityUsingSP(Capacity, id);
 
-           await _UnitOfWork.CompleteAsync();
 
             return result;
         }
@@ -108,7 +111,6 @@ namespace Application.Services
 
             var result = await _UnitOfWork.CourseRepository.SetVerifyCourseUsingSP(CourseId,isVerified, VerifiedAt, VerifiedById);
 
-            await _UnitOfWork.CompleteAsync();
 
             return result;
         }
@@ -129,7 +131,6 @@ namespace Application.Services
 
             var result = await _UnitOfWork.CourseRepository.UpdateCourseUsingSP(id, existingCourse);
 
-            await _UnitOfWork.CompleteAsync();
 
             return result;
         }

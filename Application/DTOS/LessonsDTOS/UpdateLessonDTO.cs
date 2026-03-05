@@ -6,14 +6,10 @@ using System.Threading.Tasks;
 
 namespace Application.DTOS.LessonsDTOS
 {
-    public class AllCourseLessonsDTO
+    public class UpdateLessonDTO
     {
-        public int Id { get; set; } 
-
+        public int Id { get; set; }
         public string LessonName { get; set; } = string.Empty;
-
-        public bool DidAttend { get; set; }
-
-        public int AttendanceId { get; set; }
+        public string LessonDescription { get; set; }   = string.Empty;
     }
 }

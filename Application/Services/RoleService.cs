@@ -19,7 +19,6 @@ namespace Application.Services
         {
           var result = await   _UnitOfWork.RoleRepository.AssignRoleToUserUsingSP(userId, roleId);
 
-            await _UnitOfWork.CompleteAsync();
 
 
             return result;

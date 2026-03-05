@@ -11,7 +11,7 @@ namespace TrainingManagementSystemAPI.JWT
 {
     public sealed class TokenProvider(IConfiguration configuration)
     {
-        public string create(LoginDTO loginDTO)
+        public string create(LoggedInUserDTO loginDTO)
         {
             string secretKey = configuration["Jwt:Secret"]!;
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));

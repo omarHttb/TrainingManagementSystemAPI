@@ -15,7 +15,7 @@ namespace Application.RepositoryInterfaces
 
         Task<bool> DoesEmailExist(string email, int? excludePersonId = null);
 
-        Task<LoginDTO> LoginUsingSP(string email, string password);
+        Task<int> LoginUsingSP(string email, string password);
 
         Task<List<string>> GetUserRolesUsingSP(int userId);
 

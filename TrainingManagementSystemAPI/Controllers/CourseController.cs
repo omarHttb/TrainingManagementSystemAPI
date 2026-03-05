@@ -90,7 +90,7 @@ namespace TrainingManagementSystemAPI.Controllers
         {
             var result = await _courseService.SetVerifyCourseUsingSP(courseId, isVerfie, verifiedById);
 
-            return Ok(result);
+            return Ok("Verfiy operation completed");
         }
 
         [HttpPatch("activate")]
@@ -98,6 +98,12 @@ namespace TrainingManagementSystemAPI.Controllers
         {
             var result = await _courseService.SetActivateCourseUsingSP(courseId, isActive);
 
+            return Ok("Activation operation completed");
+        }
+        [HttpGet("activeandverified")]
+        public async Task<IActionResult> GetAllActiveAndVerifiedCourses()
+        {
+            var result = await _courseService.GetAllVerifiedAndActiveCoursesUsingSP();
             return Ok(result);
         }
     }

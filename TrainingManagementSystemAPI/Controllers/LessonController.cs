@@ -1,3 +1,4 @@
+using Application.DTOS.LessonsDTOS;
 using Application.ServiceInterfaces;
 using Application.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -38,17 +39,37 @@ namespace TrainingManagementSystemAPI.Controllers
         {
             var result = await _LessonService.SetActivateLessonUsingSP(lessonId, isActive);
 
-            return Ok(result);
+            return Ok("Activation change proccess completed");
         }
 
-        [HttpGet("course/{courseId}")]
-        public async Task<IActionResult> GetAllCourseLessons(int courseId,int enrollmentId)
+        [HttpGet("course/{courseId}/enrollment/{enrollmentId}")]
+        public async Task<IActionResult> GetAllCourseLessons(int courseId, int enrollmentId)
         {
             var result = await _LessonService.GetAllCourseLessonsUsingSP(courseId, enrollmentId);
 
             return Ok(result);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateLesson(CreateLessonDTO lessonDTO)
+        {
+            var result = await _LessonService.CreateLessonUsingSP(lessonDTO);
+            return Ok(result);
+        }
 
+        [HttpPut]
+        public async Task<IActionResult> UpdateLesson(UpdateLessonDTO updateLessonDTO)
+        {
+            var result = await _LessonService.UpdateLessonUsingSP(updateLessonDTO);
+            return Ok(result);
+        }
+
+        [HttpGet("active/course/{courseId}/enrollment/{enrollmentId}")]
+        public async Task<IActionResult> GetActiveCourseLessons(int courseId, int enrollmentId)
+        {
+            var result = await _LessonService.GetAllActiveCourseLessonsUsingSP(courseId, enrollmentId);
+
+            return Ok(result);
+        }
     }
 }

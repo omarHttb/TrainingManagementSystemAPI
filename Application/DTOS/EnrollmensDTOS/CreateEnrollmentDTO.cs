@@ -10,7 +10,7 @@ namespace Application.DTOS.EnrollmensDTOS
     {
         public int CourseId { get; set; }
 
-        public int TraineeId { get; set; }
+        public int UserId { get; set; }
 
         public DateTime? EnrollmentDate { get; set; } = DateTime.Now;
     }

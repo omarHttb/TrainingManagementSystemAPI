@@ -13,7 +13,7 @@ namespace Application.Validators
         public EnrollmentDTOValidator() 
         {
             RuleFor(x => x.CourseId).GreaterThan(0).WithMessage("Course must be selected");
-            RuleFor(x => x.TraineeId).GreaterThan(0).WithMessage("Trainee must be selected");
+            RuleFor(x => x.UserId).GreaterThan(0).WithMessage("Trainee must be selected");
         }
     }
 }

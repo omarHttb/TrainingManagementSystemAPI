@@ -6,7 +6,7 @@ namespace Application.ServiceInterfaces
     {
         Task<bool> RegisterNewUserUsingSP(RegisterUserDTO registerUserDTO);
 
-        Task<LoginDTO> LoginUserUsingSP(LoginDTO loginDTO);
+        Task<LoggedInUserDTO> LoginUserUsingSP(LoginDTO loginDTO);
 
         Task<List<UsersDTO>> GetUsersByRolesUsingSP(int RoleId);
 

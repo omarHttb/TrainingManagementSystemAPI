@@ -84,7 +84,7 @@ namespace Infastructure.Repositories
         public async Task<bool> RecordAttendancePerLessonUsingSP(Attendence attendance)
         {
             using var connection = new SqlConnection(_context.Database.GetConnectionString());
-            using var command = new SqlCommand("SP_AddGradeForTrainee", connection);
+            using var command = new SqlCommand("SP_RecordAttendancePerLesson", connection);
 
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.Add("@EnrollmentId", SqlDbType.Int)
@@ -93,7 +93,7 @@ namespace Infastructure.Repositories
                                     .Value = attendance.DidAttend;
             command.Parameters.Add("@LessonId", SqlDbType.Int)
                                     .Value = attendance.LessonId;
-            command.Parameters.Add("@AttendanceDate", SqlDbType.Date)
+            command.Parameters.Add("@AttendanceDate", SqlDbType.DateTime)
                                     .Value = attendance.AttendanceDate;
 
             await connection.OpenAsync();
@@ -101,6 +101,23 @@ namespace Infastructure.Repositories
 
             return rowsAffected > 0;
 
+        }
+
+        public async Task<bool> UpdateAttendanceUsingSP(Attendence attendance)
+        {
+            using var connection = new SqlConnection(_context.Database.GetConnectionString());
+            using var command = new SqlCommand("SP_UpdateAttendance", connection);
+
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("@AttendanceId", SqlDbType.Int)
+                                    .Value = attendance.Id;
+            command.Parameters.Add("@DidAttend", SqlDbType.Bit)
+                                    .Value = attendance.DidAttend;
+   
+            await connection.OpenAsync();
+            var rowsAffected = await command.ExecuteNonQueryAsync();
+
+            return rowsAffected > 0;
         }
     }
 }

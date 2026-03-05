@@ -40,7 +40,7 @@ namespace TrainingManagementSystemAPI.Controllers
         {
             var result = await _GradeService.GetAverageGradeForCourseUsingSp(courseId);
 
-            return Ok(result);
+            return Ok("Grade updated Successfully");
         }
 
   

@@ -1,5 +1,7 @@
 ﻿using Application;
 using Application.DTOS;
+using Application.DTOS.AttendancesDTOS;
+using Application.DTOS.LessonsDTOS;
 using Application.DTOS.UsersDTOS;
 using Application.RepositoryInterfaces;
 using Application.ServiceInterfaces;
@@ -47,6 +49,9 @@ namespace TrainingManagementSystemAPI.ServiceCollection
             services.AddValidatorsFromAssemblyContaining<RegisterUserValidator>();  
             services.AddValidatorsFromAssemblyContaining<LoginDTO>();
             services.AddValidatorsFromAssemblyContaining<UpdateUserDTO>();
+            services.AddValidatorsFromAssemblyContaining<CreateLessonDTO>();
+            services.AddValidatorsFromAssemblyContaining<UpdateLessonDTO>();
+            services.AddValidatorsFromAssemblyContaining<UpdateAttendanceDTO>();
 
             return services;
         }

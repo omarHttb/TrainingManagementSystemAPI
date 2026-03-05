@@ -20,7 +20,7 @@ namespace Application.Validators
             RuleFor(x => x.Email).NotEmpty().NotNull().EmailAddress().WithMessage("A valid email must be added");
             RuleFor(x => x.Email).MustAsync(async (dto, email, cancellation) =>
             {
-                return await _userRepository.DoesEmailExist(email, dto.Id);
+                return !await _userRepository.DoesEmailExist(email, dto.Id);
             }).WithMessage("Email already exists");
         }
     }

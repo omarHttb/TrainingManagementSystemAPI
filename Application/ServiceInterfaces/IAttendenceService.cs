@@ -14,6 +14,7 @@ namespace Application.ServiceInterfaces
 
         Task<List<AttendanceCourseReportDTO>> GetAttendanceReportForACourseUsingSP(int courseId);
 
+        Task<bool> UpdateAttendanceUsingSP(UpdateAttendanceDTO updateAttendanceDTO);
 
     }
 

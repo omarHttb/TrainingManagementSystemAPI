@@ -31,6 +31,7 @@ namespace Application.ServiceInterfaces
 
         Task<List<AllCoursesDTO>> GetAllCoursesUsingSP();
 
+        Task<List<AllCoursesDTO>> GetAllVerifiedAndActiveCoursesUsingSP();
 
     }
 }

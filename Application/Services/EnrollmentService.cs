@@ -33,7 +33,6 @@ namespace Application.Services
 
             var result = await _UnitOfWork.EnrollmentRepository.EnrollTraineeIntoACourseUsingSp(enrollment);
 
-            await _UnitOfWork.CompleteAsync();
 
             return result;
         }

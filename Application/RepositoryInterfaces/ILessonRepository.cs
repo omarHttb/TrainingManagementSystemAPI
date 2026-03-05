@@ -19,6 +19,15 @@ namespace Application.RepositoryInterfaces
 
         Task<List<AllCourseLessonsDTO>> GetAllCourseLessonsUsingSP(int courseId, int enrollmentId);
 
-        Task<LessonsDTO> GetLessonByIdUsingSp (int lessonId);      
+        Task<LessonsDTO> GetLessonByIdUsingSp (int lessonId);
+
+        Task<List<AllCourseLessonsDTO>> GetAllActiveCourseLessonsUsingSP(int courseId, int enrollmentId);
+
+
+        Task<bool> UpdateLessonUsingSP(Lesson lesson);
+
+        Task<bool> CreateLessonUsingSP(Lesson lesson);
+
+
     }
 }

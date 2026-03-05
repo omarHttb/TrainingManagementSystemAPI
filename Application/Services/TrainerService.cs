@@ -89,7 +89,6 @@ namespace Application.Services
 
             var result = await _UnitOfWork.TrainerRepository.UpdateTrainerUsingSP(trainer, Id);
 
-          await  _UnitOfWork.CompleteAsync();
 
             return result;
         }

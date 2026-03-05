@@ -11,6 +11,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Application.DTOS.UsersDTOS;
+using Application.DTOS.LessonsDTOS;
+using Application.DTOS.AttendancesDTOS;
 
 namespace Application.Mapping
 {
@@ -38,6 +40,9 @@ namespace Application.Mapping
 
             CreateMap<RegisterUserDTO, User>();
 
+            CreateMap<CreateLessonDTO, Lesson>();
+
+            CreateMap<UpdateLessonDTO, Lesson>();
 
             CreateMap<CreateTrainerDTO, Trainer>();
 
@@ -46,6 +51,8 @@ namespace Application.Mapping
             CreateMap<UpdateTrainerDTO, Trainer>();
 
             CreateMap<UpdateUserDTO, User>();
+
+            CreateMap<UpdateAttendanceDTO, Attendence>();
         }
         private static int CalculateAge(DateOnly dob)
         {

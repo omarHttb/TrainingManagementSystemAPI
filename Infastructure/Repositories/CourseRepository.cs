@@ -62,7 +62,7 @@ namespace Infastructure.Repositories
                 .Value = course.Price;
 
             command.Parameters.Add("@CreationDate", SqlDbType.DateTime)
-                .Value = course.Description;
+                .Value = course.CreationDate;
 
             command.Parameters.Add("@TrainerId", SqlDbType.Int)
                 .Value = course.TrainerId;
@@ -213,6 +213,36 @@ namespace Infastructure.Repositories
                     TraineeFullName = reader.GetString(reader.GetOrdinal("TraineeFullName")),
                     AttendancePercentage = reader.GetDouble(reader.GetOrdinal("AttendancePercentage")),
                     EnrollmentDate = reader.GetDateTime(reader.GetOrdinal("EnrollmentDate"))
+                });
+            }
+
+            return result;
+        }
+
+        public async Task<List<AllCoursesDTO>> GetAllVerifiedAndActiveCoursesUsingSP()
+        {
+            var result = new List<AllCoursesDTO>();
+
+            using var connection = new SqlConnection(_context.Database.GetConnectionString());
+            using var command = new SqlCommand("SP_GetAllVerifiedAndActiveCourses", connection);
+
+            command.CommandType = CommandType.StoredProcedure;
+
+
+            await connection.OpenAsync();
+
+            using var reader = await command.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
+            {
+                result.Add(new AllCoursesDTO
+                {
+                    Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                    CourseTitle = reader.GetString(reader.GetOrdinal("Title")),
+                    Description = reader.GetString(reader.GetOrdinal("Description")),
+                    Price = reader.GetDecimal(reader.GetOrdinal("Price")),
+                    TrainerName = reader.GetString(reader.GetOrdinal("TrainerName")),
+                    Capacity = reader.GetInt32(reader.GetOrdinal("Capacity"))
                 });
             }
 

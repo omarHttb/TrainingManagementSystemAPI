@@ -47,7 +47,6 @@ namespace Application.Services
 
             var result = await _UnitOfWork.GradeRepository.AddTraineeGradeUsingSp(grade);
 
-            await _UnitOfWork.CompleteAsync();
 
             return result;
 

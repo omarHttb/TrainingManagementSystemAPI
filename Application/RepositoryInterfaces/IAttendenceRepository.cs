@@ -15,7 +15,9 @@ namespace Application.RepositoryInterfaces
 
         Task<double> CalculateAttendancePercentagePerTraineeEnrollmentUsingSP(int enrollmentId);
 
-        Task<List<AttendanceCourseReportDTO>> GetAttendanceReportForACourseUsingSP(int courseId);    
+        Task<List<AttendanceCourseReportDTO>> GetAttendanceReportForACourseUsingSP(int courseId);  
+        
+        Task<bool> UpdateAttendanceUsingSP(Attendence attendance);
             
     }
 }

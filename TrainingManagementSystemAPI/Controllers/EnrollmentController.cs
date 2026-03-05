@@ -24,8 +24,10 @@ namespace TrainingManagementSystemAPI.Controllers
         {
             var result = await _EnrollmentService.EnrollTraineeIntoACourseUsingSp(createEnrollmentDTO);
 
-            return Ok(result);
+            return Ok("Trainee has been enrolled successfully");
         }
+
+        
 
 
     }

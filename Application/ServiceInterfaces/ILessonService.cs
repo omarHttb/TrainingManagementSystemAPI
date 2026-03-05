@@ -1,4 +1,5 @@
 ﻿using Application.DTOS.LessonsDTOS;
+using Application.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,5 +19,12 @@ namespace Application.ServiceInterfaces
         Task<List<AllCourseLessonsDTO>> GetAllCourseLessonsUsingSP(int courseId, int enrollmentId);
 
         Task<LessonsDTO> GetLessonByIdUsingSp(int lessonId);
+
+        Task<bool> CreateLessonUsingSP(CreateLessonDTO lessonDTO);
+
+        Task<bool> UpdateLessonUsingSP(UpdateLessonDTO updateLessonDTO);
+
+        Task<List<AllCourseLessonsDTO>> GetAllActiveCourseLessonsUsingSP(int courseId, int enrollmentId);
+
     }
 }

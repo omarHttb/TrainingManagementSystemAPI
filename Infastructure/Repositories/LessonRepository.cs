@@ -21,6 +21,67 @@ namespace Infastructure.Repositories
         {
         }
 
+        public async Task<bool> CreateLessonUsingSP(Lesson lesson)
+        {
+            using var connection = new SqlConnection(_context.Database.GetConnectionString());
+            using var command = new SqlCommand("SP_CreateLesson", connection);
+
+            command.CommandType = CommandType.StoredProcedure;
+
+            command.Parameters.Add("@LessonName", SqlDbType.NVarChar)
+                .Value = lesson.LessonName;
+
+            command.Parameters.Add("@LessonDescription", SqlDbType.NVarChar)
+                .Value = lesson.LessonDescription;
+
+            command.Parameters.Add("@CourseId", SqlDbType.Int)
+                .Value = lesson.CourseId;
+
+            command.Parameters.Add("@IsActive", SqlDbType.Bit)
+                .Value = lesson.IsActive;
+
+            command.Parameters.Add("@CreatedAt", SqlDbType.DateTime)
+                .Value = lesson.CreatedAt ;
+
+
+            await connection.OpenAsync();
+            var rowsAffected = await command.ExecuteNonQueryAsync();
+
+            return rowsAffected > 0;
+        }
+
+        public async Task<List<AllCourseLessonsDTO>> GetAllActiveCourseLessonsUsingSP(int courseId, int enrollmentId)
+        {
+            var lessons = new List<AllCourseLessonsDTO>();
+            using var connection = new SqlConnection(_context.Database.GetConnectionString());
+            using var command = new SqlCommand("SP_GetAllActiveLessonsForCourse", connection);
+
+            command.CommandType = CommandType.StoredProcedure;
+
+
+            command.Parameters.Add("@CourseId", SqlDbType.Int)
+                    .Value = courseId;
+            command.Parameters.Add("@EnrollmentId", SqlDbType.Int)
+                 .Value = enrollmentId;
+
+            await connection.OpenAsync();
+            using var reader = await command.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
+            {
+                lessons.Add(new AllCourseLessonsDTO
+                {
+                    LessonName = reader.GetString(reader.GetOrdinal("LessonName")),
+                    DidAttend = reader.IsDBNull(reader.GetOrdinal("DidAttend")) ? false : reader.GetBoolean(reader.GetOrdinal("DidAttend")),
+                    Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                    AttendanceId = reader.IsDBNull(reader.GetOrdinal("AttendanceId")) ? 0 : reader.GetInt32(reader.GetOrdinal("AttendanceId"))
+
+                });
+            }
+
+            return lessons;
+        }
+
         public async Task<List<AllCourseLessonsDTO>> GetAllCourseLessonsUsingSP(int courseId , int enrollmentId)
         {
             var lessons = new List<AllCourseLessonsDTO>();
@@ -45,6 +106,7 @@ namespace Infastructure.Repositories
                     LessonName = reader.GetString(reader.GetOrdinal("LessonName")),
                      DidAttend = reader.IsDBNull(reader.GetOrdinal("DidAttend")) ? false : reader.GetBoolean(reader.GetOrdinal("DidAttend")),
                     Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                    AttendanceId = reader.IsDBNull(reader.GetOrdinal("AttendanceId")) ? 0 : reader.GetInt32(reader.GetOrdinal("AttendanceId"))
 
                 });
             }
@@ -158,6 +220,30 @@ namespace Infastructure.Repositories
 
             await connection.OpenAsync();
 
+            var rowsAffected = await command.ExecuteNonQueryAsync();
+
+            return rowsAffected > 0;
+        }
+
+        public async Task<bool> UpdateLessonUsingSP(Lesson lesson)
+        {
+            using var connection = new SqlConnection(_context.Database.GetConnectionString());
+            using var command = new SqlCommand("SP_UpdateLesson", connection);
+
+            command.CommandType = CommandType.StoredProcedure;
+
+            command.Parameters.Add("@LessonName", SqlDbType.NVarChar)
+                .Value = lesson.LessonName;
+
+            command.Parameters.Add("@LessonDescription", SqlDbType.NVarChar)
+                .Value = lesson.LessonDescription;
+
+            command.Parameters.Add("@LessonId", SqlDbType.Int)
+                .Value = lesson.Id;
+
+
+
+            await connection.OpenAsync();
             var rowsAffected = await command.ExecuteNonQueryAsync();
 
             return rowsAffected > 0;

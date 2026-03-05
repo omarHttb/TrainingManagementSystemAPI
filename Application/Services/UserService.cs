@@ -56,22 +56,28 @@ namespace Application.Services
             return await _UnitOfWork.UserRepository.GetUsersByRolesUsingSP(RoleId);
         }
 
-        public async Task<LoginDTO> LoginUserUsingSP(LoginDTO loginDTO)
+        public async Task<LoggedInUserDTO> LoginUserUsingSP(LoginDTO loginDTO)
         {
            await _LoginValidator.ValidateAndThrowAsync(loginDTO);
 
-            var userLoginDTO = await _UnitOfWork.UserRepository.LoginUsingSP(loginDTO.Email, loginDTO.Password);
+            var userId = await _UnitOfWork.UserRepository.LoginUsingSP(loginDTO.Email, loginDTO.Password);
 
-            if (userLoginDTO == null) 
+            if (userId == -1) 
             {
                 loginDTO.Password = BCrypt.Net.BCrypt.HashPassword(loginDTO.Password);
-                userLoginDTO = await _UnitOfWork.UserRepository.LoginUsingSP(loginDTO.Email, loginDTO.Password);
+                userId = await _UnitOfWork.UserRepository.LoginUsingSP(loginDTO.Email, loginDTO.Password);
             }
 
-            if (userLoginDTO == null) 
+            if (userId == -1) 
             {
-                return new LoginDTO();
+                throw new UnauthorizedAccessException("Invalid email or password.");
             }
+
+            LoggedInUserDTO userLoginDTO = new LoggedInUserDTO
+            {
+                Id = userId,
+                Email = loginDTO.Email
+            };
 
             userLoginDTO.Roles = await _UnitOfWork.UserRepository.GetUserRolesUsingSP(userLoginDTO.Id);
 

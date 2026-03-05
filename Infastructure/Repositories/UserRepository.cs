@@ -75,8 +75,9 @@ namespace Infastructure.Repositories
             return await query.AnyAsync();
         }
 
-        public async Task<LoginDTO> LoginUsingSP(string email, string password)
+        public async Task<int> LoginUsingSP(string email, string password)
         {
+            int Id = -1;
             using var connection = new SqlConnection(_context.Database.GetConnectionString());
             using var command = new SqlCommand("SP_VerifyUserLogin", connection);
 
@@ -94,15 +95,11 @@ namespace Infastructure.Repositories
 
             if (await reader.ReadAsync())
             {
-                return new LoginDTO
-                {
-                    Email = reader.GetString(reader.GetOrdinal("Email")),
-                    Id = reader.GetInt32(reader.GetOrdinal("Id")),
-
-                };
+                Id = reader.GetInt32(reader.GetOrdinal("Id"));
+                return Id;
             }
             else {
-                return new LoginDTO();
+                return Id;
             }
         }
 
@@ -168,7 +165,7 @@ namespace Infastructure.Repositories
         public async Task<bool> UpdateUserUsingSP(User user)
         {
             using var connection = new SqlConnection(_context.Database.GetConnectionString());
-            using var command = new SqlCommand("SP_CreateNewUser", connection);
+            using var command = new SqlCommand("SP_UpdateUser", connection);
 
             command.CommandType = CommandType.StoredProcedure;
 

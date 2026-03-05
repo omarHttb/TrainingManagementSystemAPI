@@ -37,5 +37,7 @@ namespace Application.RepositoryInterfaces
 
         Task<List<AllCoursesDTO>> GetAllCoursesUsingSP();
 
+        Task<List<AllCoursesDTO>> GetAllVerifiedAndActiveCoursesUsingSP();
+
     }
 }

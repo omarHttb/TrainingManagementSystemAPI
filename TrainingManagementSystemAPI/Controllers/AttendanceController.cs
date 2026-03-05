@@ -1,4 +1,5 @@
 using Application.DTOS.AttendanceDTOS;
+using Application.DTOS.AttendancesDTOS;
 using Application.ServiceInterfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -37,6 +38,13 @@ namespace TrainingManagementSystemAPI.Controllers
         public async Task<IActionResult> AttendanceReportForCourse(int courseId)
         {
             var result = await _AttendanceService.GetAttendanceReportForACourseUsingSP(courseId);
+            return Ok(result);
+        }
+
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateAttendanceStatus(UpdateAttendanceDTO dto)
+        {
+            var result = await _AttendanceService.UpdateAttendanceUsingSP(dto);
             return Ok(result);
         }
     }
