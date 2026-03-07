@@ -36,6 +36,8 @@ namespace Application.Services
 
             var result = await _UnitOfWork.TrainerRepository.CreateTrainerUsingSP(trainer);
 
+            await _UnitOfWork.RoleRepository.AssignRoleToUserUsingSP(trainer.UserId, 1);
+
 
             return result;
         }

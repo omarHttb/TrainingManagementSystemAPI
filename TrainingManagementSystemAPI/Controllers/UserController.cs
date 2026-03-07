@@ -1,5 +1,6 @@
 using Application.DTOS.UsersDTOS;
 using Application.ServiceInterfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TrainingManagementSystemAPI.JWT;
 
@@ -39,6 +40,7 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok(token);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("byroles")]
         public async Task<IActionResult> GetUsersByRole(int roleId, int pageNumber, int pageSize)
         {
@@ -47,6 +49,7 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok(result);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("paginated")]
         public async Task<IActionResult> GetUsersWithPagination( int pageNumber, int pageSize)
         {
@@ -55,6 +58,7 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok(result);
         }
 
+        [Authorize(Roles = "Admin,Trainer,Trainee")]
         [HttpPut("update")]
         public async Task<IActionResult> UpdateUser(UpdateUserDTO updateUserDTO)
         {
@@ -63,6 +67,7 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok("User Updated successfully");
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> GetAllUsers()
         {
@@ -71,6 +76,7 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok(result);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("{Id}")]
         public async Task<IActionResult> GetAllUsersById(int Id)
         {

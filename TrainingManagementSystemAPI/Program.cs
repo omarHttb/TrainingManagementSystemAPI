@@ -17,7 +17,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection") ));
 
 builder.Services.AddApplicationServices(builder.Configuration)
-                .AddValidatorsFromAssemblies();
+                .AddValidatorsFromAssemblies().AddSwaggerGenWithAuth();
 
 builder.Services.AddSingleton<TokenProvider>();
 
@@ -34,6 +34,38 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidAudience = builder.Configuration["Jwt:Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"]!))
+        };
+        options.Events = new JwtBearerEvents
+        {
+            OnChallenge = async context =>
+            {
+                context.HandleResponse();
+
+                context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                context.Response.ContentType = "application/json";
+
+                var response = new
+                {
+                    success = false,
+                    message = "Unauthorized - You must login first"
+                };
+
+                await context.Response.WriteAsJsonAsync(response);
+            },
+
+            OnForbidden = async context =>
+            {
+                context.Response.StatusCode = StatusCodes.Status403Forbidden;
+                context.Response.ContentType = "application/json";
+
+                var response = new
+                {
+                    success = false,
+                    message = "Forbidden - You do not have permission to access this resource"
+                };
+
+                await context.Response.WriteAsJsonAsync(response);
+            }
         };
     });
 

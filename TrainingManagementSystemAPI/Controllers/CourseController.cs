@@ -1,5 +1,6 @@
 using Application.DTOS;
 using Application.ServiceInterfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TrainingManagementSystemAPI.Controllers
@@ -14,7 +15,7 @@ namespace TrainingManagementSystemAPI.Controllers
             _courseService = courseService;
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpPost("assign/{trainerId:int}/course/{courseId:int}")]
         public async Task<IActionResult> AssignTrainerToCourse(int courseId, int trainerId)
         {
@@ -23,6 +24,8 @@ namespace TrainingManagementSystemAPI.Controllers
         }
 
 
+
+        [Authorize(Roles = "Trainer")]
         [HttpPost]
         public async Task<IActionResult> CreateCourse([FromBody] CreateCourseDTO createCourseDTO)
         {
@@ -31,6 +34,7 @@ namespace TrainingManagementSystemAPI.Controllers
         }
 
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{courseId:int}")]
         public async Task<IActionResult> DeleteCourse(int courseId)
         {
@@ -38,14 +42,14 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok(result);
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpGet("details")]
         public async Task<IActionResult> GetAllCoursesDetails()
         {
             var result = await _courseService.GetAllCourseDetailsUsingSP();
             return Ok(result);
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> GetAllCourses()
         {
@@ -54,7 +58,7 @@ namespace TrainingManagementSystemAPI.Controllers
         }
 
 
-
+        [Authorize(Roles = "Admin")]
         [HttpGet("{courseId:int}")]
         public async Task<IActionResult> GetCourseDetailsById(int courseId)
         {
@@ -62,7 +66,7 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok(result);
         }
 
-
+        [Authorize(Roles = "Trainer")]
         [HttpPut("{courseId:int}/capacity")]
         public async Task<IActionResult> SetCourseCapacity(int courseId, [FromBody] int capacity)
         {
@@ -70,7 +74,7 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok(result);
         }
 
-
+        [Authorize(Roles = "Trainer")]
         [HttpPut("{courseId:int}")]
         public async Task<IActionResult> UpdateCourse(int courseId, [FromBody] UpdateCourseDTO updateCourseDTO)
         {
@@ -78,13 +82,14 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok(result);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("{courseId:int}/enrolledtrainees")]
         public async Task<IActionResult> GetAllTraineesEnrolledInACourse(int courseId)
         {
             var result = await _courseService.GetAllTraineesEnrolledInACourseUsingSP(courseId);
             return Ok(result);
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPatch("verify")]
         public async Task<IActionResult> VerifyCourse(int courseId, int verifiedById, bool isVerfie)
         {
@@ -93,6 +98,7 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok("Verfiy operation completed");
         }
 
+        [Authorize(Roles = "Trainer")]
         [HttpPatch("activate")]
         public async Task<IActionResult> ActivateCourse(int courseId, bool isActive)
         {
@@ -100,6 +106,7 @@ namespace TrainingManagementSystemAPI.Controllers
 
             return Ok("Activation operation completed");
         }
+        [Authorize(Roles = "Trainer, Admin, Trainee")]
         [HttpGet("activeandverified")]
         public async Task<IActionResult> GetAllActiveAndVerifiedCourses()
         {

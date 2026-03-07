@@ -1,6 +1,7 @@
 using Application.DTOS.EnrollmensDTOS;
 using Application.ServiceInterfaces;
 using Application.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TrainingManagementSystemAPI.Controllers
@@ -19,6 +20,7 @@ namespace TrainingManagementSystemAPI.Controllers
         
          }
 
+        [Authorize(Roles = "Trainee")]
         [HttpPost]
         public async Task<IActionResult> EnrollTraineeIntoACourse(CreateEnrollmentDTO createEnrollmentDTO)
         {

@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
 using System.Text;
@@ -66,6 +67,12 @@ namespace TrainingManagementSystemAPI.Middleware
                     title = "Dependency Error";
                     detail = $"The provided {field} does not exist.";
                     details = new[] { new { field, message = $"Invalid {field}" } };
+                    break;
+                case UnauthorizedAccessException:
+                    statusCode = StatusCodes.Status403Forbidden;
+                    code = "UNAUTHORIZED";
+                    title = "Unauthorized";
+                    detail = "You are not authorized to access this resource.";
                     break;
             }
 

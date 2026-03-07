@@ -1,6 +1,7 @@
 using Application.DTOS.TrainersDTOS;
 using Application.ServiceInterfaces;
 using Application.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TrainingManagementSystemAPI.Controllers
@@ -18,7 +19,7 @@ namespace TrainingManagementSystemAPI.Controllers
             _TrainersService = TrainersService;
         }
 
-
+        [Authorize(Roles = "Trainee, Admin")]
         [HttpPost]
         public async Task<IActionResult> CreateTrainer(CreateTrainerDTO createTrainerDTO)
         {
@@ -27,6 +28,7 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok(result);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete]
         public async Task<IActionResult> DeleteTrainer(int id)
         {
@@ -35,12 +37,14 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok(result);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> GetAllTrainers()
         {
             return Ok(await _TrainersService.GetAllTrainersUsingSP());
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTrainerById(int id)
         {
@@ -49,6 +53,7 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok(result);
         }
 
+        [Authorize(Roles = "Trainer")]
         [HttpPut]
         public async Task<IActionResult> UpdateTrainer(UpdateTrainerDTO updateTrainerDTO, int id)
         {
@@ -57,6 +62,7 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok(result);
         }
 
+        [Authorize(Roles = "Trainer")]
         [HttpPatch("activate")]
         public async Task<IActionResult> ActivateTrainer(int trainerId, bool isActive)
         {
@@ -65,6 +71,8 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok("Activation Proccess Completed");
         }
 
+
+        [Authorize(Roles = "Admin")]
         [HttpPatch("verify")]
         public async Task<IActionResult> VerifyCourse(int trainerId, int verifiedById, bool isVerfie)
         {

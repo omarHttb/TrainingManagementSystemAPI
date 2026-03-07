@@ -1,4 +1,5 @@
 using Application.ServiceInterfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TrainingManagementSystemAPI.Controllers
@@ -15,6 +16,7 @@ namespace TrainingManagementSystemAPI.Controllers
             _RoleService = RoleService;
          }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("assign")]
         public async Task<IActionResult> AssignRoleToUser(int userId,int RoleId)
         {

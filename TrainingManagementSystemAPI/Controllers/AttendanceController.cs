@@ -1,6 +1,7 @@
 using Application.DTOS.AttendanceDTOS;
 using Application.DTOS.AttendancesDTOS;
 using Application.ServiceInterfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TrainingManagementSystemAPI.Controllers
@@ -18,6 +19,8 @@ namespace TrainingManagementSystemAPI.Controllers
             _AttendanceService = AttendanceService;
         }
 
+
+        [Authorize(Roles = "Trainee")]
         [HttpPost("record")]
         public async Task<IActionResult> RecordAttendancePerLessonForTrainee(CreateAttendanceDTO dto)
         {
@@ -26,6 +29,7 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok(result);
         }
 
+        [Authorize(Roles = "Trainer")]
         [HttpGet("percentage/{traineeId}")]
         public async Task<IActionResult> AttendancePercentageForTrainee(int traineeId)
         {
@@ -34,6 +38,7 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok(result);
         }
 
+        [Authorize(Roles = "Trainer")]
         [HttpGet("report/{courseId}")]
         public async Task<IActionResult> AttendanceReportForCourse(int courseId)
         {
@@ -41,6 +46,7 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok(result);
         }
 
+        [Authorize(Roles = "Trainee")]
         [HttpPut("update")]
         public async Task<IActionResult> UpdateAttendanceStatus(UpdateAttendanceDTO dto)
         {

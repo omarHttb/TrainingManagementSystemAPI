@@ -1,6 +1,7 @@
 using Application.DTOS.LessonsDTOS;
 using Application.ServiceInterfaces;
 using Application.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TrainingManagementSystemAPI.Controllers
@@ -18,6 +19,7 @@ namespace TrainingManagementSystemAPI.Controllers
             _LessonService = LessonService;
         }
 
+        [Authorize(Roles = "Trainer")]
         [HttpGet("detailed")]
         public async Task<IActionResult> GetAllLessons(int courseId)
         {
@@ -26,6 +28,7 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok(result);
         }
 
+        [Authorize(Roles = "Trainer")]
         [HttpGet("attended")]
         public async Task<IActionResult> GetAttendedLessonsEnrollmentId(int EnrollmentId)
         {
@@ -33,7 +36,7 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok(result);
         }
 
-
+        [Authorize(Roles = "Trainer")]
         [HttpPatch("activatelesson")]
         public async Task<IActionResult> ActivateLesson(int lessonId, bool isActive)
         {
@@ -42,6 +45,7 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok("Activation change proccess completed");
         }
 
+        [Authorize(Roles = "Trainer")]
         [HttpGet("course/{courseId}/enrollment/{enrollmentId}")]
         public async Task<IActionResult> GetAllCourseLessons(int courseId, int enrollmentId)
         {
@@ -50,6 +54,7 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok(result);
         }
 
+        [Authorize(Roles = "Trainer")]
         [HttpPost]
         public async Task<IActionResult> CreateLesson(CreateLessonDTO lessonDTO)
         {
@@ -57,6 +62,7 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok("Lesson Created Successfully");
         }
 
+        [Authorize(Roles = "Trainer")]
         [HttpPut]
         public async Task<IActionResult> UpdateLesson(UpdateLessonDTO updateLessonDTO)
         {
@@ -64,6 +70,7 @@ namespace TrainingManagementSystemAPI.Controllers
             return Ok(result);
         }
 
+        [Authorize(Roles = "Trainee")]
         [HttpGet("active/course/{courseId}/enrollment/{enrollmentId}")]
         public async Task<IActionResult> GetActiveCourseLessons(int courseId, int enrollmentId)
         {
