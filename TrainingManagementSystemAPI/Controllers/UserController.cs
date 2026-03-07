@@ -40,9 +40,17 @@ namespace TrainingManagementSystemAPI.Controllers
         }
 
         [HttpGet("byroles")]
-        public async Task<IActionResult> GetUsersByRole(int roleId)
+        public async Task<IActionResult> GetUsersByRole(int roleId, int pageNumber, int pageSize)
         {
-            var result = await _UserService.GetUsersByRolesUsingSP(roleId);
+            var result = await _UserService.GetUsersByRolesUsingSP(roleId, pageNumber, pageSize);
+
+            return Ok(result);
+        }
+
+        [HttpGet("paginated")]
+        public async Task<IActionResult> GetUsersWithPagination( int pageNumber, int pageSize)
+        {
+            var result = await _UserService.GetUsersWithPaginationUsingSP(pageNumber, pageSize);
 
             return Ok(result);
         }

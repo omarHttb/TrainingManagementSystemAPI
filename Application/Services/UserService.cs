@@ -51,9 +51,15 @@ namespace Application.Services
 
         }
 
-        public async Task<List<UsersDTO>> GetUsersByRolesUsingSP(int RoleId)
+        public async Task<List<UsersDTO>> GetUsersByRolesUsingSP(int RoleId, int pageNumber, int pageSize)
         {
-            return await _UnitOfWork.UserRepository.GetUsersByRolesUsingSP(RoleId);
+            return await _UnitOfWork.UserRepository.GetUsersByRolesUsingSP(RoleId, pageNumber, pageSize);
+        }
+
+        public async Task<List<UsersDTO>> GetUsersWithPaginationUsingSP(int pageNumber, int pageSize)
+        {
+            return await _UnitOfWork.UserRepository.GetUsersWithPaginationUsingSP(pageNumber, pageSize);
+
         }
 
         public async Task<LoggedInUserDTO> LoginUserUsingSP(LoginDTO loginDTO)

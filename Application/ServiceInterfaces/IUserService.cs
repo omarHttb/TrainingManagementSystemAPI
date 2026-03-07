@@ -8,7 +8,8 @@ namespace Application.ServiceInterfaces
 
         Task<LoggedInUserDTO> LoginUserUsingSP(LoginDTO loginDTO);
 
-        Task<List<UsersDTO>> GetUsersByRolesUsingSP(int RoleId);
+        Task<List<UsersDTO>> GetUsersByRolesUsingSP(int RoleId, int pageNumber, int pageSize);
+        Task<List<UsersDTO>> GetUsersWithPaginationUsingSP(int pageNumber, int pageSize);
 
         Task<bool> UpdateUserUsingSP(UpdateUserDTO updateUserDTO);
 

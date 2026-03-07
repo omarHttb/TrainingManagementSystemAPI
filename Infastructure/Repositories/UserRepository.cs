@@ -129,7 +129,7 @@ namespace Infastructure.Repositories
 
         }
 
-        public async Task<List<UsersDTO>> GetUsersByRolesUsingSP(int RoleId)
+        public async Task<List<UsersDTO>> GetUsersByRolesUsingSP(int RoleId, int pageNumber, int pageSize)
         {
             var result = new List<UsersDTO>();
 
@@ -141,6 +141,10 @@ namespace Infastructure.Repositories
 
             command.Parameters.Add("@RoleId", SqlDbType.Int)
                     .Value = RoleId;
+            command.Parameters.Add("@PageNumber", SqlDbType.Int)
+                  .Value = pageNumber;
+            command.Parameters.Add("@PageSize", SqlDbType.Int)
+                  .Value = pageSize;
 
             await connection.OpenAsync();
             using var reader = await command.ExecuteReaderAsync();
@@ -196,6 +200,42 @@ namespace Infastructure.Repositories
 
             return rowsAffected > 0;
 
+        }
+
+        public async Task<List<UsersDTO>> GetUsersWithPaginationUsingSP(int pageNumber, int pageSize)
+        {
+            var result = new List<UsersDTO>();
+
+            using var connection = new SqlConnection(_context.Database.GetConnectionString());
+            using var command = new SqlCommand("SP_GetUsers", connection);
+
+            command.CommandType = CommandType.StoredProcedure;
+
+
+           
+            command.Parameters.Add("@PageNumber", SqlDbType.Int)
+                  .Value = pageNumber;
+            command.Parameters.Add("@PageSize", SqlDbType.Int)
+                  .Value = pageSize;
+
+            await connection.OpenAsync();
+            using var reader = await command.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
+            {
+                result.Add(new UsersDTO
+                {
+                    Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                    FullName = reader.GetString(reader.GetOrdinal("fullname")),
+                    Email = reader.GetString(reader.GetOrdinal("Email")),
+                    PhoneNumber = reader.GetString(reader.GetOrdinal("PhoneNumber")),
+                    Gender = reader.GetString(reader.GetOrdinal("Gender")),
+                    ProfilePicture = reader.IsDBNull(reader.GetOrdinal("ProfilePicture")) ? "" : reader.GetString(reader.GetOrdinal("ProfilePicture")),
+                    age = reader.GetInt32(reader.GetOrdinal("age"))
+                });
+            }
+
+            return result;
         }
     }
 }

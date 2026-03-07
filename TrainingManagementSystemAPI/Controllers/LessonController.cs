@@ -54,7 +54,7 @@ namespace TrainingManagementSystemAPI.Controllers
         public async Task<IActionResult> CreateLesson(CreateLessonDTO lessonDTO)
         {
             var result = await _LessonService.CreateLessonUsingSP(lessonDTO);
-            return Ok(result);
+            return Ok("Lesson Created Successfully");
         }
 
         [HttpPut]

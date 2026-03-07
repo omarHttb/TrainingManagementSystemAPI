@@ -31,7 +31,7 @@ namespace Application.Services
 
             if (doesTraineeGradeExist != null)
             {
-                throw new ArgumentException("Grade already added for this entrollment ID must be greater than 0");
+                throw new ArgumentException("Grade already added for this entrollment ID ");
             }
 
             var grade = _Mapper.Map<Grade>(gradeDTO);
