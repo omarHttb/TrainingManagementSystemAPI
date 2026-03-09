@@ -68,12 +68,7 @@ namespace TrainingManagementSystemAPI.Middleware
                     detail = $"The provided {field} does not exist.";
                     details = new[] { new { field, message = $"Invalid {field}" } };
                     break;
-                case UnauthorizedAccessException:
-                    statusCode = StatusCodes.Status403Forbidden;
-                    code = "UNAUTHORIZED";
-                    title = "Unauthorized";
-                    detail = "You are not authorized to access this resource.";
-                    break;
+            
             }
 
             _logger.LogError(exception, "An error occurred: {Message}", exception.Message);
